@@ -10,11 +10,36 @@
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<nav class="top"><a class="back" href="../">&larr; Home</a></nav>
+<nav class="top"><a class="back" href="../">&larr; Home</a><ol class="crumbs" aria-label="You are here"><li><a href="../">Level 1 · Surface</a></li><li aria-current="page">Level 2 · Overview: Family Archive</li></ol></nav>
 <header class="hero small-hero"><h1>Family Archive</h1>
 <p class="lead">Remember. Connect. Build.</p>
-<p class="draft-label">First drafts, final versions coming</p></header>
+</header>
 <main><section>
+<h2>Level 2 · Overview</h2>
+<p class="summary">The Farthing Archive and The Pilgrim Chronicle: &ldquo;A living memoir for Odin, Fae, and the generations after them.&rdquo; The cover art is Fae's orange-cat drawing.</p>
+<p class="motto">My Kids are ONLY little ONCE! <span>These are the GOOD OLD DAYS NOW!</span></p>
+<ul>
+<li>The Pilgrim Chronicle: Full Edition, 275 pages</li>
+<li>The Farthing Archive, built one brick at a time</li>
+<li>Proofreader notes from family and friends</li>
+</ul>
+<div class="doc"><div class="book-row">
+<img src="../assets/pilgrim-chronicle-fae-cover.jpg" alt="Fae's orange cat drawing, the cover art of The Pilgrim Chronicle" width="630" height="800" loading="lazy">
+<div><span class="badge fact">Fact · Real book</span>
+<p class="doc-title">The Pilgrim Chronicle: Full Edition</p>
+<a class="btn big" href="../deep/#read">Read the Full Book</a>
+<a class="btn alt" href="../assets/pilgrim-chronicle-full-edition.pdf" download>Download PDF</a>
+<p class="fine">PDF · 275 pages · Large, clear type</p></div></div></div>
+<p class="soon">More coming soon.</p>
+<h2>Portfolio</h2>
+<p class="key"><span class="badge fact">Fact</span> means real and finished. <span class="badge poss">Possibility</span> means an idea or AI-made preview, not finished work yet.</p>
+<div class="gallery three">
+<figure class="item"><img src="../assets/portfolio/archive-fae-cover.jpg" alt="Fae's orange cat drawing" loading="lazy"><figcaption><span class="badge fact">Fact · Real drawing</span><b>Cover art by Fae</b>Fae's orange cat, with Odin's stick figures.</figcaption></figure>
+<figure class="item"><img src="../assets/portfolio/archive-chronicle-title.jpg" alt="Title page of The Pilgrim Chronicle first draft" loading="lazy"><figcaption><span class="badge fact">Fact · Draft</span><b>The Pilgrim Chronicle, first draft</b>The early version, below.</figcaption></figure>
+<figure class="item"><img src="../assets/portfolio/archive-charter-brick-001.jpg" alt="Cover page: The Farthing Archive, Brick 001" loading="lazy"><figcaption><span class="badge fact">Fact · Draft</span><b>Brick 001: The Archive Charter</b>The rules of the archive, below.</figcaption></figure>
+</div>
+<h2>First Drafts &amp; Proofreader Notes</h2>
+<p class="draft-label">First drafts, final versions coming</p>
 <div class="doc"><p class="doc-title">The Pilgrim Chronicle, a living memoir for Odin, Fae, and the generations after them</p>
 <a class="btn big" href="pilgrim-chronicle-draft.pdf" target="_blank" rel="noopener">View</a>
 <a class="btn alt" href="pilgrim-chronicle-draft.pdf" download>Download PDF</a>
@@ -34,7 +59,8 @@
 <label for="c-a">What needs fixing?</label>
 <textarea id="c-a" name="comment" rows="6" required></textarea>
 <button class="btn big" type="submit">Send my note to Blake</button>
-<p class="small">This opens a text message to 979-578-2069.</p>
+<button class="btn alt" type="button" onclick="emailNote(this.form)">Or email my note</button>
+<p class="small">The gold button opens a text message to 979-578-2069. The green button opens an email to blake@dynamisblake.com.</p>
 </form>
 </div>
 <div class="doc"><p class="doc-title">The Farthing Archive, Brick 001: The Archive Charter</p>
@@ -56,16 +82,22 @@
 <label for="c-b">What needs fixing?</label>
 <textarea id="c-b" name="comment" rows="6" required></textarea>
 <button class="btn big" type="submit">Send my note to Blake</button>
-<p class="small">This opens a text message to 979-578-2069.</p>
+<button class="btn alt" type="button" onclick="emailNote(this.form)">Or email my note</button>
+<p class="small">The gold button opens a text message to 979-578-2069. The green button opens an email to blake@dynamisblake.com.</p>
 </form>
 </div>
+<a class="teaser" href="../deep/#yearbook"><img src="../assets/yearbook-2007/yb2007-cover.jpg" alt="The 2007 senior yearbook cover" width="910" height="1200" loading="lazy"><span><span class="tier-tag">Treasure</span><b>My 2007 Senior Yearbook</b>A time capsule from 2007. I designed the cover and much of the book. See the pages and read the whole yearbook &rarr;</span></a>
+<a class="deeper" href="../deep/">Go deeper &rarr; Level 3: The Full Story</a>
 <a class="btn alt" href="../">&larr; Back to Home</a>
 </section></main>
+<footer><p>El Campo, TX · <a href="../">DynamisBlake.com</a></p></footer>
 <script>
 function sendNote(e,f){e.preventDefault();
 var b='Proofreading '+f.dataset.doc+' - Page '+f.page.value.trim()+' - '+f.name.value.trim()+': '+f.comment.value.trim();
 location.href='sms:+19795782069?body='+encodeURIComponent(b);}
+function emailNote(f){if(!f.reportValidity())return;
+var b='Proofreading '+f.dataset.doc+' - Page '+f.page.value.trim()+' - '+f.name.value.trim()+': '+f.comment.value.trim();
+location.href='mailto:blake@dynamisblake.com?subject='+encodeURIComponent('Proofreader note: '+f.dataset.doc)+'&body='+encodeURIComponent(b);}
 </script>
-<!-- [PLACEHOLDER: add an "Email my note" button once a booking/contact email exists] -->
 </body>
 </html>
