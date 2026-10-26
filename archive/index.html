@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family Archive | Dynamis Blake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<nav class="top"><a class="back" href="../">&larr; Home</a></nav>
+<header class="hero small-hero"><h1>Family Archive</h1>
+<p class="lead">Remember. Connect. Build.</p>
+<p class="draft-label">First drafts, final versions coming</p></header>
+<main><section>
+<div class="doc"><p class="doc-title">The Pilgrim Chronicle, a living memoir for Odin, Fae, and the generations after them</p>
+<a class="btn big" href="pilgrim-chronicle-draft.pdf" target="_blank" rel="noopener">View</a>
+<a class="btn alt" href="pilgrim-chronicle-draft.pdf" download>Download PDF</a>
+<form class="notes" data-doc="The Pilgrim Chronicle" onsubmit="sendNote(event,this)">
+<h2>Proofreader Notes</h2>
+<p class="howto">Found a mistake? Here is how to tell Blake:</p>
+<ol class="howto">
+<li>Type your name.</li>
+<li>Type the page number.</li>
+<li>Write what needs fixing.</li>
+<li>Press the big gold button. Your phone opens a text message to Blake. Then press <strong>Send</strong> in your messages.</li>
+</ol>
+<label for="n-a">Your name</label>
+<input id="n-a" name="name" type="text" autocomplete="name" required>
+<label for="p-a">Page number</label>
+<input id="p-a" name="page" type="text" inputmode="numeric" required>
+<label for="c-a">What needs fixing?</label>
+<textarea id="c-a" name="comment" rows="6" required></textarea>
+<button class="btn big" type="submit">Send my note to Blake</button>
+<p class="small">This opens a text message to 979-578-2069.</p>
+</form>
+</div>
+<div class="doc"><p class="doc-title">The Farthing Archive, Brick 001: The Archive Charter</p>
+<a class="btn big" href="farthing-archive-charter-draft.pdf" target="_blank" rel="noopener">View</a>
+<a class="btn alt" href="farthing-archive-charter-draft.pdf" download>Download PDF</a>
+<form class="notes" data-doc="The Farthing Archive, Brick 001: The Archive Charter" onsubmit="sendNote(event,this)">
+<h2>Proofreader Notes</h2>
+<p class="howto">Found a mistake? Here is how to tell Blake:</p>
+<ol class="howto">
+<li>Type your name.</li>
+<li>Type the page number.</li>
+<li>Write what needs fixing.</li>
+<li>Press the big gold button. Your phone opens a text message to Blake. Then press <strong>Send</strong> in your messages.</li>
+</ol>
+<label for="n-b">Your name</label>
+<input id="n-b" name="name" type="text" autocomplete="name" required>
+<label for="p-b">Page number</label>
+<input id="p-b" name="page" type="text" inputmode="numeric" required>
+<label for="c-b">What needs fixing?</label>
+<textarea id="c-b" name="comment" rows="6" required></textarea>
+<button class="btn big" type="submit">Send my note to Blake</button>
+<p class="small">This opens a text message to 979-578-2069.</p>
+</form>
+</div>
+<a class="btn alt" href="../">&larr; Back to Home</a>
+</section></main>
+<script>
+function sendNote(e,f){e.preventDefault();
+var b='Proofreading '+f.dataset.doc+' - Page '+f.page.value.trim()+' - '+f.name.value.trim()+': '+f.comment.value.trim();
+location.href='sms:+19795782069?body='+encodeURIComponent(b);}
+</script>
+<!-- [PLACEHOLDER: add an "Email my note" button once a booking/contact email exists] -->
+</body>
+</html>
