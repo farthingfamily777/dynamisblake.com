@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>The Pilgrim's Path</title>
+<style>
+  :root {
+    --cream: #faf6ec;
+    --cream-2: #f3ecda;
+    --gold: #c9a24b;
+    --gold-dark: #a9842f;
+    --sky: #bcd7e0;
+    --sky-2: #8fb9c9;
+    --leaf: #8faa7c;
+    --ink: #4a4137;
+    --ink-soft: #6f6558;
+    --card-bg: #fffdf7;
+    --shadow: rgba(90, 74, 40, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cream: #241f19;
+      --cream-2: #2c261e;
+      --gold: #d8b565;
+      --gold-dark: #b8933f;
+      --sky: #33505c;
+      --sky-2: #294049;
+      --leaf: #4d5e42;
+      --ink: #f1e9d8;
+      --ink-soft: #cfc3ac;
+      --card-bg: #2e281f;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+  }
+  body {
+    background: linear-gradient(180deg, var(--sky) 0%, var(--sky-2) 22%, var(--cream-2) 55%, var(--cream) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px 64px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  .sun {
+    position: absolute;
+    top: 40px;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #fff6d8 0%, var(--gold) 55%, transparent 75%);
+    opacity: 0.9;
+    filter: blur(1px);
+    pointer-events: none;
+  }
+  .mountains {
+    position: absolute;
+    top: 130px;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 160px;
+    pointer-events: none;
+  }
+  .path-svg {
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 220px;
+    pointer-events: none;
+  }
+  header {
+    text-align: center;
+    z-index: 2;
+    margin-top: 90px;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-size: 2.4rem;
+    letter-spacing: 0.03em;
+    margin: 0;
+    color: var(--gold-dark);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+  header p.sub {
+    margin: 6px 0 0;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+  main {
+    z-index: 2;
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 18px 40px var(--shadow);
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(201, 162, 75, 0.35);
+    position: relative;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .card.fade {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .label {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    background: rgba(201, 162, 75, 0.14);
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .verse-text {
+    font-size: 1.45rem;
+    line-height: 1.55;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .verse-ref {
+    font-size: 1rem;
+    color: var(--gold-dark);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+  .reflection {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    border-top: 1px dashed rgba(143, 122, 60, 0.35);
+    padding-top: 16px;
+    margin: 0;
+    font-style: italic;
+  }
+  .fav-btn {
+    position: absolute;
+    top: 14px;
+    inset-inline-end: 16px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: rgba(169, 132, 47, 0.4);
+    transition: color 0.2s ease, transform 0.15s ease;
+    line-height: 1;
+    padding: 4px;
+  }
+  .fav-btn.active {
+    color: var(--gold-dark);
+    transform: scale(1.12);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  button.primary {
+    background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+    color: #fffdf6;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px var(--shadow);
+    font-family: inherit;
+    letter-spacing: 0.03em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  button.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 22px var(--shadow); }
+  button.primary:active { transform: translateY(0); }
+  button.secondary {
+    background: transparent;
+    color: var(--gold-dark);
+    border: 1.5px solid var(--gold);
+    padding: 13px 24px;
+    font-size: 0.95rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease;
+  }
+  button.secondary:hover { background: rgba(201, 162, 75, 0.12); }
+  .favorites-panel {
+    width: 100%;
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 26px var(--shadow);
+    border: 1px solid rgba(201, 162, 75, 0.3);
+    display: none;
+  }
+  .favorites-panel.open { display: block; }
+  .favorites-panel h2 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    color: var(--gold-dark);
+  }
+  .fav-item {
+    text-align: start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(143, 122, 60, 0.18);
+  }
+  .fav-item:last-child { border-bottom: none; }
+  .fav-item .ref { font-weight: 600; color: var(--gold-dark); font-size: 0.9rem; }
+  .fav-item .txt { color: var(--ink-soft); font-size: 0.92rem; margin-top: 2px; }
+  .empty-note { color: var(--ink-soft); font-style: italic; text-align: center; padding: 8px 0; }
+  footer {
+    z-index: 2;
+    margin-top: 34px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    max-width: 520px;
+    line-height: 1.5;
+  }
+  footer .dedication {
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--gold-dark);
+    margin: 0 0 14px;
+    line-height: 1.6;
+  }
+  footer .fine-print {
+    margin: 0;
+  }
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.9rem; }
+    .card { padding: 28px 20px; }
+    .verse-text { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sun" aria-hidden="true"></div>
+<svg class="mountains" viewBox="0 0 800 160" preserveAspectRatio="none" aria-hidden="true">
+  <polygon points="0,160 150,50 300,160" fill="#8fb9c9" opacity="0.55"/>
+  <polygon points="200,160 400,30 620,160" fill="#7aa6b7" opacity="0.55"/>
+  <polygon points="480,160 650,60 800,160" fill="#8faa7c" opacity="0.5"/>
+</svg>
+<svg class="path-svg" viewBox="0 0 800 220" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M400,0 C360,60 460,90 380,150 C310,205 250,210 200,220 L600,220 C540,205 470,190 430,150 C380,100 460,60 400,0 Z"
+        fill="#e8d9a8" opacity="0.35"/>
+</svg>
+
+<header>
+  <h1>The Pilgrim's Path</h1>
+  <p class="sub">Daily verses and quiet inspiration for the journey</p>
+</header>
+
+<main>
+  <div class="card" id="card">
+    <button class="fav-btn" id="favBtn" aria-label="Save as favorite" title="Save as favorite">&#9733;</button>
+    <span class="label" id="cardLabel">Verse of the Day</span>
+    <p class="verse-text" id="verseText"></p>
+    <p class="verse-ref" id="verseRef"></p>
+    <p class="reflection" id="reflection"></p>
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="newVerseBtn">New Verse &amp; Inspiration</button>
+    <button class="secondary" id="todayBtn">Back to Today's Verse</button>
+    <button class="secondary" id="favToggleBtn">Show Favorites (0)</button>
+  </div>
+
+  <div class="favorites-panel" id="favPanel">
+    <h2>Your Favorites (this session)</h2>
+    <div id="favList"><p class="empty-note">No favorites saved yet — tap the star on a verse to save it here.</p></div>
+  </div>
+</main>
+
+<footer>
+  <p class="dedication">Made to share the love of God through education and learning —<br>
+  for Odin and Fae, and all who walk this path.</p>
+  <p class="fine-print">Verses shown in the King James Version (public domain). Reflections are original.
+  This app runs entirely in your browser and does not save anything after you close or reload the page —
+  favorites shown here last only for this visit.</p>
+</footer>
+
+<script>
+(function () {
+  var verses = [
+    { ref: "Psalm 23:1, KJV", text: "The LORD is my shepherd; I shall not want.", reflection: "Whatever today asks of you, you are not walking it unaccompanied — provision and presence go ahead of you." },
+    { ref: "Joshua 1:9, KJV", text: "Have not I commanded thee? Be strong and of a good courage, be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.", reflection: "Courage isn't the absence of fear; it's taking the next step anyway, trusting you're not carrying it alone." },
+    { ref: "Isaiah 40:31, KJV", text: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.", reflection: "Rest and waiting are not wasted time — they are how strength is quietly rebuilt for the road ahead." },
+    { ref: "Philippians 4:13, KJV", text: "I can do all things through Christ which strengtheneth me.", reflection: "The task in front of you may be large, but you were never meant to face it on your own strength alone." },
+    { ref: "Jeremiah 29:11, KJV", text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", reflection: "Even when the path curves out of sight, there is a good intention shaping where it leads." },
+    { ref: "Romans 8:28, KJV", text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", reflection: "Nothing you're carrying today is outside the reach of a bigger, kinder story being written." },
+    { ref: "Psalm 46:1, KJV", text: "God is our refuge and strength, a very present help in trouble.", reflection: "When the ground feels unsteady, there is still a place sturdy enough to stand on." },
+    { ref: "Proverbs 3:5-6, KJV", text: "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.", reflection: "You don't need to see the whole map today — just the next right step, taken in trust." },
+    { ref: "Matthew 11:28, KJV", text: "Come unto me, all ye that labour and are heavy laden, and I will give you rest.", reflection: "Weariness is an invitation, not a failure — rest is offered freely to those who are tired." },
+    { ref: "Psalm 34:18, KJV", text: "The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.", reflection: "Grief and heartbreak don't push you further away — they are met with a nearness, not a distance." },
+    { ref: "2 Corinthians 12:9, KJV", text: "My grace is sufficient for thee: for my strength is made perfect in weakness.", reflection: "Your limits are not disqualifying — they are often exactly where something greater has room to work." },
+    { ref: "John 14:27, KJV", text: "Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.", reflection: "This kind of peace doesn't depend on quiet circumstances — it can hold steady inside a noisy day." },
+    { ref: "Psalm 121:1-2, KJV", text: "I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD, which made heaven and earth.", reflection: "Sometimes the most honest prayer is simply looking up and remembering where help actually comes from." },
+    { ref: "Lamentations 3:22-23, KJV", text: "It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", reflection: "However yesterday went, this morning arrives clean — mercy doesn't run low overnight." },
+    { ref: "1 Peter 5:7, KJV", text: "Casting all your care upon him; for he careth for you.", reflection: "You were never meant to grip every worry with both hands — some of it is meant to be set down." },
+    { ref: "Psalm 27:1, KJV", text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", reflection: "Fear loses some of its size the moment you remember whose light you're standing in." },
+    { ref: "Galatians 6:9, KJV", text: "And let us not be weary in well doing: for in due season we shall reap, if we faint not.", reflection: "The good you're doing quietly, unnoticed, is not wasted — harvest has its own timing." },
+    { ref: "Psalm 55:22, KJV", text: "Cast thy burden upon the LORD, and he shall sustain thee: he shall never suffer the righteous to be moved.", reflection: "Carrying it alone was never the requirement — you're allowed to hand the weight over." },
+    { ref: "Deuteronomy 31:6, KJV", text: "Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee.", reflection: "Whatever is ahead, you are not being sent into it and then left there." },
+    { ref: "Psalm 16:8, KJV", text: "I have set the LORD always before me: because he is at my right hand, I shall not be moved.", reflection: "A steady center keeps you upright even when everything around you is shifting." },
+    { ref: "Isaiah 41:10, KJV", text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", reflection: "Four different promises in one verse — strength, help, and an upholding hand for the moments you can't stand on your own." },
+    { ref: "Psalm 143:8, KJV", text: "Cause me to hear thy lovingkindness in the morning; for in thee do I trust: cause me to know the way wherein I should walk; for I lift up my soul unto thee.", reflection: "A good morning prayer isn't for answers to everything — just enough light for the next few steps." },
+    { ref: "Hebrews 11:1, KJV", text: "Now faith is the substance of things hoped for, the evidence of things not seen.", reflection: "Faith doesn't require proof up front — it's the quiet confidence that keeps you walking toward what's not yet visible." },
+    { ref: "Psalm 30:5, KJV", text: "Weeping may endure for a night, but joy cometh in the morning.", reflection: "Whatever night you're in, it has a morning — sorrow rarely gets the last word." },
+    { ref: "1 Corinthians 13:4, KJV", text: "Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up.", reflection: "Love shows up less as a feeling and more as patience, chosen again and again." },
+    { ref: "Psalm 118:24, KJV", text: "This is the day which the LORD hath made; we will rejoice and be glad in it.", reflection: "Today doesn't have to be perfect to be worth rejoicing in — it's already been given." },
+    { ref: "Colossians 3:15, KJV", text: "And let the peace of God rule in your hearts, to the which also ye are called in one body; and be ye thankful.", reflection: "Gratitude and peace tend to arrive together — one often opens the door for the other." },
+    { ref: "Psalm 37:4, KJV", text: "Delight thyself also in the LORD: and he shall give thee the desires of thine heart.", reflection: "Delight isn't a reward for finishing the journey — it's available for the walking of it." },
+    { ref: "Micah 6:8, KJV", text: "He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?", reflection: "The instructions were never complicated — act justly, love mercy, and walk humbly, one day at a time." },
+    { ref: "Numbers 6:24-26, KJV", text: "The LORD bless thee, and keep thee: The LORD make his face shine upon thee, and be gracious unto thee: The LORD lift up his countenance upon thee, and give thee peace.", reflection: "A blessing this old still fits today — kept, seen with favor, and sent onward in peace." },
+    { ref: "Psalm 16:11, KJV", text: "Thou wilt shew me the path of life: in thy presence is fulness of joy; at thy right hand there are pleasures for evermore.", reflection: "The path itself is not meant to be grim — there is real joy built into the walking of it." }
+  ];
+
+  var favorites = []; // session-only, never persisted
+  var currentIndex = null;
+  var isTodayView = true;
+
+  function dayOfYearIndex() {
+    var now = new Date();
+    var start = new Date(now.getFullYear(), 0, 0);
+    var diff = now - start;
+    var oneDay = 1000 * 60 * 60 * 24;
+    var dayOfYear = Math.floor(diff / oneDay);
+    return dayOfYear % verses.length;
+  }
+
+  function randomIndexExcluding(exclude) {
+    if (verses.length <= 1) return 0;
+    var idx;
+    do {
+      idx = Math.floor(Math.random() * verses.length);
+    } while (idx === exclude);
+    return idx;
+  }
+
+  var cardEl = document.getElementById('card');
+  var verseTextEl = document.getElementById('verseText');
+  var verseRefEl = document.getElementById('verseRef');
+  var reflectionEl = document.getElementById('reflection');
+  var cardLabelEl = document.getElementById('cardLabel');
+  var favBtn = document.getElementById('favBtn');
+  var favListEl = document.getElementById('favList');
+  var favPanel = document.getElementById('favPanel');
+  var favToggleBtn = document.getElementById('favToggleBtn');
+
+  function renderVerse(index, label, animate) {
+    currentIndex = index;
+    var v = verses[index];
+
+    function apply() {
+      verseTextEl.textContent = v.text;
+      verseRefEl.textContent = v.ref;
+      reflectionEl.textContent = v.reflection;
+      cardLabelEl.textContent = label;
+      updateFavButton();
+      if (animate) {
+        cardEl.classList.remove('fade');
+      }
+    }
+
+    if (animate) {
+      cardEl.classList.add('fade');
+      setTimeout(apply, 180);
+    } else {
+      apply();
+    }
+  }
+
+  function updateFavButton() {
+    var v = verses[currentIndex];
+    var isFav = favorites.some(function (f) { return f.ref === v.ref; });
+    favBtn.classList.toggle('active', isFav);
+  }
+
+  function renderFavorites() {
+    favToggleBtn.textContent = (favPanel.classList.contains('open') ? 'Hide Favorites (' : 'Show Favorites (') + favorites.length + ')';
+    if (favorites.length === 0) {
+      favListEl.innerHTML = '<p class="empty-note">No favorites saved yet — tap the star on a verse to save it here.</p>';
+      return;
+    }
+    favListEl.innerHTML = favorites.map(function (f) {
+      return '<div class="fav-item"><div class="ref"></div><div class="txt"></div></div>';
+    }).join('');
+    var items = favListEl.querySelectorAll('.fav-item');
+    favorites.forEach(function (f, i) {
+      items[i].querySelector('.ref').textContent = f.ref;
+      items[i].querySelector('.txt').textContent = f.text;
+    });
+  }
+
+  favBtn.addEventListener('click', function () {
+    var v = verses[currentIndex];
+    var existingIdx = favorites.findIndex(function (f) { return f.ref === v.ref; });
+    if (existingIdx >= 0) {
+      favorites.splice(existingIdx, 1);
+    } else {
+      favorites.push(v);
+    }
+    updateFavButton();
+    renderFavorites();
+  });
+
+  document.getElementById('newVerseBtn').addEventListener('click', function () {
+    isTodayView = false;
+    var idx = randomIndexExcluding(currentIndex);
+    renderVerse(idx, 'On-Demand Inspiration', true);
+  });
+
+  document.getElementById('todayBtn').addEventListener('click', function () {
+    isTodayView = true;
+    renderVerse(dayOfYearIndex(), "Verse of the Day", true);
+  });
+
+  favToggleBtn.addEventListener('click', function () {
+    favPanel.classList.toggle('open');
+    renderFavorites();
+  });
+
+  // initial load: today's verse
+  renderVerse(dayOfYearIndex(), "Verse of the Day", false);
+  renderFavorites();
+})();
+</script>
+
+</body>
+</html>
