@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample Quote · Farthing, Garcia &amp; Sons</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1f4d2b;--rust:#a5482a;--cream:#f5efe0}
+*{box-sizing:border-box}
+body{background:var(--cream);color:var(--green);font-family:'Lexend',sans-serif;font-size:1.3rem;line-height:1.6;margin:0}
+.sample{background:var(--rust);color:#fff;text-align:center;font-weight:800;font-size:1.4rem;padding:.8rem;position:sticky;top:0;z-index:10;letter-spacing:.03em}
+.hero{background:var(--green);color:var(--cream);text-align:center;padding:1.5rem 1rem}
+.hero img{max-width:240px;width:65%;background:var(--cream);border-radius:16px;padding:.5rem}
+.hero h1{font-size:2.2rem;margin:.5rem 0;line-height:1.2}
+.hero .tag{font-size:1.45rem;color:#f0c9a8;font-weight:600;margin:.2rem 0}
+main{max-width:720px;margin:0 auto;padding:1rem}
+h2{color:var(--rust);font-size:1.8rem;border-bottom:3px solid var(--rust);margin-top:2rem}
+.info{background:#fff;border:3px solid var(--green);border-radius:14px;padding:1rem}
+.info p{margin:.2rem 0}
+.card{display:flex;gap:1rem;align-items:flex-start;background:#fff;border:3px solid var(--green);border-radius:14px;padding:1rem;margin:1rem 0;cursor:pointer}
+.card.on{border-color:var(--rust);box-shadow:0 0 0 3px var(--rust)}
+.card input{width:2.4rem;height:2.4rem;flex:none;accent-color:var(--rust);margin-top:.3rem}
+.card h3{margin:0;font-size:1.5rem;color:var(--rust);line-height:1.3}
+.card p{margin:.3rem 0}
+.price{font-size:1.7rem;font-weight:800}
+.total{background:var(--green);color:var(--cream);border-radius:14px;padding:1.2rem;position:sticky;bottom:.5rem}
+.row{display:flex;justify-content:space-between;gap:.5rem;font-size:1.35rem;padding:.25rem 0}
+.big{font-size:1.9rem;font-weight:800}
+.save{background:var(--cream);color:var(--green);border-radius:10px;padding:.6rem;margin:.6rem 0;font-weight:600;text-align:center}
+.plan{border-top:2px solid #f0c9a8;margin-top:.6rem;padding-top:.6rem}
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.days button{font:inherit;font-size:1.5rem;font-weight:800;padding:.9rem 0;border:3px solid var(--green);border-radius:12px;background:#fff;color:var(--green)}
+.days button.on{background:var(--rust);border-color:var(--rust);color:#fff}
+ul.notes li{margin:.6rem 0}
+.btns a{display:block;background:var(--rust);color:#fff;text-decoration:none;padding:1.1rem;border-radius:12px;margin:.7rem 0;font-size:1.4rem;font-weight:800;text-align:center}
+.btns a.alt{background:var(--green)}
+footer{text-align:center;padding:1.5rem 1rem;background:var(--green);color:var(--cream);margin-top:2rem}
+footer .motto{font-size:1.5rem;font-weight:800}
+footer a{color:var(--cream)}
+</style>
+</head>
+<body>
+<div class="sample">SAMPLE QUOTE: example only</div>
+<header class="hero">
+  <img src="../logo.png" alt="Farthing, Garcia &amp; Sons logo">
+  <h1>Farthing, Garcia &amp; Sons</h1>
+  <p class="tag">Painting · General Contracting</p>
+  <p>Faith First &amp; Family Owned</p>
+</header>
+<main>
+  <div class="info">
+    <p><strong>Quote #:</strong> FGS-SAMPLE-001</p>
+    <p><strong>For:</strong> Jane Sample</p>
+    <p>123 Example St, El Campo, TX</p>
+  </div>
+
+  <h2>Your Jobs</h2>
+  <p>Tap a job to add it or take it off.</p>
+  <div id="jobs"></div>
+
+  <h2>Your Total</h2>
+  <div class="total" aria-live="polite">
+    <div class="row big"><span>Total</span><span id="t">$0</span></div>
+    <div class="row"><span>10% down to start</span><span id="d">$0</span></div>
+    <div class="row"><span>Balance</span><span id="b">$0</span></div>
+    <div class="save">Pay in full and save 5%: <span id="f">$0</span></div>
+    <div class="plan"><strong>No-interest plan (balance):</strong>
+      <div class="row"><span>6 months</span><span id="m6">$0</span></div>
+      <div class="row"><span>9 months</span><span id="m9">$0</span></div>
+      <div class="row"><span>12 months</span><span id="m12">$0</span></div>
+    </div>
+  </div>
+
+  <h2>Pay Day</h2>
+  <p>Pick the day that works for you.</p>
+  <div class="days" id="days"></div>
+  <p id="dayMsg"></p>
+
+  <h2>Good to Know</h2>
+  <ul class="notes">
+    <li>If we find hidden rot, we will give you a price <strong>before</strong> any extra work.</li>
+    <li>We use lead-safe prep to keep your family safe.</li>
+    <li>Rain or bad weather can move the schedule a little.</li>
+  </ul>
+
+  <h2>Talk to Us</h2>
+  <div class="btns">
+    <a href="tel:+19795782069">📞 Call Blake (979) 578-2069</a>
+    <a class="alt" href="sms:+19795782069?&amp;body=Hi%2C%20I%27d%20like%20a%20quote%20for%20my%20home">💬 Text Us</a>
+    <a href="tel:+19794659552">📞 Call Jacob (979) 465-9552</a>
+    <a href="tel:+18329032971">📞 Call Loreto (832) 903-2971</a>
+  </div>
+</main>
+<footer>
+  <p class="motto">We ALWAYS leave it better than we found it.</p>
+  <p>El Campo, TX · <a href="../">Farthing, Garcia &amp; Sons</a></p>
+</footer>
+<script>
+const jobs=[
+ ["A","Interior wood floor repair",575,"We fix the soft or broken boards in your floor so it is safe and solid again."],
+ ["B","Ceiling crack repair",325,"We patch and smooth the cracks in your ceiling so they disappear."],
+ ["C","Exterior prep",1725,"We wash, scrape, sand, and fix the outside so new paint will stick and last."],
+ ["D","Exterior paint (2 coats, after prep)",2375,"We paint the outside of your home with two good coats."]];
+const $=id=>document.getElementById(id);
+const money=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const m2=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+$("jobs").innerHTML=jobs.map((j,i)=>`<label class="card on"><input type="checkbox" checked data-i="${i}" aria-label="Add job ${j[0]}"><div><h3>${j[0]}. ${j[1]}</h3><p>${j[3]}</p><p class="price">${money(j[2])}</p><p>10% down: ${money(j[2]*.1)}</p></div></label>`).join("");
+function upd(){let t=0;document.querySelectorAll("#jobs input").forEach(c=>{c.closest(".card").classList.toggle("on",c.checked);if(c.checked)t+=jobs[c.dataset.i][2]});
+ const d=t*.1,b=t-d;$("t").textContent=money(t);$("d").textContent=money(d);$("b").textContent=money(b);$("f").textContent=money(t*.95);
+ [6,9,12].forEach(m=>$("m"+m).textContent=m2(b/m)+" / mo");}
+document.querySelectorAll("#jobs input").forEach(c=>c.addEventListener("change",upd));upd();
+const ord=n=>n+(n==1?"st":n==5||n>=10&&n<=20||n==25||n==30?"th":"");
+$("days").innerHTML=[1,5,10,15,20,25,30].map(n=>`<button type="button" data-n="${n}">${ord(n)}</button>`).join("");
+$("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#days button").forEach(x=>x.classList.toggle("on",x===b));$("dayMsg").innerHTML=`<strong>You picked the ${b.textContent} of each month.</strong>`;});
+</script>
+</body>
+</html>
