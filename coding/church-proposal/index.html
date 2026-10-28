@@ -12,7 +12,7 @@
 <style>
 .inv{width:100%;border-collapse:collapse;font-size:1.1rem;background:#fff}
 .inv td,.inv th{border:2px solid var(--green);padding:.5rem .7rem;text-align:left}
-.inv td:last-child,.inv th:last-child{text-align:right;white-space:nowrap}
+.inv td:not(:first-child),.inv th:not(:first-child){text-align:right;white-space:nowrap}
 .inv .total td{font-weight:800;background:#fff3c4}
 .phase{background:#fff;border-left:8px solid var(--gold);border-radius:.6rem;padding:.8rem 1rem;margin:1rem 0}
 .phase h3{margin:0 0 .3rem;color:var(--green)}
@@ -36,6 +36,8 @@ button.btn{border:0;cursor:pointer;font-family:inherit;width:100%}
  .sig{grid-template-columns:1fr 1fr;margin-top:2.5rem}
  a{color:#000;text-decoration:none}
 }
+.save{font-size:1.3rem;color:var(--green);text-align:center;background:#fff3c4;border-radius:.6rem;padding:.4rem}
+.blake p{font-style:italic}
 </style>
 </head>
 <body>
@@ -47,6 +49,9 @@ button.btn{border:0;cursor:pointer;font-family:inherit;width:100%}
 <p><b>Prepared for:</b> [Church Name]</p>
 <p><b>Date:</b> Oct 28, 2026</p>
 <button class="btn big no-print" onclick="window.print()">Print / Save as PDF</button>
+</section>
+<section>
+<div class="phase blake"><h3>A note from Blake</h3><p>I&rsquo;m doing this because I love this church and want to help it grow. I&rsquo;ve worked in tech and social media for 20 years, and I&rsquo;m offering that at half my regular rate as a gift to our church family. As I step toward seminary, this work also helps support my family, so a fair payment for my time and expertise means a lot. Thank you for trusting me with it.</p></div>
 </section>
 <section>
 <h2>Purpose</h2>
@@ -67,16 +72,17 @@ button.btn{border:0;cursor:pointer;font-family:inherit;width:100%}
 <h2>Investment</h2>
 <p><b>Church-family rate</b> &mdash; <i>suggested; we&rsquo;ll settle what&rsquo;s fair together.</i></p>
 <table class="inv">
-<tr><th>Item</th><th>Amount</th></tr>
-<tr><td>Tithe.ly setup</td><td>$500</td></tr>
-<tr><td>Website rebuild</td><td>$1,200</td></tr>
-<tr><td>Social media setup</td><td>$300</td></tr>
-<tr><td>Training</td><td>$200</td></tr>
-<tr class="total"><td>Total</td><td>$2,200</td></tr>
-<tr><td>Optional monthly care (updates, posts, tech help)</td><td>$150/mo</td></tr>
+<tr><th>Item</th><th>Regular Price</th><th>Church-Family Rate</th></tr>
+<tr><td>Tithe.ly setup</td><td>$900</td><td>$500</td></tr>
+<tr><td>Website rebuild</td><td>$2,500</td><td>$1,200</td></tr>
+<tr><td>Social media setup</td><td>$600</td><td>$300</td></tr>
+<tr><td>Training</td><td>$400</td><td>$200</td></tr>
+<tr class="total"><td>Total</td><td>$4,400</td><td><b>$2,200</b></td></tr>
+<tr><td>Optional monthly care (updates, posts, tech help)</td><td>$300/mo</td><td>$150/mo</td></tr>
 </table>
+<p class="save"><b>You save $2,200</b></p>
 <p>Tithe.ly&rsquo;s own subscription and processing fees are paid by the church directly to Tithe.ly.</p>
-<p><b>Payment:</b> 25% to start, and the rest as each phase is finished.</p>
+<p><b>Payment:</b> 10% down to start ($220), the rest by phase as each part is finished.</p>
 </section>
 <section class="signsec">
 <h2>Thank You</h2>
