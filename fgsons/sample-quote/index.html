@@ -42,6 +42,7 @@ footer{text-align:center;padding:1.5rem 1rem;background:var(--green);color:var(-
 footer .motto{font-size:1.5rem;font-weight:800}
 footer a{color:var(--cream)}
 </style>
+<link rel="stylesheet" href="../../assets/lang.css">
 </head>
 <body>
 <div class="sample">SAMPLE QUOTE: example only</div>
@@ -117,5 +118,117 @@ const ord=n=>n+(n==1?"st":n==5||n>=10&&n<=20||n==25||n==30?"th":"");
 $("days").innerHTML=[1,5,10,15,20,25,30].map(n=>`<button type="button" data-n="${n}">${ord(n)}</button>`).join("");
 $("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#days button").forEach(x=>x.classList.toggle("on",x===b));$("dayMsg").innerHTML=`<strong>You picked the ${b.textContent} of each month.</strong>`;});
 </script>
+<!-- i18n:start -->
+<script type="application/json" id="i18n-es">
+{
+"← Home": "← Inicio",
+"Level 1 · Surface": "Nivel 1 · Superficie",
+"Level 3 · Deep Dive": "Nivel 3 · A fondo",
+"Level 2 · Overview": "Nivel 2 · Resumen",
+"More coming soon.": "Pronto habrá más.",
+"Portfolio": "Portafolio",
+"Fact": "Hecho",
+"means real and finished.": "quiere decir real y terminado.",
+"Possibility": "Posibilidad",
+"means an idea or AI-made preview, not finished work yet.": "quiere decir una idea o una vista previa hecha con IA, todavía no es trabajo terminado.",
+"Possibility · AI concept": "Posibilidad · Idea hecha con IA",
+"Go deeper → Level 3: The Full Story": "Más a fondo → Nivel 3: La historia completa",
+"← Back to Home": "← Volver al inicio",
+"El Campo, TX ·": "El Campo, TX ·",
+"You are here": "Usted está aquí",
+"Coming soon": "Muy pronto",
+"Possibility · Design concept": "Posibilidad · Idea de diseño",
+"Fact · Draft": "Hecho · Borrador",
+"Fact · Real book": "Hecho · Libro real",
+"Faith First & Family Owned": "La fe primero y negocio familiar",
+"We ALWAYS leave it better than we found it.": "SIEMPRE lo dejamos mejor de como lo encontramos.",
+"Painting · General Contracting": "Pintura · Contratista general",
+"See a Sample Quote": "Vea un presupuesto de muestra",
+"Treasure": "Tesoro",
+"Download PDF": "Descargar PDF",
+"PDF · 275 pages · Large, clear type": "PDF · 275 páginas · Letra grande y clara",
+"My Kids are ONLY little ONCE!": "¡Mis hijos son pequeños UNA SOLA VEZ!",
+"These are the GOOD OLD DAYS NOW!": "¡Estos son los BUENOS TIEMPOS, AHORA!",
+"The Pilgrim Chronicle: Full Edition": "The Pilgrim Chronicle: Edición completa",
+"The Pilgrim Chronicle, first draft": "The Pilgrim Chronicle, primer borrador",
+"Brick 001: The Archive Charter": "Ladrillo 001: La carta del archivo",
+"Blake's First Songs": "Las primeras canciones de Blake",
+"The High School Band": "La banda de la prepa",
+"Email Blake": "Escríbale un correo a Blake",
+"Call (979) 578-2069": "Llame al (979) 578-2069",
+"Text Blake": "Mándele un mensaje a Blake",
+"Music": "Música",
+"Education": "Educación",
+"Coding": "Programación",
+"Faith": "Fe",
+"Apps": "Aplicaciones",
+"Family Archive": "Archivo familiar",
+"More": "Más",
+"& Contact": "y contacto",
+"Sample Quote · Farthing, Garcia & Sons": "Presupuesto de muestra · Farthing, Garcia & Sons",
+"SAMPLE QUOTE: example only": "PRESUPUESTO DE MUESTRA: solo un ejemplo",
+"Quote #:": "Presupuesto #:",
+"For:": "Para:",
+"Your Jobs": "Sus trabajos",
+"Tap a job to add it or take it off.": "Toque un trabajo para agregarlo o quitarlo.",
+"Your Total": "Su total",
+"Total": "Total",
+"10% down to start": "10% de enganche para empezar",
+"Balance": "Saldo",
+"Pay in full and save 5%:": "Pague todo de una vez y ahorre 5%:",
+"No-interest plan (balance):": "Plan sin intereses (saldo):",
+"6 months": "6 meses",
+"9 months": "9 meses",
+"12 months": "12 meses",
+"Pay Day": "Día de pago",
+"Pick the day that works for you.": "Escoja el día que le convenga.",
+"Good to Know": "Bueno saber",
+"If we find hidden rot, we will give you a price": "Si encontramos madera podrida escondida, le daremos un precio",
+"before": "antes de",
+"any extra work.": "cualquier trabajo extra.",
+"We use lead-safe prep to keep your family safe.": "Preparamos de forma segura contra el plomo para cuidar a su familia.",
+"Rain or bad weather can move the schedule a little.": "La lluvia o el mal tiempo pueden mover un poco el calendario.",
+"Talk to Us": "Hable con nosotros",
+"📞 Call Blake (979) 578-2069": "📞 Llame a Blake (979) 578-2069",
+"💬 Text Us": "💬 Mándenos un mensaje",
+"📞 Call Jacob (979) 465-9552": "📞 Llame a Jacob (979) 465-9552",
+"📞 Call Loreto (832) 903-2971": "📞 Llame a Loreto (832) 903-2971",
+"A. Interior wood floor repair": "A. Reparación de piso de madera interior",
+"We fix the soft or broken boards in your floor so it is safe and solid again.": "Arreglamos las tablas blandas o rotas de su piso para que quede seguro y firme otra vez.",
+"B. Ceiling crack repair": "B. Reparación de grietas en el techo",
+"We patch and smooth the cracks in your ceiling so they disappear.": "Resanamos y emparejamos las grietas de su techo para que desaparezcan.",
+"C. Exterior prep": "C. Preparación exterior",
+"We wash, scrape, sand, and fix the outside so new paint will stick and last.": "Lavamos, raspamos, lijamos y arreglamos el exterior para que la pintura nueva pegue y dure.",
+"D. Exterior paint (2 coats, after prep)": "D. Pintura exterior (2 capas, después de preparar)",
+"We paint the outside of your home with two good coats.": "Pintamos el exterior de su casa con dos buenas capas.",
+"1st": "1",
+"5th": "5",
+"10th": "10",
+"15th": "15",
+"20th": "20",
+"25th": "25",
+"30th": "30",
+"_patterns": [
+[
+"^10% down: (.*)$",
+"10% de enganche: $1"
+],
+[
+"^(\\$[\\d,.]+) / mo$",
+"$1 al mes"
+],
+[
+"^You picked the (\\d+)\\D* of each month\\.$",
+"Usted escogió el día $1 de cada mes."
+],
+[
+"^Add job (\\w)$",
+"Agregar trabajo $1"
+]
+]
+}
+</script>
+<script src="../../assets/lang.js" defer></script>
+<!-- i18n:end -->
 </body>
 </html>
