@@ -6,7 +6,8 @@
   var norm=function(s){return s.replace(/\s+/g," ").trim()};
   function tr(s){var n=norm(s);if(!n)return null;if(dict[n]!=null)return dict[n];
     for(var i=0;i<pats.length;i++){if(pats[i][0].test(n))return n.replace(pats[i][0],pats[i][1]);}return null;}
-  var lang=localStorage.getItem(KEY)==="es"?"es":"en", busy=false, title0=document.title;
+  var q=(location.search.match(/[?&]lang=(en|es)/)||[])[1];if(q){try{localStorage.setItem(KEY,q)}catch(e){}}
+  var lang=(q||localStorage.getItem(KEY))==="es"?"es":"en", busy=false, title0=document.title;
   function doNode(n,es){
     if(n.nodeType===3){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName)||p.closest(".lang-toggle"))return;
       var o=orig.get(n);
