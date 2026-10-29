@@ -32,7 +32,7 @@
     var w=document.createElement("div");w.className="lang-toggle";w.setAttribute("role","group");w.setAttribute("aria-label","Language / Idioma");
     w.innerHTML='<button type="button" data-lang="en" lang="en">English</button><span aria-hidden="true">|</span><button type="button" data-lang="es" lang="es">Español</button>';
     w.addEventListener("click",function(e){var b=e.target.closest("button");if(b)set(b.dataset.lang);});
-    document.body.appendChild(w);apply();
+    document.body.insertBefore(w,document.body.firstChild);apply();
     new MutationObserver(function(ms){if(busy||lang!=="es")return;busy=true;ms.forEach(function(m){m.addedNodes.forEach(function(n){doNode(n,true)});if(m.type==="characterData")doNode(m.target,true);});busy=false;})
       .observe(document.body,{childList:true,subtree:true,characterData:true});
   }

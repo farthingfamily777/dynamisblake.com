@@ -5,8 +5,7 @@
 .lang-toggle button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media print{.lang-toggle{display:none}}
 @media (max-width:700px){
-.lang-toggle{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));right:10px;padding:3px;border-width:2px}
-.lang-toggle button{font-size:15px;min-height:44px;min-width:44px;padding:6px 12px}
+.lang-toggle{position:relative;top:auto;right:auto;width:max-content;margin:8px auto;padding:3px;border-width:2px}
+.lang-toggle button{font-size:16px;min-height:44px;min-width:44px;padding:6px 14px}
 .lang-toggle span{font-size:16px}
-body{padding-bottom:76px}
 }
