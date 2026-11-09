@@ -66,20 +66,12 @@ footer a{color:var(--cream)}
   <h2>Your Total</h2>
   <div class="total" aria-live="polite">
     <div class="row big"><span>Total</span><span id="t">$0</span></div>
-    <div class="row"><span>10% down to start</span><span id="d">$0</span></div>
-    <div class="row"><span>Balance</span><span id="b">$0</span></div>
-    <div class="save">Pay in full and save 5%: <span id="f">$0</span></div>
-    <div class="plan"><strong>No-interest plan (balance):</strong>
-      <div class="row"><span>6 months</span><span id="m6">$0</span></div>
-      <div class="row"><span>9 months</span><span id="m9">$0</span></div>
-      <div class="row"><span>12 months</span><span id="m12">$0</span></div>
+    <div class="save">Pay in full and save 10%: <span id="f">$0</span></div>
+    <div class="plan"><strong>Or pay half and half:</strong>
+      <div class="row"><span>Half to start</span><span id="h1">$0</span></div>
+      <div class="row"><span>Half on completion</span><span id="h2">$0</span></div>
     </div>
   </div>
-
-  <h2>Pay Day</h2>
-  <p>Pick the day that works for you.</p>
-  <div class="days" id="days"></div>
-  <p id="dayMsg"></p>
 
   <h2>Good to Know</h2>
   <ul class="notes">
@@ -107,14 +99,10 @@ const jobs=[
 const $=id=>document.getElementById(id);
 const money=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
 const m2=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-$("jobs").innerHTML=jobs.map((j,i)=>`<label class="card on"><input type="checkbox" checked data-i="${i}" aria-label="Add job ${j[0]}"><div><h3>${j[0]}. ${j[1]}</h3><p>${j[3]}</p><p class="price">${money(j[2])}</p><p>10% down: ${money(j[2]*.1)}</p></div></label>`).join("");
+$("jobs").innerHTML=jobs.map((j,i)=>`<label class="card on"><input type="checkbox" checked data-i="${i}" aria-label="Add job ${j[0]}"><div><h3>${j[0]}. ${j[1]}</h3><p>${j[3]}</p><p class="price">${money(j[2])}</p></div></label>`).join("");
 function upd(){let t=0;document.querySelectorAll("#jobs input").forEach(c=>{c.closest(".card").classList.toggle("on",c.checked);if(c.checked)t+=jobs[c.dataset.i][2]});
- const d=t*.1,b=t-d;$("t").textContent=money(t);$("d").textContent=money(d);$("b").textContent=money(b);$("f").textContent=money(t*.95);
- [6,9,12].forEach(m=>$("m"+m).textContent=m2(b/m)+" / mo");}
+ $("t").textContent=money(t);$("f").textContent=money(t*.9);$("h1").textContent=money(t/2);$("h2").textContent=money(t-t/2);}
 document.querySelectorAll("#jobs input").forEach(c=>c.addEventListener("change",upd));upd();
-const ord=n=>n+(n==1?"st":n==5||n>=10&&n<=20||n==25||n==30?"th":"");
-$("days").innerHTML=[1,5,10,15,20,25,30].map(n=>`<button type="button" data-n="${n}">${ord(n)}</button>`).join("");
-$("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#days button").forEach(x=>x.classList.toggle("on",x===b));$("dayMsg").innerHTML=`<strong>You picked the ${b.textContent} of each month.</strong>`;});
 </script>
 <!-- i18n:start -->
 <script type="application/json" id="i18n-es">
@@ -171,13 +159,10 @@ $("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)
 "Tap a job to add it or take it off.": "Toque un trabajo para agregarlo o quitarlo.",
 "Your Total": "Su total",
 "Total": "Total",
-"10% down to start": "10% de enganche para empezar",
-"Balance": "Saldo",
-"Pay in full and save 5%:": "Pague todo de una vez y ahorre 5%:",
-"No-interest plan (balance):": "Plan sin intereses (saldo):",
-"6 months": "6 meses",
-"9 months": "9 meses",
-"12 months": "12 meses",
+"Pay in full and save 10%:": "Paga completo y ahorra 10%:",
+"Or pay half and half:": "O la mitad al empezar y la mitad al terminar:",
+"Half to start": "La mitad al empezar",
+"Half on completion": "La mitad al terminar",
 "Pay Day": "Día de pago",
 "Pick the day that works for you.": "Escoja el día que le convenga.",
 "Good to Know": "Bueno saber",
@@ -205,18 +190,6 @@ $("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)
 "25th": "25",
 "30th": "30",
 "_patterns": [
-[
-"^10% down: (.*)$",
-"10% de enganche: $1"
-],
-[
-"^(\\$[\\d,.]+) / mo$",
-"$1 al mes"
-],
-[
-"^You picked the (\\d+)\\D* of each month\\.$",
-"Usted escogió el día $1 de cada mes."
-],
 [
 "^Add job (\\w)$",
 "Agregar trabajo $1"
