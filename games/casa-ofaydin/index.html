@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa O'Faydin Game | Dynamis Blake</title>
+<meta name="description" content="Casa O'Faydin Game is a phone-first role-playing game Blake is building. Play the early test in your browser, and see concept art and the plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../assets/lang.css">
+<style>
+.play-shot{display:block;width:min(100%,360px);height:auto;margin:0 auto 1rem;border:4px solid var(--gold);border-radius:1rem;background:var(--deep)}
+.howto{background:#fff;border:4px solid var(--gold);border-radius:1rem;padding:1rem 1.2rem}
+.howto h2{margin-top:0}
+.gallery.wide .item.tall img{max-height:28rem;object-fit:contain;background:var(--deep)}
+.section-lead{font-size:1.2rem}
+</style>
+</head>
+<body>
+<nav class="top"><a class="back" href="../../coding/">&larr; Coding</a><ol class="crumbs" aria-label="You are here"><li><a href="../../">Level 1 &middot; Surface</a></li><li><a href="../../coding/">Level 2 &middot; Coding</a></li><li aria-current="page">Level 3 &middot; Casa O'Faydin Game</li></ol></nav>
+<header class="hero small-hero">
+  <h1>Casa O'Faydin Game</h1>
+  <p class="lead">A phone-first game Blake is building. Play the early test right here.</p>
+</header>
+<main>
+<section>
+<p class="summary">This is a role-playing game for phones, made in the free Godot engine. It is set on Earth, far in the future, where magic, science, and neon cities share one sky. The test uses plain shapes today. The pictures below show where the art is heading.</p>
+<img class="play-shot" src="images/screenshot-graybox.jpg" width="720" height="1280" alt="A real screenshot of the early game: a green field, a purple hero, crystal towers, a day clock, and health and mana bars.">
+<a class="btn big" href="play/">Play the Game</a>
+<p class="soon">This is an early test, not the finished game.</p>
+</section>
+
+<section class="howto">
+<h2>How to play</h2>
+<ul>
+<li>On a phone, drag the left side of the screen to move. The word <b>Move</b> marks that side.</li>
+<li>Tap <b>View</b> to switch between first person and third person.</li>
+<li>Tap <b>Lux</b> (Latin for light) to turn nearby bugs into light. This uses mana.</li>
+<li>On a computer, use the arrow keys or WASD, and click the buttons.</li>
+<li>A glowing fairy flies around you and slowly refills your health and mana.</li>
+<li>If your health runs out, you start again in the middle of the field. There is no gore. Bugs pop into light.</li>
+</ul>
+</section>
+
+<section>
+<h2>Pictures</h2>
+<p class="key"><span class="badge fact">Fact</span> means a real screenshot from the game running now. <span class="badge poss">Concept art</span> means a picture of how the game might look later, not a screenshot.</p>
+<div class="gallery wide">
+<figure class="item tall"><img src="images/screenshot-graybox.jpg" alt="A real screenshot of the early game: a green field, a purple hero, crystal towers, a day clock, and health and mana bars." width="720" height="1280"><figcaption><span class="badge fact">Fact &middot; Real screenshot</span><b>The game running now</b>Plain shapes on a green field, with a day-and-night clock, health and mana bars, a fairy, and colony towers.</figcaption></figure>
+<figure class="item"><img src="images/art-style-test-01.jpg" alt="Concept art of a warm, detailed town with towers, trees, and a harbor." width="1280" height="720"><figcaption><span class="badge poss">Concept art</span><b>Art look A &middot; Warm and detailed</b>One possible look for the towns and harbors.</figcaption></figure>
+<figure class="item"><img src="images/art-style-test-02-retro.jpg" alt="Concept art of a blocky, 1990s video-game town." width="1280" height="720"><figcaption><span class="badge poss">Concept art</span><b>Art look B &middot; Blocky 90s</b>A chunkier, older-game look.</figcaption></figure>
+<figure class="item"><img src="images/art-style-test-03-smooth.jpg" alt="Concept art of a smooth, painted town at dusk." width="1280" height="720"><figcaption><span class="badge poss">Concept art</span><b>Art look C &middot; Smooth and painted</b>A softer, painted look.</figcaption></figure>
+<figure class="item"><img src="images/art-style-test-04-mix.jpg" alt="Concept art that mixes the three art looks in one town scene." width="1280" height="720"><figcaption><span class="badge poss">Concept art</span><b>Art look mix</b>A town that mixes the three looks. Blake will choose the final style.</figcaption></figure>
+<figure class="item"><img src="images/camera-switch-mockup.jpg" alt="Concept art showing the same hero in third person and in first person." width="1280" height="720"><figcaption><span class="badge poss">Concept art</span><b>Camera switch</b>One tap moves you between third person and first person.</figcaption></figure>
+<figure class="item"><img src="images/class-crosshairs.jpg" alt="Concept art of class crosshairs: a rune, crossed swords, fangs, and two eye marks for Rogue and Thief." width="900" height="660"><figcaption><span class="badge poss">Concept art</span><b>Class crosshairs</b>Each class gets its own aiming mark. Blake approved these marks for this game.</figcaption></figure>
+<figure class="item tall"><img src="images/character-equipment-mockup.png" alt="A concept sketch of the character screen, with many clothing and armor slots on the left and right." width="1080" height="1920"><figcaption><span class="badge poss">Concept art</span><b>Character equipment</b>Every layer you wear can show on your hero and add to your stats. An easy Dress Me button is planned too.</figcaption></figure>
+</div>
+</section>
+
+<section>
+<h2>The world</h2>
+<p class="section-lead">The game is set on Earth, far in the future. Old relics still remain.</p>
+<ul>
+<li>Imperial villages and cottages, giant mushrooms, and volcanoes that erupt.</li>
+<li>Beautiful seas with huge imperial harbors and ships being built.</li>
+<li>Many peoples live side by side: Nordics, gray aliens, dragons, people who look like Krishna or Ganesh, and also demons, aliens, entities, souls, spirits, liches, vampires, and werewolves.</li>
+<li>Werewolves live out in the wilderness.</li>
+<li>Vampires and humans both want to be in charge, and now they know about each other.</li>
+<li>Long ago, kingdoms built a great wall to keep the vampires out. The vampires stopped at the mountains, because they do not like mountains.</li>
+<li>Today, power works like big companies, the heirs of those old kingdoms.</li>
+<li>Dragons and fairies help the people and the monks.</li>
+<li>Magic and science both work. Starships, cloning labs, and neon cities stand next to old villages.</li>
+</ul>
+</section>
+
+<section>
+<h2>The hero and companions</h2>
+<ul>
+<li>You play one hero, and friends join you along the way. Each friend has a story and a loyalty quest.</li>
+<li>Your first companion is an ork trooper who joins after the bug fight.</li>
+<li>Classes include Pilgrim and Merchant. Anyone can rise all the way to King or Queen.</li>
+<li>You can pick your start (a town, a family, a job) or roll a random start.</li>
+<li>You can always see your hero, dressed from head to toe.</li>
+</ul>
+</section>
+
+<section>
+<h2>Three healing paths</h2>
+<p>Healing has three equal paths, so every player can find a style:</p>
+<ul>
+<li><b>Magic.</b> Spells that use mana.</li>
+<li><b>Science.</b> Healing tanks in med bays and on starships.</li>
+<li><b>Herbs.</b> Plants you grow and brew on your farm.</li>
+</ul>
+</section>
+
+<section>
+<h2>The camera</h2>
+<ul>
+<li>One tap on <b>View</b> switches between first person and third person, any time.</li>
+<li>Auto Camera (the default) picks the best view for what you are using: first person for bows, guns, and aimed spells; third person for shields, healing, and invisibility. Swords work in either view.</li>
+<li>You can turn Auto Camera off in settings.</li>
+</ul>
+</section>
+
+<section>
+<h2>Guilds and languages</h2>
+<ul>
+<li>There are four guilds: Mages, Fighters, Thieves, and Assassins.</li>
+<li>Each new world rolls new guild names, always with a clear label, like &ldquo;The Blood Cloak (Assassins Guild).&rdquo;</li>
+<li>In kid mode, the Assassins Guild is sneak and tag, with no killing.</li>
+<li>You learn real words as you play, from Latin, Greek, Aramaic, Sanskrit, and Arabic. The first spell is <b>Lux</b>, Latin for light.</li>
+<li>Stories come from the hero&rsquo;s journey and from old public-domain tales, so the game can make new adventures without end.</li>
+</ul>
+</section>
+
+<section>
+<h2>What is built</h2>
+<ul>
+<li>A working test in Godot you can play above: day and night, health and mana, a fairy who refills you, bugs that crawl in, the Lux spell, the View button, and colony towers.</li>
+<li>Concept art for three art looks plus a mix, the camera switch, class crosshairs, and the equipment screen.</li>
+</ul>
+</section>
+
+<section>
+<h2>What is next</h2>
+<ul>
+<li>Blake will choose the art look and the world&rsquo;s name.</li>
+<li>Next in the game: an ork companion, more of the colony, and a build for phones.</li>
+<li>Still to decide: the main peoples, where magic comes from, and whether Odin and Fae get characters or places of their own.</li>
+</ul>
+<p class="motto">Brick by brick.</p>
+</section>
+
+<a class="deeper" href="../../apps/">See the Apps &rarr;</a>
+<section><a class="btn alt" href="../../coding/">&larr; Back to Coding</a>
+<a class="btn alt" href="../../">&larr; Back to Home</a></section>
+</main>
+<footer><p>El Campo, TX &middot; <a href="../../">DynamisBlake.com</a></p></footer>
+<!-- i18n:start -->
+<script type="application/json" id="i18n-es">
+{
+"← Home": "← Inicio",
+"← Coding": "← Programación",
+"← Back to Coding": "← Volver a Programación",
+"← Back to Home": "← Volver al inicio",
+"Level 1 · Surface": "Nivel 1 · Superficie",
+"Level 2 · Coding": "Nivel 2 · Programación",
+"Level 3 · Casa O'Faydin Game": "Nivel 3 · Juego Casa O'Faydin",
+"Casa O'Faydin Game | Dynamis Blake": "Juego Casa O'Faydin | Dynamis Blake",
+"Casa O'Faydin Game": "Juego Casa O'Faydin",
+"A phone-first game Blake is building. Play the early test right here.": "Un juego hecho primero para el celular, que Blake está construyendo. Pruebe la versión temprana aquí mismo.",
+"This is a role-playing game for phones, made in the free Godot engine. It is set on Earth, far in the future, where magic, science, and neon cities share one sky. The test uses plain shapes today. The pictures below show where the art is heading.": "Este es un juego de rol para celulares, hecho con el motor gratuito Godot. Se desarrolla en la Tierra, en un futuro lejano, donde la magia, la ciencia y las ciudades de neón comparten el mismo cielo. La prueba de hoy usa formas sencillas. Las imágenes de abajo muestran hacia dónde va el arte.",
+"Play the Game": "Jugar",
+"This is an early test, not the finished game.": "Esta es una prueba temprana, no el juego terminado.",
+"How to play": "Cómo jugar",
+"On a phone, drag the left side of the screen to move. The word Move marks that side.": "En un celular, arrastre el lado izquierdo de la pantalla para moverse. La palabra Mover marca ese lado.",
+"Tap View to switch between first person and third person.": "Toque Vista para cambiar entre primera persona y tercera persona.",
+"Tap Lux (Latin for light) to turn nearby bugs into light. This uses mana.": "Toque Lux (luz en latín) para convertir en luz a los bichos cercanos. Esto usa maná.",
+"On a computer, use the arrow keys or WASD, and click the buttons.": "En una computadora, use las flechas o WASD, y haga clic en los botones.",
+"A glowing fairy flies around you and slowly refills your health and mana.": "Un hada brillante vuela a su alrededor y le recarga despacio la salud y el maná.",
+"If your health runs out, you start again in the middle of the field. There is no gore. Bugs pop into light.": "Si se le acaba la salud, empieza de nuevo en medio del campo. No hay sangre. Los bichos se convierten en luz.",
+"Pictures": "Imágenes",
+"Fact": "Hecho",
+"means a real screenshot from the game running now.": "quiere decir una captura real del juego funcionando ahora.",
+"Concept art": "Arte conceptual",
+"means a picture of how the game might look later, not a screenshot.": "quiere decir una imagen de cómo podría verse el juego más adelante, no una captura.",
+"Fact · Real screenshot": "Hecho · Captura real",
+"The game running now": "El juego funcionando ahora",
+"Plain shapes on a green field, with a day-and-night clock, health and mana bars, a fairy, and colony towers.": "Formas sencillas en un campo verde, con un reloj de día y noche, barras de salud y maná, un hada y torres de la colonia.",
+"Art look A · Warm and detailed": "Estilo A · Cálido y detallado",
+"One possible look for the towns and harbors.": "Una posible apariencia para los pueblos y los puertos.",
+"Art look B · Blocky 90s": "Estilo B · Años 90 con bloques",
+"A chunkier, older-game look.": "Una apariencia más recortada, como de un juego antiguo.",
+"Art look C · Smooth and painted": "Estilo C · Suave y pintado",
+"A softer, painted look.": "Una apariencia más suave, como pintada.",
+"Art look mix": "Mezcla de estilos",
+"A town that mixes the three looks. Blake will choose the final style.": "Un pueblo que mezcla los tres estilos. Blake elegirá el estilo final.",
+"Camera switch": "Cambio de cámara",
+"One tap moves you between third person and first person.": "Un toque le pasa de tercera persona a primera persona.",
+"Class crosshairs": "Miras de cada clase",
+"Each class gets its own aiming mark. Blake approved these marks for this game.": "Cada clase tiene su propia marca para apuntar. Blake aprobó estas marcas para este juego.",
+"Character equipment": "Equipo del personaje",
+"Every layer you wear can show on your hero and add to your stats. An easy Dress Me button is planned too.": "Cada capa que se pone puede verse en el héroe y sumar a sus datos. También se planea un botón fácil de Vísteme.",
+"The world": "El mundo",
+"The game is set on Earth, far in the future. Old relics still remain.": "El juego se desarrolla en la Tierra, en un futuro lejano. Todavía quedan reliquias antiguas.",
+"Imperial villages and cottages, giant mushrooms, and volcanoes that erupt.": "Aldeas y cabañas imperiales, hongos gigantes y volcanes que entran en erupción.",
+"Beautiful seas with huge imperial harbors and ships being built.": "Mares hermosos con grandes puertos imperiales y barcos en construcción.",
+"Many peoples live side by side: Nordics, gray aliens, dragons, people who look like Krishna or Ganesh, and also demons, aliens, entities, souls, spirits, liches, vampires, and werewolves.": "Muchos pueblos viven juntos: nórdicos, alienígenas grises, dragones, personas que se parecen a Krishna o a Ganesh, y también demonios, alienígenas, entidades, almas, espíritus, liches, vampiros y hombres lobo.",
+"Werewolves live out in the wilderness.": "Los hombres lobo viven en el campo.",
+"Vampires and humans both want to be in charge, and now they know about each other.": "Los vampiros y los humanos quieren mandar, y ahora ya se conocen.",
+"Long ago, kingdoms built a great wall to keep the vampires out. The vampires stopped at the mountains, because they do not like mountains.": "Hace mucho, los reinos construyeron una gran muralla para detener a los vampiros. Los vampiros se detuvieron en las montañas, porque no les gustan las montañas.",
+"Today, power works like big companies, the heirs of those old kingdoms.": "Hoy el poder funciona como las grandes compañías, herederas de aquellos reinos antiguos.",
+"Dragons and fairies help the people and the monks.": "Los dragones y las hadas ayudan a la gente y a los monjes.",
+"Magic and science both work. Starships, cloning labs, and neon cities stand next to old villages.": "La magia y la ciencia las dos funcionan. Naves, laboratorios de clones y ciudades de neón están junto a aldeas antiguas.",
+"The hero and companions": "El héroe y sus compañeros",
+"You play one hero, and friends join you along the way. Each friend has a story and a loyalty quest.": "Usted juega con un solo héroe, y los amigos se unen por el camino. Cada amigo tiene una historia y una misión de lealtad.",
+"Your first companion is an ork trooper who joins after the bug fight.": "Su primer compañero es un soldado orco que se une después de la pelea contra los bichos.",
+"Classes include Pilgrim and Merchant. Anyone can rise all the way to King or Queen.": "Las clases incluyen Peregrino y Mercader. Cualquiera puede llegar a ser rey o reina.",
+"You can pick your start (a town, a family, a job) or roll a random start.": "Puede elegir su comienzo (un pueblo, una familia, un trabajo) o un comienzo al azar.",
+"You can always see your hero, dressed from head to toe.": "Siempre puede ver a su héroe, vestido de pies a cabeza.",
+"Three healing paths": "Tres caminos para sanar",
+"Healing has three equal paths, so every player can find a style:": "Hay tres caminos iguales para sanar, para que cada jugador encuentre su estilo:",
+"Magic.": "Magia.",
+"Spells that use mana.": "Hechizos que usan maná.",
+"Science.": "Ciencia.",
+"Healing tanks in med bays and on starships.": "Tanques de sanación en salas médicas y en naves.",
+"Herbs.": "Hierbas.",
+"Plants you grow and brew on your farm.": "Plantas que usted cultiva y prepara en su granja.",
+"The camera": "La cámara",
+"One tap on View switches between first person and third person, any time.": "Un toque en Vista cambia entre primera persona y tercera persona, cuando quiera.",
+"Auto Camera (the default) picks the best view for what you are using: first person for bows, guns, and aimed spells; third person for shields, healing, and invisibility. Swords work in either view.": "La cámara automática (la opción normal) elige la mejor vista para lo que está usando: primera persona para arcos, armas y hechizos dirigidos; tercera persona para escudos, sanación e invisibilidad. Las espadas sirven en las dos vistas.",
+"You can turn Auto Camera off in settings.": "Puede apagar la cámara automática en los ajustes.",
+"Guilds and languages": "Gremios e idiomas",
+"There are four guilds: Mages, Fighters, Thieves, and Assassins.": "Hay cuatro gremios: Magos, Guerreros, Ladrones y Asesinos.",
+"Each new world rolls new guild names, always with a clear label, like “The Blood Cloak (Assassins Guild).”": "Cada mundo nuevo sortea nombres nuevos para los gremios, siempre con una etiqueta clara, como “El Manto de Sangre (Gremio de Asesinos).”",
+"In kid mode, the Assassins Guild is sneak and tag, with no killing.": "En el modo para niños, el Gremio de Asesinos es esconderse y tocar, sin matar.",
+"You learn real words as you play, from Latin, Greek, Aramaic, Sanskrit, and Arabic. The first spell is Lux, Latin for light.": "Usted aprende palabras de verdad mientras juega, en latín, griego, arameo, sánscrito y árabe. El primer hechizo es Lux, que en latín significa luz.",
+"Stories come from the hero’s journey and from old public-domain tales, so the game can make new adventures without end.": "Las historias salen del viaje del héroe y de cuentos antiguos de dominio público, para que el juego pueda crear aventuras nuevas sin fin.",
+"What is built": "Lo que ya está hecho",
+"A working test in Godot you can play above: day and night, health and mana, a fairy who refills you, bugs that crawl in, the Lux spell, the View button, and colony towers.": "Una prueba que funciona en Godot y que puede jugar arriba: día y noche, salud y maná, un hada que le recarga, bichos que se acercan, el hechizo Lux, el botón Vista y las torres de la colonia.",
+"Concept art for three art looks plus a mix, the camera switch, class crosshairs, and the equipment screen.": "Arte conceptual de tres estilos más una mezcla, el cambio de cámara, las miras de cada clase y la pantalla de equipo.",
+"What is next": "Lo que sigue",
+"Blake will choose the art look and the world’s name.": "Blake elegirá el estilo de arte y el nombre del mundo.",
+"Next in the game: an ork companion, more of the colony, and a build for phones.": "Lo siguiente en el juego: un compañero orco, más de la colonia y una versión para celulares.",
+"Still to decide: the main peoples, where magic comes from, and whether Odin and Fae get characters or places of their own.": "Todavía hay que decidir: los pueblos principales, de dónde viene la magia, y si Odin y Fae tendrán personajes o lugares propios.",
+"Brick by brick.": "Ladrillo a ladrillo.",
+"See the Apps →": "Vea las aplicaciones →",
+"El Campo, TX ·": "El Campo, TX ·",
+"You are here": "Usted está aquí"
+}
+</script>
+<script src="../../assets/lang.js" defer></script>
+<!-- i18n:end -->
+</body>
+</html>
