@@ -9,6 +9,7 @@ This folder is a handoff package for collaborators, including Microsoft Copilot 
 3. The same four documents are combined in `Casa-OFaydin-Cowork-Handoff.docx` for Word or OneDrive.
 4. The Godot project is in `godot/`. Open it with Godot 4.3.
 5. Earlier design specs are in `docs/`. The November 10 minutiae docs are in `design/` (start with `design/SUMMARY.md`). Art baseline stills are in `art-previews-v3/`. Latin word lists are in `godot/data/latin_names.json`.
+6. Mods are welcome. Start with `MODDING.md`.
 
 ## Live links
 
@@ -21,7 +22,7 @@ A plain list of every file is in `FILES.txt`.
 
 ## License
 
-All rights reserved. Source is visible for collaboration. See `LICENSE`. No other license has been chosen yet.
+This project is licensed under CC BY-NC-SA 4.0. You may copy, share, and make mods if you give credit to Blake Farthing, you do not sell the work, and you share adaptations under the same license. See `LICENSE` for the official legal text, or https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ## Note on freshness
 

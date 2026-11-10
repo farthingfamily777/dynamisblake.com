@@ -162,9 +162,13 @@ Blake asked to start digging into the minutiae now that the skeleton is standing
 3. **Talking to towns.** A courier desk and a one-page governor report, with ready-made letters and a few buttons (send grain, send money, ask for a report, leave it). The full hall and elections stay behind a Hall door. This starts in Phase 4, when a second town exists. Details: `design/courier-and-reports-v0.1.md`.
 4. **Government, guilds, and legions.** Offices use Latin titles with a plain English label, like "Praefectus, Governor." Guilds still roll names such as "The Blood Cloak (Assassins Guild)." Legions come in Phase 5, named like "Legio IV Maritima." A generator is specified but not coded yet. Word lists are in `godot/data/latin_names.json`. Details: `design/government-guilds-legions-v0.1.md`.
 5. **Lore bible.** The shape is a classic god court plus wilder bargains, but every name is original. Eight Kindled gods, four Dusk powers, five demigods, four banking clans, four vampire clans, and three werewolf packs, all on a far-future Earth (working label: Later Earth). Vampires and banks fight over old money and Numera, a goddess of fair counting. Vampires use a "night tithe" (a tired morning, never gore). Werewolves are a moonlit run in the woods. Blake's notebooks still win if they disagree. Details: `design/lore-bible-v0.1.md`.
-6. **Mods.** Goods, towns, factions, gods, and names should live in JSON. A `mods/` folder and a load-order file come first, starting as Phase 2 data lands. Build mode is the first in-game editor. A later Data Desk lets people add items without writing code. Details: `design/modding-tools-v0.1.md`.
+6. **Mods.** Goods, towns, factions, gods, and names should live in JSON. A `mods/` folder and a load-order file come first, starting as Phase 2 data lands. Build mode is the first in-game editor. A later Data Desk lets people add items without writing code. Details: `design/modding-tools-v0.1.md`. A plain guide for people making packs is `MODDING.md`.
 
 Rivalries and splinters are written into each of these systems. Do not found empires in the current build.
+
+## License
+
+Casa O'Faydin is licensed under CC BY-NC-SA 4.0. You may copy, share, and make mods if you give credit to Blake Farthing, you do not sell the work or use it mainly to make money, and you share adaptations under the same license. The official legal text is in `LICENSE`. The human-readable deed is at https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ## Open items (TBD)
 

@@ -12,6 +12,8 @@ Work from the real project files. Do not invent lore, names, classes, or feature
 
 https://dynamisblake.com/games/casa-ofaydin/source/
 
+The project is licensed under CC BY-NC-SA 4.0. People may see the code and make their own mods if they give credit to Blake Farthing, do not sell the work, and share adaptations under the same license. See `LICENSE` and `MODDING.md`.
+
 The live game is at:
 
 - https://dynamisblake.com/games/casa-ofaydin/play/
@@ -90,7 +92,7 @@ All of these are in `design/` (and in the appendix of the combined Word file):
 - `courier-and-reports-v0.1.md` — canned letters and a one-page governor report, not a politics sim
 - `government-guilds-legions-v0.1.md` — offices, guild names, legions, and the Latin generator spec
 - `lore-bible-v0.1.md` — original gods, demigods, vampire clans, werewolf packs, and banking clans (working names; Blake's notebooks still win)
-- `modding-tools-v0.1.md` — JSON data, a `mods/` folder and load order, Build mode as the first editor
+- `modding-tools-v0.1.md` — JSON data, a `mods/` folder and load order, Build mode as the first editor. A plain guide for modders is `MODDING.md`.
 
 Latin word lists are in `godot/data/latin_names.json` (data only; the generator script is not written yet). The lists include banned tokens and a banned roman numeral, so names stay original and never use eye words or borrowed Elder Scrolls names.
 
@@ -111,7 +113,7 @@ Twin-stick controls already shipped (see Current state). If Blake wants stick fe
 
 3. **Build the Phase 2 bank.** Deposits, a simple loan, interest that compounds once a season, and balances that never show the house-forbidden number. This is how a founding chest gets started. Founding the town itself still waits for Phase 5. The Harbor Counting House is the local bank in the lore bible. Kid mode can show a savings jar.
 
-4. **Keep new content in JSON and add a `mods/` load-order hook** as those Phase 2 files land, so later packs can drop in without rewriting the engine. `latin_names.json` is already there. Follow `design/modding-tools-v0.1.md`. Do not build an in-game Data Desk or a public workshop yet. Do not add a name-generator button to the live game in Phase 0 or 1.
+4. **Keep new content in JSON and add a `mods/` load-order hook** as those Phase 2 files land, so later packs can drop in without rewriting the engine. `latin_names.json` is already there. Follow `design/modding-tools-v0.1.md` and `MODDING.md`. Do not build an in-game Data Desk or a public workshop yet. Do not add a name-generator button to the live game in Phase 0 or 1.
 
 **Leave until later phases** (use the docs as the map, not as a to-do list for the current build): couriers, guild offices, and clan quest hooks in Phase 4; new towns, regions, caravans, temples, and legions in Phase 5.
 

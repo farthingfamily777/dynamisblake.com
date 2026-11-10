@@ -30,6 +30,7 @@ Use this checklist on every art or UI pass before asking Blake to approve it.
 - [x] Visual baseline stills saved in `art-previews-v3/`.
 - [x] Minutiae design docs in `design/` (summary, trade, founding towns, couriers, government/guilds/legions, lore bible, modding tools). Design only; no gameplay code was changed in that pass.
 - [x] Latin word lists added at `godot/data/latin_names.json` (data only; generator not written yet).
+- [x] The source is licensed under CC BY-NC-SA 4.0. A plain modding guide is in `MODDING.md`.
 - [x] Twin-stick touch controls: left stick walks and strafes, right stick looks. Live on `/play/` and `/v2/` as of November 10, 2026, 5:38 PM America/Chicago. Source: `godot/main.gd`, `godot/scripts/virtual_stick.gd`.
 
 

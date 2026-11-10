@@ -14,6 +14,9 @@ https://dynamisblake.com/games/casa-ofaydin/source/Casa-OFaydin-Cowork-Handoff.d
 LICENSE
 https://dynamisblake.com/games/casa-ofaydin/source/LICENSE
 
+MODDING.md
+https://dynamisblake.com/games/casa-ofaydin/source/MODDING.md
+
 PROJECT-BRIEF.md
 https://dynamisblake.com/games/casa-ofaydin/source/PROJECT-BRIEF.md
 
@@ -158,8 +161,8 @@ https://dynamisblake.com/games/casa-ofaydin/source/godot/scripts/tavern/tavern_t
 godot/scripts/virtual_stick.gd
 https://dynamisblake.com/games/casa-ofaydin/source/godot/scripts/virtual_stick.gd
 
-FILES.txt
-https://dynamisblake.com/games/casa-ofaydin/source/FILES.txt
-
 index.html
 https://dynamisblake.com/games/casa-ofaydin/source/index.html
+
+FILES.txt
+https://dynamisblake.com/games/casa-ofaydin/source/FILES.txt

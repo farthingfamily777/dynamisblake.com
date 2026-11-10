@@ -79,7 +79,7 @@ art-previews-v3/ Baseline stills
 - **`main.tscn`** — A single `Node3D` named Main, with `main.gd` attached.
 - **`main.gd`** — The running prototype. It builds a collision ground, a hero capsule (later restyled by art), a camera, a fairy, five bugs, and the HUD (health, mana, day clock, View, Lux, and two virtual sticks). It advances the day/night clock, moves the hero with twin-stick or WASD, looks with the right stick, empty-screen drag, or the mouse, refills health and mana, moves bugs, and casts Lux. It calls `Art.apply` and `Art.update_sky`. Arrival forms and tavern tables are mentioned only in comments.
 - **`data/starting_gear.json`** — Starter kits for the eight starting classes, using only the approved slot names.
-- **`data/latin_names.json`** — Word lists and ban rules for a future Latin name generator (persons, offices, guilds, legions). Data only; no generator script is in the project yet. The rules are in `design/government-guilds-legions-v0.1.md`. Planned later data files (`goods.json`, `buyers.json`, and others) are listed in `design/modding-tools-v0.1.md` and should land with their phase. A `mods/` folder and load-order hook are designed, not built.
+- **`data/latin_names.json`** — Word lists and ban rules for a future Latin name generator (persons, offices, guilds, legions). Data only; no generator script is in the project yet. The rules are in `design/government-guilds-legions-v0.1.md`. Planned later data files (`goods.json`, `buyers.json`, and others) are listed in `design/modding-tools-v0.1.md` and should land with their phase. A `mods/` folder and load-order hook are designed, not built. See `MODDING.md` and `design/modding-tools-v0.1.md`.
 
 
 ### `godot/art/` (all code-only GDScript)
