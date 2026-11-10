@@ -1,0 +1,29 @@
+config_version=5
+
+[application]
+config/name="Casa O'Faydin Game - Milestone 1"
+run/main_scene="res://main.tscn"
+
+[display]
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/handheld/orientation=1
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[input_devices]
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+renderer/rendering_method="mobile"
+renderer/rendering_method.web="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+; Godot 4.3 no-threads web export hides all 3D if instance count exceeds this
+; default (1000). See https://github.com/godotengine/godot/issues/96968
+limits/spatial_indexer/threaded_cull_minimum_instances=20000
+
+[debug]
+gdscript/warnings/treat_warnings_as_errors=false
+gdscript/warnings/inferred_declaration=0
+gdscript/warnings/untyped_declaration=0
+gdscript/warnings/unsafe_void_return=0

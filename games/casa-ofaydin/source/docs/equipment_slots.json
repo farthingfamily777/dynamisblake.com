@@ -1,0 +1,13 @@
+{
+  "note": "Layered paper-doll slots, inner to outer. Every item has stats. Robe can go under or over armor (player toggle).",
+  "head": ["cap/hood", "helmet", "crown"],
+  "torso": ["undershirt", "shirt", "tunic", "chain mail", "breastplate", "robe (over or under armor)", "cloak"],
+  "shoulders": ["left pauldron", "right pauldron"],
+  "arms_hands": ["left bracer", "right bracer", "left glove", "right glove", "left gauntlet", "right gauntlet"],
+  "legs": ["underpants", "tights", "pants or skirt", "chain leggings", "greaves"],
+  "feet": ["socks", "shoes or boots"],
+  "waist": ["belt", "pouch"],
+  "jewelry": ["amulet", "left ring", "right ring"],
+  "hands_held": ["main hand", "off hand or shield"],
+  "item_stats": ["armor", "warmth", "weight", "magic bonus", "charm (merchants and kings)", "stealth", "durability"]
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa O'Faydin Source and Handoff | Dynamis Blake</title>
+<meta name="description" content="Browsable source, design docs, and a Cowork handoff package for Casa O'Faydin, a phone-first game Blake is building.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../assets/lang.css">
+<style>
+.howto{background:#fff;border:4px solid var(--gold);border-radius:1rem;padding:1rem 1.2rem}
+.howto h2{margin-top:0}
+.file-list{columns:1;margin:0;padding-left:1.2rem}
+@media (min-width:720px){.file-list.wide{columns:2}}
+.preview-row{display:flex;flex-wrap:wrap;gap:0.75rem}
+.preview-row a{display:block;width:min(100%,200px)}
+.preview-row img{display:block;width:100%;height:auto;border:3px solid var(--gold);border-radius:0.75rem;background:var(--deep)}
+.section-lead{font-size:1.15rem}
+</style>
+</head>
+<body>
+<nav class="top"><a class="back" href="../">&larr; Casa O'Faydin Game</a><ol class="crumbs" aria-label="You are here"><li><a href="../../../">Level 1 &middot; Surface</a></li><li><a href="../../../coding/">Level 2 &middot; Coding</a></li><li><a href="../">Level 3 &middot; Casa O'Faydin Game</a></li><li aria-current="page">Source</li></ol></nav>
+<header class="hero small-hero">
+  <h1>Casa O'Faydin Source</h1>
+  <p class="lead">The game project, the design docs, and a handoff package you can give to a collaborator such as Microsoft Copilot Cowork.</p>
+</header>
+<main>
+<section>
+<p class="summary">Casa O'Faydin is a phone-first role-playing game Blake is building in Godot 4.3. The first town is Port Paradise, a busy harbor you can already walk around in a browser. The source here is visible for collaboration. All rights are reserved; this is not a license to copy or sell the work. See the license below.</p>
+<p><a class="btn big" href="../v2/">Play the game</a> <a class="btn alt" href="casa-ofaydin-handoff.zip">Download the zip</a></p>
+</section>
+
+<section class="howto">
+<h2>Handoff package</h2>
+<p>Start with the ready-to-paste prompt. The brief, tech guide, and task board explain the rest. The Word file is the same four documents plus an appendix of the newer design docs.</p>
+<ul>
+<li><a href="COWORK-PROMPT.md">COWORK-PROMPT.md</a> &mdash; ready-to-paste prompt for Copilot Cowork, including the art quality bar</li>
+<li><a href="PROJECT-BRIEF.md">PROJECT-BRIEF.md</a> &mdash; vision, pillars, scope lock, and what is already built</li>
+<li><a href="TECH-GUIDE.md">TECH-GUIDE.md</a> &mdash; folder map, scripts, tests, web export, and how the site deploys</li>
+<li><a href="TASK-BOARD.md">TASK-BOARD.md</a> &mdash; done, next, and the art quality checklist</li>
+<li><a href="Casa-OFaydin-Cowork-Handoff.docx">Casa-OFaydin-Cowork-Handoff.docx</a> &mdash; all of the above, plus the design appendix, for Word or OneDrive</li>
+<li><a href="casa-ofaydin-handoff.zip">casa-ofaydin-handoff.zip</a> &mdash; the Godot project source, the docs, and the baseline stills</li>
+<li><a href="README.md">README.md</a> and <a href="LICENSE">LICENSE</a></li>
+<li><a href="FILES.txt">FILES.txt</a> &mdash; a plain list of every file, with full URLs, for a crawler or an agent</li>
+</ul>
+</section>
+
+<section>
+<h2>The project, in short</h2>
+<p class="section-lead">The live web build uses Godot 4.3, the Compatibility renderer, and threads off. Art is written in GDScript, not bulky imported models. A required project setting keeps the town from vanishing on the web.</p>
+<ul>
+<li>You can walk around Port Paradise with twin-stick controls: the left stick moves and strafes, the right stick looks around.</li>
+<li>Arrival-forms character creation and tavern games (chess, checkers, and dominoes) have their logic and tests done. The on-screen UI for those is still to come.</li>
+<li>Work follows a scope lock. Finish Phase 1 before starting Phase 2. New ideas go into the phase list, not into the current build.</li>
+<li>On the evening of November 10, 2026, new design docs landed for trade, founding towns, couriers, government and Latin names, a lore bible, and built-in modding. Those are design only, with a data file of Latin word lists.</li>
+</ul>
+</section>
+
+<section>
+<h2>Newer design docs</h2>
+<p>Start with the one-page summary. These are the map for later phases, not a to-do list for the current build.</p>
+<ul>
+      <li><a href="design/SUMMARY.md">SUMMARY.md</a></li>
+      <li><a href="design/courier-and-reports-v0.1.md">courier-and-reports-v0.1.md</a></li>
+      <li><a href="design/founding-towns-v0.1.md">founding-towns-v0.1.md</a></li>
+      <li><a href="design/government-guilds-legions-v0.1.md">government-guilds-legions-v0.1.md</a></li>
+      <li><a href="design/lore-bible-v0.1.md">lore-bible-v0.1.md</a></li>
+      <li><a href="design/modding-tools-v0.1.md">modding-tools-v0.1.md</a></li>
+      <li><a href="design/trade-buyers-regions-v0.1.md">trade-buyers-regions-v0.1.md</a></li>
+</ul>
+<p>Latin word lists: <a href="godot/data/latin_names.json">godot/data/latin_names.json</a></p>
+</section>
+
+<section>
+<h2>Earlier specs</h2>
+<ul>
+      <li><a href="docs/character-creation-v0.1.md">character-creation-v0.1.md</a></li>
+      <li><a href="docs/equipment_slots.json">equipment_slots.json</a></li>
+      <li><a href="docs/game-design-plan-v0.1.md">game-design-plan-v0.1.md</a></li>
+      <li><a href="docs/tavern-games-v0.1.md">tavern-games-v0.1.md</a></li>
+</ul>
+</section>
+
+<section>
+<h2>Godot project source</h2>
+<p>Open these in Godot 4.3. This copy does not include the engine cache or web export binaries.</p>
+<ul class="file-list wide">
+      <li><a href="godot/art/bootstrap.gd">godot/art/bootstrap.gd</a></li>
+      <li><a href="godot/art/fx.gd">godot/art/fx.gd</a></li>
+      <li><a href="godot/art/harbor.gd">godot/art/harbor.gd</a></li>
+      <li><a href="godot/art/hero_model.gd">godot/art/hero_model.gd</a></li>
+      <li><a href="godot/art/hud_style.gd">godot/art/hud_style.gd</a></li>
+      <li><a href="godot/art/market.gd">godot/art/market.gd</a></li>
+      <li><a href="godot/art/props.gd">godot/art/props.gd</a></li>
+      <li><a href="godot/art/shot.gd">godot/art/shot.gd</a></li>
+      <li><a href="godot/art/sky.gd">godot/art/sky.gd</a></li>
+      <li><a href="godot/art/tex.gd">godot/art/tex.gd</a></li>
+      <li><a href="godot/art/town.gd">godot/art/town.gd</a></li>
+      <li><a href="godot/data/latin_names.json">godot/data/latin_names.json</a></li>
+      <li><a href="godot/data/starting_gear.json">godot/data/starting_gear.json</a></li>
+      <li><a href="godot/export_presets.cfg">godot/export_presets.cfg</a></li>
+      <li><a href="godot/main.gd">godot/main.gd</a></li>
+      <li><a href="godot/main.tscn">godot/main.tscn</a></li>
+      <li><a href="godot/project.godot">godot/project.godot</a></li>
+      <li><a href="godot/scripts/arrival_forms.gd">godot/scripts/arrival_forms.gd</a></li>
+      <li><a href="godot/scripts/tavern/checkers_rules.gd">godot/scripts/tavern/checkers_rules.gd</a></li>
+      <li><a href="godot/scripts/tavern/chess_rules.gd">godot/scripts/tavern/chess_rules.gd</a></li>
+      <li><a href="godot/scripts/tavern/dominoes_rules.gd">godot/scripts/tavern/dominoes_rules.gd</a></li>
+      <li><a href="godot/scripts/tavern/tavern_ai.gd">godot/scripts/tavern/tavern_ai.gd</a></li>
+      <li><a href="godot/scripts/tavern/tavern_safe.gd">godot/scripts/tavern/tavern_safe.gd</a></li>
+      <li><a href="godot/scripts/tavern/tavern_table.gd">godot/scripts/tavern/tavern_table.gd</a></li>
+      <li><a href="godot/scripts/tavern/tavern_tests.gd">godot/scripts/tavern/tavern_tests.gd</a></li>
+      <li><a href="godot/scripts/virtual_stick.gd">godot/scripts/virtual_stick.gd</a></li>
+</ul>
+</section>
+
+<section>
+<h2>Art baseline stills</h2>
+<p>Theatron's previews of the current Port Paradise look. New art should be better than these in texture detail, silhouettes, and weathering, with a muted earthy palette and no flat primary colors.</p>
+<div class="preview-row">
+  <a href="art-previews-v3/01-morning-start.png"><img src="art-previews-v3/01-morning-start.png" alt="Art preview 01-morning-start.png"></a>
+  <a href="art-previews-v3/02-harbor-wide.png"><img src="art-previews-v3/02-harbor-wide.png" alt="Art preview 02-harbor-wide.png"></a>
+  <a href="art-previews-v3/03-market.png"><img src="art-previews-v3/03-market.png" alt="Art preview 03-market.png"></a>
+  <a href="art-previews-v3/04-dusk.png"><img src="art-previews-v3/04-dusk.png" alt="Art preview 04-dusk.png"></a>
+  <a href="art-previews-v3/05-hero-close.png"><img src="art-previews-v3/05-hero-close.png" alt="Art preview 05-hero-close.png"></a>
+  <a href="art-previews-v3/08-noon-check.png"><img src="art-previews-v3/08-noon-check.png" alt="Art preview 08-noon-check.png"></a>
+</div>
+</section>
+
+<section>
+<h2>License</h2>
+<p>Copyright 2026 Blake Farthing / Dynamis Blake. All rights reserved. Source is visible here for collaboration. You may read it, study it, and use it to help Blake build the game when he has asked you to. You may not copy, sell, publish, or reuse this work as your own. No other license has been chosen yet. The full text is in <a href="LICENSE">LICENSE</a>.</p>
+</section>
+
+<p class="motto">Brick by brick.</p>
+<a class="deeper" href="../">Back to the game page &rarr;</a>
+<section><a class="btn alt" href="../">&larr; Casa O'Faydin Game</a>
+<a class="btn alt" href="../../../coding/">&larr; Back to Coding</a></section>
+</main>
+<footer><p>El Campo, TX &middot; <a href="../../../">DynamisBlake.com</a></p></footer>
+</body>
+</html>

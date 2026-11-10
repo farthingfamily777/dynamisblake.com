@@ -1,0 +1,1169 @@
+{
+  "note": "Starter gear by class for Port Paradise arrival forms. Use only these slot names, which match /workspace/casa-game/equipment_slots.json. Common under-layers are merged onto every kit at apply time. No eye-named items. The house-forbidden number is not used. Kid-safe wording. Draft v0.1, not 15-year canon item names.",
+  "slot_names": [
+    "cap/hood",
+    "helmet",
+    "crown",
+    "undershirt",
+    "shirt",
+    "tunic",
+    "chain mail",
+    "breastplate",
+    "robe (over or under armor)",
+    "cloak",
+    "left pauldron",
+    "right pauldron",
+    "left bracer",
+    "right bracer",
+    "left glove",
+    "right glove",
+    "left gauntlet",
+    "right gauntlet",
+    "underpants",
+    "tights",
+    "pants or skirt",
+    "chain leggings",
+    "greaves",
+    "socks",
+    "shoes or boots",
+    "belt",
+    "pouch",
+    "amulet",
+    "left ring",
+    "right ring",
+    "main hand",
+    "off hand or shield"
+  ],
+  "stat_names": [
+    "armor",
+    "warmth",
+    "weight",
+    "magic bonus",
+    "charm",
+    "stealth",
+    "durability"
+  ],
+  "common_base": {
+    "undershirt": {
+      "id": "plain_undershirt",
+      "name": "Plain Undershirt",
+      "stats": {
+        "armor": 0,
+        "warmth": 1,
+        "weight": 1,
+        "magic bonus": 0,
+        "charm": 0,
+        "stealth": 0,
+        "durability": 10
+      }
+    },
+    "underpants": {
+      "id": "plain_underclothes",
+      "name": "Plain Underclothes",
+      "stats": {
+        "armor": 0,
+        "warmth": 1,
+        "weight": 1,
+        "magic bonus": 0,
+        "charm": 0,
+        "stealth": 0,
+        "durability": 10
+      }
+    },
+    "socks": {
+      "id": "wool_socks",
+      "name": "Wool Socks",
+      "stats": {
+        "armor": 0,
+        "warmth": 1,
+        "weight": 1,
+        "magic bonus": 0,
+        "charm": 0,
+        "stealth": 0,
+        "durability": 10
+      }
+    }
+  },
+  "kits": {
+    "pilgrim": {
+      "id": "pilgrim",
+      "class_name": "Pilgrim",
+      "kit_name": "Traveler's Outfit",
+      "robe_over_armor": true,
+      "gear": {
+        "cap/hood": {
+          "id": "traveler_hood",
+          "name": "Traveler's Hood",
+          "stats": {
+            "armor": 1,
+            "warmth": 2,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shirt": {
+          "id": "travel_shirt",
+          "name": "Travel Shirt",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "robe (over or under armor)": {
+          "id": "simple_robe",
+          "name": "Simple Robe",
+          "stats": {
+            "armor": 0,
+            "warmth": 2,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "dust_cloak",
+          "name": "Dust Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 2,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pants or skirt": {
+          "id": "travel_pants",
+          "name": "Travel Pants",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "walking_shoes",
+          "name": "Walking Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "worn_belt",
+          "name": "Worn Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "travel_pouch",
+          "name": "Travel Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "amulet": {
+          "id": "path_charm",
+          "name": "Path Charm",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "walking_staff",
+          "name": "Walking Staff",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 3,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "merchant": {
+      "id": "merchant",
+      "class_name": "Merchant",
+      "kit_name": "Trader's Outfit",
+      "robe_over_armor": true,
+      "gear": {
+        "tunic": {
+          "id": "merchant_tunic",
+          "name": "Merchant Tunic",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "market_cloak",
+          "name": "Market Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pants or skirt": {
+          "id": "town_pants",
+          "name": "Town Pants",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "town_shoes",
+          "name": "Town Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "merchant_belt",
+          "name": "Merchant Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "coin_pouch",
+          "name": "Coin Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 2,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "left ring": {
+          "id": "fair_deal_ring",
+          "name": "Fair Deal Ring",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 0,
+            "magic bonus": 0,
+            "charm": 2,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "measuring_stick",
+          "name": "Measuring Stick",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "mage": {
+      "id": "mage",
+      "class_name": "Mage",
+      "kit_name": "Apprentice Outfit",
+      "robe_over_armor": true,
+      "gear": {
+        "cap/hood": {
+          "id": "student_hood",
+          "name": "Student's Hood",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 1,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "robe (over or under armor)": {
+          "id": "apprentice_robe",
+          "name": "Apprentice Robe",
+          "stats": {
+            "armor": 0,
+            "warmth": 2,
+            "weight": 2,
+            "magic bonus": 2,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "study_cloak",
+          "name": "Study Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 1,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "tights": {
+          "id": "mage_soft_tights",
+          "name": "Soft Tights",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "mage_soft_shoes",
+          "name": "Soft Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "cloth_belt",
+          "name": "Cloth Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "herb_pouch",
+          "name": "Herb Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 1,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "amulet": {
+          "id": "light_charm",
+          "name": "Light Charm",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 2,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "practice_staff",
+          "name": "Practice Staff",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 3,
+            "magic bonus": 1,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "fighter": {
+      "id": "fighter",
+      "class_name": "Fighter",
+      "kit_name": "Training Outfit",
+      "robe_over_armor": false,
+      "gear": {
+        "helmet": {
+          "id": "iron_cap",
+          "name": "Iron Cap",
+          "stats": {
+            "armor": 2,
+            "warmth": 1,
+            "weight": 3,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shirt": {
+          "id": "training_shirt",
+          "name": "Training Shirt",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "chain mail": {
+          "id": "practice_mail",
+          "name": "Practice Mail",
+          "stats": {
+            "armor": 4,
+            "warmth": 1,
+            "weight": 8,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "left bracer": {
+          "id": "training_bracer_l",
+          "name": "Training Bracer",
+          "stats": {
+            "armor": 1,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "right bracer": {
+          "id": "training_bracer_r",
+          "name": "Training Bracer",
+          "stats": {
+            "armor": 1,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pants or skirt": {
+          "id": "training_pants",
+          "name": "Training Pants",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "sturdy_boots",
+          "name": "Sturdy Boots",
+          "stats": {
+            "armor": 1,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "wide_belt",
+          "name": "Wide Belt",
+          "stats": {
+            "armor": 1,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "practice_sword",
+          "name": "Practice Sword",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 4,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 12
+          }
+        },
+        "off hand or shield": {
+          "id": "wooden_shield",
+          "name": "Wooden Shield",
+          "stats": {
+            "armor": 3,
+            "warmth": 0,
+            "weight": 4,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "thief": {
+      "id": "thief",
+      "class_name": "Thief",
+      "kit_name": "Soft-Shoe Outfit",
+      "robe_over_armor": true,
+      "gear": {
+        "cap/hood": {
+          "id": "soft_hood",
+          "name": "Soft Hood",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "tunic": {
+          "id": "dark_tunic",
+          "name": "Dark Tunic",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "quiet_cloak",
+          "name": "Quiet Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 2,
+            "durability": 10
+          }
+        },
+        "left glove": {
+          "id": "soft_glove_l",
+          "name": "Soft Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "right glove": {
+          "id": "soft_glove_r",
+          "name": "Soft Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "tights": {
+          "id": "thief_soft_tights",
+          "name": "Soft Tights",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "thief_soft_shoes",
+          "name": "Soft Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 2,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "thin_belt",
+          "name": "Thin Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "hide_pouch",
+          "name": "Hide Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "short_blade",
+          "name": "Short Blade",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "assassin": {
+      "id": "assassin",
+      "class_name": "Assassin",
+      "kit_name": "Quiet Outfit",
+      "robe_over_armor": true,
+      "note": "Kid mode: sneak and tag, no killing. The Tag Stick is the starter tool.",
+      "gear": {
+        "cap/hood": {
+          "id": "shadow_hood",
+          "name": "Shadow Hood",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 2,
+            "durability": 10
+          }
+        },
+        "shirt": {
+          "id": "dark_shirt",
+          "name": "Dark Shirt",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "night_cloak",
+          "name": "Night Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 2,
+            "durability": 10
+          }
+        },
+        "left glove": {
+          "id": "quiet_glove_l",
+          "name": "Quiet Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "right glove": {
+          "id": "quiet_glove_r",
+          "name": "Quiet Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "tights": {
+          "id": "assassin_soft_tights",
+          "name": "Soft Tights",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "assassin_soft_shoes",
+          "name": "Soft Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 2,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "assassin_thin_belt",
+          "name": "Thin Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "assassin_hide_pouch",
+          "name": "Hide Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "tag_stick",
+          "name": "Tag Stick",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "rogue": {
+      "id": "rogue",
+      "class_name": "Rogue",
+      "kit_name": "Rover's Outfit",
+      "robe_over_armor": true,
+      "gear": {
+        "cap/hood": {
+          "id": "rover_hood",
+          "name": "Rover's Hood",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "tunic": {
+          "id": "rover_tunic",
+          "name": "Rover's Tunic",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "rover_cloak",
+          "name": "Rover's Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "left glove": {
+          "id": "worn_glove_l",
+          "name": "Worn Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "right glove": {
+          "id": "worn_glove_r",
+          "name": "Worn Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "pants or skirt": {
+          "id": "rover_pants",
+          "name": "Travel Pants",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "soft_boots",
+          "name": "Soft Boots",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "rover_worn_belt",
+          "name": "Worn Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "rover_hide_pouch",
+          "name": "Hide Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "rover_short_blade",
+          "name": "Short Blade",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 12
+          }
+        }
+      }
+    },
+    "vampire": {
+      "id": "vampire",
+      "class_name": "Vampire",
+      "kit_name": "Evening Outfit",
+      "robe_over_armor": true,
+      "note": "All-ages starter kit. A cane, not a weapon. The high-collar coat uses the robe slot, because there is no separate coat slot.",
+      "gear": {
+        "shirt": {
+          "id": "vampire_dark_shirt",
+          "name": "Dark Shirt",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "robe (over or under armor)": {
+          "id": "high_collar_coat",
+          "name": "High-Collar Coat",
+          "stats": {
+            "armor": 1,
+            "warmth": 2,
+            "weight": 3,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "cloak": {
+          "id": "vampire_night_cloak",
+          "name": "Night Cloak",
+          "stats": {
+            "armor": 0,
+            "warmth": 2,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 1,
+            "durability": 10
+          }
+        },
+        "left glove": {
+          "id": "vampire_glove_l",
+          "name": "Fine Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "right glove": {
+          "id": "vampire_glove_r",
+          "name": "Fine Glove",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pants or skirt": {
+          "id": "vampire_town_pants",
+          "name": "Town Pants",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 0,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "shoes or boots": {
+          "id": "polished_shoes",
+          "name": "Polished Shoes",
+          "stats": {
+            "armor": 0,
+            "warmth": 1,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "belt": {
+          "id": "vampire_fine_belt",
+          "name": "Fine Belt",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "pouch": {
+          "id": "vampire_coin_pouch",
+          "name": "Coin Pouch",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 1,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "left ring": {
+          "id": "family_crest_ring",
+          "name": "Family Crest Ring",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 0,
+            "magic bonus": 0,
+            "charm": 2,
+            "stealth": 0,
+            "durability": 10
+          }
+        },
+        "main hand": {
+          "id": "walking_cane",
+          "name": "Walking Cane",
+          "stats": {
+            "armor": 0,
+            "warmth": 0,
+            "weight": 2,
+            "magic bonus": 0,
+            "charm": 1,
+            "stealth": 0,
+            "durability": 12
+          }
+        }
+      }
+    }
+  }
+}
