@@ -164,5 +164,11 @@ https://dynamisblake.com/games/casa-ofaydin/source/godot/scripts/virtual_stick.g
 index.html
 https://dynamisblake.com/games/casa-ofaydin/source/index.html
 
+WEBSITE-GUIDE.md
+https://dynamisblake.com/games/casa-ofaydin/source/WEBSITE-GUIDE.md
+
+website-guide/index.html
+https://dynamisblake.com/games/casa-ofaydin/source/website-guide/index.html
+
 FILES.txt
 https://dynamisblake.com/games/casa-ofaydin/source/FILES.txt

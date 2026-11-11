@@ -10,6 +10,7 @@ This folder is a handoff package for collaborators, including Microsoft Copilot 
 4. The Godot project is in `godot/`. Open it with Godot 4.3.
 5. Earlier design specs are in `docs/`. The November 10 minutiae docs are in `design/` (start with `design/SUMMARY.md`). Art baseline stills are in `art-previews-v3/`. Latin word lists are in `godot/data/latin_names.json`.
 6. Mods are welcome. Start with `MODDING.md`.
+7. To run the websites, read `WEBSITE-GUIDE.md` or the HTML guide in `website-guide/`.
 
 ## Live links
 
@@ -17,6 +18,7 @@ This folder is a handoff package for collaborators, including Microsoft Copilot 
 - Play: https://dynamisblake.com/games/casa-ofaydin/play/
 - Version 2: https://dynamisblake.com/games/casa-ofaydin/v2/
 - This source: https://dynamisblake.com/games/casa-ofaydin/source/
+- Website operations guide: https://dynamisblake.com/games/casa-ofaydin/source/website-guide/
 
 A plain list of every file is in `FILES.txt`.
 

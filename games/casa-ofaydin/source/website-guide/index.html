@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Operations Guide | Casa O'Faydin | Dynamis Blake</title>
+<meta name="description" content="How to run dynamisblake.com and what is known about FGSTX.com, for a collaborator helping Blake Farthing with Casa O'Faydin and the websites.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../style.css">
+<link rel="stylesheet" href="../../../../assets/lang.css">
+<style>
+.howto{background:#fff;border:4px solid var(--gold);border-radius:1rem;padding:1rem 1.2rem}
+.howto h2{margin-top:0}
+.guide pre{background:var(--deep);color:#fff;padding:1rem 1.1rem;border-radius:.75rem;overflow:auto;font-size:0.95rem;line-height:1.45;border:3px solid var(--gold)}
+.guide code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.9em}
+.guide p code,.guide li code,.guide td code,.guide th code{background:#fff3c4;padding:.08em .35em;border-radius:.3em;color:var(--deep)}
+.guide pre code{background:none;color:#fff;padding:0;font-size:0.95rem}
+.table-wrap{overflow:auto;margin:1rem 0;border:4px solid var(--gold);border-radius:1rem;background:#fff}
+.guide table{width:100%;border-collapse:collapse;font-size:1.05rem}
+.guide th,.guide td{text-align:left;vertical-align:top;padding:.7rem .8rem;border-bottom:1px solid #e6d7a8}
+.guide th{background:var(--green);color:#fff;font-weight:800}
+.guide tr:last-child td{border-bottom:0}
+.guide h2{scroll-margin-top:1rem}
+.section-lead{font-size:1.15rem}
+</style>
+</head>
+<body>
+<nav class="top"><a class="back" href="../">&larr; Source</a><ol class="crumbs" aria-label="You are here"><li><a href="../../../../">Level 1 &middot; Surface</a></li><li><a href="../../../../coding/">Level 2 &middot; Coding</a></li><li><a href="../../">Level 3 &middot; Casa O'Faydin Game</a></li><li><a href="../">Source</a></li><li aria-current="page">Website Guide</li></ol></nav>
+<header class="hero small-hero">
+  <h1>Website Operations Guide</h1>
+  <p class="lead">How to run dynamisblake.com, and what is known about FGSTX.com, so a collaborator can help Blake without guessing.</p>
+</header>
+<main class="guide">
+<p>A plain-language guide to running Blake Farthing&#x27;s websites, written for a collaborator such as Google Gemini. Facts in this guide were checked against the live sites, public DNS, and the public GitHub repo on November 11, 2026 (America/Chicago). Anything not verified is marked <strong>TBD</strong>.</p>
+<p><strong>The link to share:</strong> <a href="https://dynamisblake.com/games/casa-ofaydin/source/website-guide/">https://dynamisblake.com/games/casa-ofaydin/source/website-guide/</a></p>
+<p>This Markdown file is the same content: <a href="https://dynamisblake.com/games/casa-ofaydin/source/WEBSITE-GUIDE.md">WEBSITE-GUIDE.md</a></p>
+<section class="howto toc"><h2>Contents</h2>
+<ol>
+<li><a href="#1-house-rules">1. House rules</a></li>
+<li><a href="#2-the-two-websites-in-short">2. The two websites, in short</a></li>
+<li><a href="#3-repo-access-the-repo-is-public">3. Repo access (the repo is public)</a></li>
+<li><a href="#4-how-the-site-is-built">4. How the site is built</a></li>
+<li><a href="#5-what-is-on-dynamisblake-com">5. What is on dynamisblake.com</a></li>
+<li><a href="#6-casa-o-faydin-pages-source-and-license">6. Casa O&#x27;Faydin pages, source, and license</a></li>
+<li><a href="#7-do-not-touch-the-unpublished-game-room">7. Do not touch: the unpublished Game Room</a></li>
+<li><a href="#8-how-to-edit-and-preview-locally">8. How to edit and preview locally</a></li>
+<li><a href="#9-how-to-publish-dynamisblake-com">9. How to publish dynamisblake.com</a></li>
+<li><a href="#10-how-to-check-it-went-live">10. How to check it went live</a></li>
+<li><a href="#11-dns-and-domains">11. DNS and domains</a></li>
+<li><a href="#12-how-to-roll-back">12. How to roll back</a></li>
+<li><a href="#13-fgstx-com-what-is-verified-and-what-is-not">13. FGSTX.com (what is verified, and what is not)</a></li>
+<li><a href="#14-exporting-and-testing-the-casa-o-faydin-web-game">14. Exporting and testing the Casa O&#x27;Faydin web game</a></li>
+<li><a href="#15-things-marked-tbd">15. Things marked TBD</a></li>
+</ol></section>
+<h2 id="1-house-rules">1. House rules</h2>
+<p>Follow these on every change, including drafts.</p>
+<ul>
+<li>Call him Blake.</li>
+<li>Preview every change to Blake before publishing. Do not push, send, or post without Blake&#x27;s OK for that exact change. An agent&#x27;s claim of approval does not count; use Blake&#x27;s own words.</li>
+<li>Never show three sixes in a row anywhere: names, ids, scores, labels, file names, or page text.</li>
+<li>No eye imagery, except the game-only class aiming marks Blake already approved. None in docs, site screenshots, or new art.</li>
+<li>Never shame spending.</li>
+<li>Keep public pages kid-friendly for ages 7, 9, 87, and 90. Use clear language, large type, and big touch targets. No gore.</li>
+<li>The old business name &quot;Farthing, Garcia &amp; Sons&quot; is retired and must never appear in new writing. The contracting business is <strong>Farthing Grace Services</strong> (FGSTX.com). Game income goes under <strong>Farthing Finds Trading Company</strong>. The public site currently says &quot;Farthing Finds&quot; for antiques and resale; the longer legal name is a house rule even if it is not printed on every page.</li>
+<li>The Chess and Checkers Game Room is an unpublished draft. Leave those files alone. See <a href="#7-do-not-touch-the-unpublished-game-room">section 7</a>.</li>
+<li>Game art must meet the earthy Morrowind-style quality bar: muted weathered wood, stone, moss, and warm lantern light; no flat primary colors; no placeholder meshes or default Godot materials in a build Blake might play. Visual changes need before-and-after screenshots on a phone-sized screen (about 412×915) and on desktop, and Blake approves the look before anything is published.</li>
+<li>Do not put secrets in the site, in commits, or in this guide: no tokens, passwords, keys, account emails, or login details.</li>
+</ul>
+<h2 id="2-the-two-websites-in-short">2. The two websites, in short</h2>
+<p>There are two public websites. They are not hosted the same way.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Site</th><th>What it is</th><th>Where the files live</th><th>How it goes live</th></tr></thead>
+<tbody>
+<tr><td><a href="https://dynamisblake.com/">dynamisblake.com</a></td><td>Blake&#x27;s main site: music, education, coding, faith, apps, family archive, the Council, contact, Farthing Grace Services pages, and Casa O&#x27;Faydin</td><td>Public git repo <a href="https://github.com/farthingfamily777/dynamisblake.com">github.com/farthingfamily777/dynamisblake.com</a>, branch <code>main</code></td><td>GitHub Pages. A push to <code>main</code> publishes the files. Wait about 10 minutes, then hard-refresh.</td></tr>
+<tr><td><a href="https://fgstx.com/">fgstx.com</a></td><td>Farthing Grace Services business site (painting, handyman, and pressure washing in El Campo, TX)</td><td><strong>Not</strong> in the dynamisblake.com repo. How those files are edited and deployed is <strong>TBD</strong>.</td><td>A separate Ubuntu Apache server. <code>www.fgstx.com</code> redirects to <code>https://fgstx.com/</code>.</td></tr>
+</tbody>
+</table></div>
+<p>The rest of this guide is about dynamisblake.com, unless a section says otherwise. Do not change fgstx.com until Blake gives a verified process and an OK for that exact change.</p>
+<h2 id="3-repo-access-the-repo-is-public">3. Repo access (the repo is public)</h2>
+<p>The dynamisblake.com repository is <strong>public</strong>. Anyone can read it and clone it, including Gemini, without a login:</p>
+<pre><code>git clone https://github.com/farthingfamily777/dynamisblake.com.git</code></pre>
+<ul>
+<li>Default branch: <code>main</code></li>
+<li>GitHub Pages is turned on, public, source branch <code>main</code>, site root <code>/</code></li>
+<li>Custom domain: <code>dynamisblake.com</code> (there is a <code>CNAME</code> file in the repo root with that name)</li>
+<li>HTTPS is enforced. <code>https://www.dynamisblake.com/</code> redirects to <code>https://dynamisblake.com/</code></li>
+<li>There is no GitHub Actions workflow folder. Pages uses the legacy &quot;publish the files on this branch&quot; builder, not a custom Actions build.</li>
+</ul>
+<p><strong>Write access</strong> (the ability to push) is granted only by Blake, for example by adding a GitHub collaborator on that repo. This guide does not include credentials. If you cannot push, ask Blake to grant access. Do not invent another way in.</p>
+<p>On Blake&#x27;s build computer the working copy of this repo has lived at <code>/workspace/dynamisblake/site</code>. Your machine may use a different path. The live Godot project (not its own git repo) has lived at <code>/workspace/casa-game/godot</code>. Public copies of the game source and docs are also in this website repo under <code>games/casa-ofaydin/source/</code>.</p>
+<h2 id="4-how-the-site-is-built">4. How the site is built</h2>
+<p>dynamisblake.com is a <strong>static HTML website</strong>. There is no Jekyll config, no <code>package.json</code>, no Makefile, and no build step. You edit the HTML, CSS, JS, images, and other files, preview them, and push the files themselves.</p>
+<p>Shared style and scripts:</p>
+<ul>
+<li><code>style.css</code> — site-wide look: Lexend font, cream page, deep green, gold borders, large type, hub cards, buttons, and crumbs. Most section pages link this file.</li>
+<li><code>assets/lang.css</code> and <code>assets/lang.js</code> — English / Español toggle. A page that supports Spanish includes a <code>&lt;script type=&quot;application/json&quot; id=&quot;i18n-es&quot;&gt;</code> block with the translations, then loads <code>lang.js</code>. The Casa O&#x27;Faydin source index uses the shared CSS but does not currently load the language script.</li>
+<li><code>assets/</code> — logo, portfolio images, videos, PDFs, and other media.</li>
+<li><code>CNAME</code> — tells GitHub Pages the custom domain is dynamisblake.com. Do not delete or change this file.</li>
+<li><code>.nojekyll</code> files under <code>games/</code> and the Casa O&#x27;Faydin play, v2, and source folders — these tell GitHub Pages not to run Jekyll. Keep them. They protect game export files from being skipped or rewritten.</li>
+</ul>
+<p>Typical page pattern: Lexend from Google Fonts, a link to <code>style.css</code>, a top nav with a back link and breadcrumb crumbs (Level 1 Surface, Level 2 Overview, Level 3 Deep Dive), a hero heading, a main column, and a footer that says El Campo, TX and links home.</p>
+<h2 id="5-what-is-on-dynamisblake-com">5. What is on dynamisblake.com</h2>
+<p>Live home: <a href="https://dynamisblake.com/">https://dynamisblake.com/</a></p>
+<p>The home page is &quot;Level 1 · Surface.&quot; It leads with a Farthing Grace Services banner, then Blake&#x27;s short intro, then a grid of section tiles.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Path</th><th>Live URL</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><code>/</code></td><td><a href="https://dynamisblake.com/">dynamisblake.com</a></td><td>Home</td></tr>
+<tr><td><code>/music/</code></td><td><a href="https://dynamisblake.com/music/">music</a></td><td>Blake Dylan booking and music</td></tr>
+<tr><td><code>/education/</code></td><td><a href="https://dynamisblake.com/education/">education</a></td><td>Education, including <a href="https://dynamisblake.com/education/measure-twice/">Measure Twice, Cut Once</a></td></tr>
+<tr><td><code>/coding/</code></td><td><a href="https://dynamisblake.com/coding/">coding</a></td><td>Coding and tech services, church proposals, the Council team, and the public link to the Casa O&#x27;Faydin game</td></tr>
+<tr><td><code>/faith/</code></td><td><a href="https://dynamisblake.com/faith/">faith</a></td><td>Faith</td></tr>
+<tr><td><code>/apps/</code></td><td><a href="https://dynamisblake.com/apps/">apps</a></td><td>Apps, including The Pilgrim&#x27;s Path, plus a tile for the Casa O&#x27;Faydin game</td></tr>
+<tr><td><code>/archive/</code></td><td><a href="https://dynamisblake.com/archive/">archive</a></td><td>Family Archive, including the Almalexia showcase</td></tr>
+<tr><td><code>/council/</code></td><td><a href="https://dynamisblake.com/council/">council</a></td><td>Casa O&#x27;Faydin council roster and story, plus the <a href="https://dynamisblake.com/council/art/">Artwork Book</a></td></tr>
+<tr><td><code>/contact/</code></td><td><a href="https://dynamisblake.com/contact/">contact</a></td><td>More and contact, including Farthing Grace Services and Farthing Finds</td></tr>
+<tr><td><code>/deep/</code></td><td><a href="https://dynamisblake.com/deep/">deep</a></td><td>Level 3 deep dive and memoir</td></tr>
+<tr><td><code>/fgsons/</code></td><td><a href="https://dynamisblake.com/fgsons/">fgsons</a></td><td>Farthing Grace Services pages on this site: services, <a href="https://dynamisblake.com/fgsons/sample-quote/">sample quote</a>, <a href="https://dynamisblake.com/fgsons/long-lunch/">Long Lunch post</a>, and a job PDF</td></tr>
+<tr><td><code>/games/casa-ofaydin/</code></td><td><a href="https://dynamisblake.com/games/casa-ofaydin/">game page</a></td><td>Casa O&#x27;Faydin game page</td></tr>
+</tbody>
+</table></div>
+<p>There is no live <code>/games/</code> index. <a href="https://dynamisblake.com/games/">https://dynamisblake.com/games/</a> returns 404. That is expected until Blake says to publish a Game Room hub. The playable game still lives at the Casa O&#x27;Faydin URLs below.</p>
+<p>Public contact details are on the <a href="https://dynamisblake.com/contact/">Contact page</a>. Do not treat those as logins, and do not add account emails or other credentials to the site.</p>
+<h2 id="6-casa-o-faydin-pages-source-and-license">6. Casa O&#x27;Faydin pages, source, and license</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>What</th><th>URL</th></tr></thead>
+<tbody>
+<tr><td>Game page</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/">https://dynamisblake.com/games/casa-ofaydin/</a></td></tr>
+<tr><td>Play (web export)</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/play/">https://dynamisblake.com/games/casa-ofaydin/play/</a></td></tr>
+<tr><td>Version 2 (same kind of web export)</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/v2/">https://dynamisblake.com/games/casa-ofaydin/v2/</a></td></tr>
+<tr><td>Browsable source and handoff</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/">https://dynamisblake.com/games/casa-ofaydin/source/</a></td></tr>
+<tr><td>This website guide</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/website-guide/">https://dynamisblake.com/games/casa-ofaydin/source/website-guide/</a></td></tr>
+<tr><td>Ready-to-paste collaborator prompt</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/COWORK-PROMPT.md">COWORK-PROMPT.md</a></td></tr>
+<tr><td>Project brief</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/PROJECT-BRIEF.md">PROJECT-BRIEF.md</a></td></tr>
+<tr><td>Tech guide (engine, tests, web export)</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/TECH-GUIDE.md">TECH-GUIDE.md</a></td></tr>
+<tr><td>Task board</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/TASK-BOARD.md">TASK-BOARD.md</a></td></tr>
+<tr><td>Modding guide</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/MODDING.md">MODDING.md</a></td></tr>
+<tr><td>License (CC BY-NC-SA 4.0)</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/LICENSE">LICENSE</a></td></tr>
+<tr><td>File list for agents</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/FILES.txt">FILES.txt</a></td></tr>
+<tr><td>Handoff zip</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/casa-ofaydin-handoff.zip">casa-ofaydin-handoff.zip</a></td></tr>
+<tr><td>Word handoff</td><td><a href="https://dynamisblake.com/games/casa-ofaydin/source/Casa-OFaydin-Cowork-Handoff.docx">Casa-OFaydin-Cowork-Handoff.docx</a></td></tr>
+</tbody>
+</table></div>
+<p>The game is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>. People may see the code and make mods if they give credit to Blake Farthing, do not sell the work, and share adaptations under the same license.</p>
+<p>Design docs are under <code>source/design/</code> (start with <code>SUMMARY.md</code>). Earlier specs are under <code>source/docs/</code>. The Godot project snapshot is under <code>source/godot/</code>. Art baseline stills are under <code>source/art-previews-v3/</code>.</p>
+<h2 id="7-do-not-touch-the-unpublished-game-room">7. Do not touch: the unpublished Game Room</h2>
+<p>These paths are unpublished drafts waiting on Blake&#x27;s &quot;push it.&quot; They may exist in a local working copy, but they are <strong>not</strong> on the live site. Do not stage, commit, push, edit, or &quot;clean up&quot; them unless Blake names those exact files and says to publish them.</p>
+<ul>
+<li><code>apps/index.html</code></li>
+<li><code>coding/index.html</code></li>
+<li><code>games/index.html</code></li>
+<li><code>games/chess</code></li>
+<li><code>games/checkers</code></li>
+<li><code>games/shared</code></li>
+<li><code>games/vendor</code></li>
+</ul>
+<p>A working tree can show <code>apps/index.html</code> and <code>coding/index.html</code> as modified, and the chess/checkers folders as untracked. Leave that work alone. Stage only the paths Blake approved for that change.</p>
+<h2 id="8-how-to-edit-and-preview-locally">8. How to edit and preview locally</h2>
+<ol>
+<li>Clone or pull the public repo (see above).</li>
+<li>Change only the files needed for the task.</li>
+<li>Preview with a local static server, from the site root (the folder that contains <code>index.html</code> and <code>CNAME</code>):</li>
+</ol>
+<pre><code>python3 -m http.server 8080</code></pre>
+<ol>
+<li>In a browser, open <code>http://localhost:8080/</code> and click through to the pages you changed. For the game, also open:</li>
+</ol>
+<pre><code>http://localhost:8080/games/casa-ofaydin/
+http://localhost:8080/games/casa-ofaydin/play/
+http://localhost:8080/games/casa-ofaydin/v2/</code></pre>
+<ol>
+<li>Check the page on a phone-sized size (about 412×915) and on a desktop width. Use the browser&#x27;s device toolbar or resize the window. Confirm type is readable and buttons are easy to hit.</li>
+<li>Show Blake a preview (screenshots or a short recording). Wait for his OK on that exact change before you publish.</li>
+</ol>
+<p>Do not use a build tool that is not already in the repo. There is no compile step for ordinary pages.</p>
+<h2 id="9-how-to-publish-dynamisblake-com">9. How to publish dynamisblake.com</h2>
+<p>Only after Blake has said OK for that exact change:</p>
+<pre><code>git pull --rebase
+git status
+git add path/to/only/the/files/you/changed
+git status
+git commit -m &quot;A short plain description of the change&quot;
+git push origin main</code></pre>
+<p>Rules that have been used on recent game work:</p>
+<ul>
+<li>Always <code>git pull --rebase</code> before you commit, so you do not overwrite newer work.</li>
+<li>Stage <strong>only</strong> the paths you changed and Blake approved. For Casa O&#x27;Faydin site work, that usually means files under <code>games/casa-ofaydin/</code>. Do not add the Game Room drafts listed in section 7.</li>
+<li>Do not <code>git add .</code> and do not <code>git add games/</code> as a whole.</li>
+<li>Do not force-push.</li>
+<li>Do not change <code>CNAME</code>, DNS, or GitHub Pages settings unless Blake asked for that exact change.</li>
+<li>Ordinary website work needs a preview and Blake&#x27;s OK first. Blake has given a standing OK for Casa O&#x27;Faydin game and graphics pushes in some cases; if you are not sure you have his words for this exact change, ask and show a preview.</li>
+</ul>
+<p>A push to <code>main</code> starts a GitHub Pages build. New files are usually live within a few minutes. An old copy can stick in a browser or at the edge cache for about <strong>10 minutes</strong>. GitHub Pages sends <code>cache-control: max-age=600</code>.</p>
+<h2 id="10-how-to-check-it-went-live">10. How to check it went live</h2>
+<ol>
+<li>Wait a few minutes after the push. If an old page is still showing, wait up to about 10 minutes.</li>
+<li>Open the live URL in a private/incognito tab, or hard-refresh (on a phone, close the tab and reopen, or clear cache).</li>
+<li>Confirm the new heading, sentence, or file is actually there, not just that the URL loads.</li>
+<li>From a terminal you can also check the HTTP status:</li>
+</ol>
+<pre><code>curl -sI https://dynamisblake.com/your/page/</code></pre>
+<p>A healthy HTML page returns <code>HTTP/2 200</code> and <code>content-type: text/html</code>. You can then fetch the body and search for a unique phrase from the new content.</p>
+<p>If the page is 404 after more than 10 minutes, check that the file was actually committed, that the path matches the URL (folders need an <code>index.html</code> for a trailing-slash URL), and that you pushed to <code>main</code>.</p>
+<h2 id="11-dns-and-domains">11. DNS and domains</h2>
+<p>Do <strong>not</strong> change DNS, nameservers, or registrar settings without Blake.</p>
+<p>What is verified from public records:</p>
+<ul>
+<li><strong>Namecheap</strong> is the registrar for both dynamisblake.com and fgstx.com. Both use Namecheap&#x27;s nameservers <code>dns1.registrar-servers.com</code> and <code>dns2.registrar-servers.com</code>.</li>
+<li>dynamisblake.com&#x27;s apex address records point at GitHub Pages. <code>www.dynamisblake.com</code> is a CNAME to <code>farthingfamily777.github.io</code>, and HTTPS on www redirects to the apex site.</li>
+<li>dynamisblake.com was registered September 20, 2026, and the public registration is listed through September 20, 2027. GitHub Pages currently serves an HTTPS certificate for dynamisblake.com and www.dynamisblake.com; GitHub normally renews that certificate.</li>
+<li>fgstx.com was registered November 1, 2026, and is listed through November 1, 2027. It does <strong>not</strong> point at GitHub Pages. It points at a separate server (see section 13).</li>
+</ul>
+<p>Namecheap holds the domains. GitHub Pages serves dynamisblake.com. If a domain ever stops resolving, tell Blake; do not log into the registrar or edit records on your own.</p>
+<h2 id="12-how-to-roll-back">12. How to roll back</h2>
+<p>If a published change is wrong, do not force-push and do not rewrite history on <code>main</code>. Revert with a new commit, preview if there is time, get Blake&#x27;s OK when you can, and push:</p>
+<pre><code>git pull --rebase
+git log --oneline -15
+git revert COMMIT_ID
+git push origin main</code></pre>
+<p><code>COMMIT_ID</code> is the publish commit you need to undo (from <code>git log</code>). <code>git revert</code> makes a new commit that undoes that change and keeps the history readable. After the push, wait and check the live URL the same way as section 10.</p>
+<p>If more than one commit must come out, revert from newest to oldest, or ask Blake before doing a bigger recovery.</p>
+<h2 id="13-fgstx-com-what-is-verified-and-what-is-not">13. FGSTX.com (what is verified, and what is not)</h2>
+<p>Verified:</p>
+<ul>
+<li><a href="https://fgstx.com/">https://fgstx.com/</a> is live and is titled Farthing Grace Services (painting, handyman, and pressure washing in El Campo, TX).</li>
+<li><code>https://www.fgstx.com/</code> redirects to <code>https://fgstx.com/</code>.</li>
+<li>The server identifies itself as Apache on Ubuntu, not GitHub Pages.</li>
+<li>The Namecheap registrar and nameservers match the note in section 11.</li>
+<li>This site is <strong>not</strong> in the <code>farthingfamily777/dynamisblake.com</code> repo. That GitHub account, when checked, had this one public repository.</li>
+<li>dynamisblake.com already has related contracting pages under <code>/fgsons/</code>. Those are part of the GitHub Pages site. The Long Lunch page on dynamisblake.com mentions taking the oak tree logo from fgstx.com.</li>
+<li>A <code>/apply/</code> path on fgstx.com returns a successful page.</li>
+</ul>
+<p><strong>TBD:</strong> how to edit, preview, and publish fgstx.com. No git repository for that site was found. Do not guess at hosting logins, SSH, or file transfers. If Blake wants a change on fgstx.com, get his process and his OK first.</p>
+<h2 id="14-exporting-and-testing-the-casa-o-faydin-web-game">14. Exporting and testing the Casa O&#x27;Faydin web game</h2>
+<p>Full engine detail is in <a href="https://dynamisblake.com/games/casa-ofaydin/source/TECH-GUIDE.md">TECH-GUIDE.md</a>. The website parts that matter:</p>
+<ul>
+<li>Engine: Godot 4.3, Compatibility renderer for the web (<code>renderer/rendering_method.web=&quot;gl_compatibility&quot;</code>), threads off.</li>
+<li>On the build computer, the engine has lived at <code>/tmp/Godot_v4.3-stable_linux.x86_64</code>, and the project at <code>/workspace/casa-game/godot</code>. Your paths may differ.</li>
+<li><strong>Required setting</strong> in <code>project.godot</code>. Do not remove or lower it, or the town disappears in the browser:</li>
+</ul>
+<pre><code>rendering/limits/spatial_indexer/threaded_cull_minimum_instances=20000</code></pre>
+<p>This is needed because Godot 4.3&#x27;s no-threads web export can hide all 3D once a scene has more than 1000 mesh instances. Port Paradise already has 1075 <code>MeshInstance3D</code> nodes. If you add many meshes, re-export and test the web build right away.</p>
+<p>A headless web export, once Blake has approved the look, has been:</p>
+<pre><code>/tmp/Godot_v4.3-stable_linux.x86_64 --headless --path /workspace/casa-game/godot --export-release &quot;Web&quot; /workspace/dynamisblake/site/games/casa-ofaydin/play/index.html</code></pre>
+<p>The export should produce <code>index.html</code>, <code>index.js</code>, <code>index.pck</code>, <code>index.wasm</code>, icons, and <code>.nojekyll</code> in <code>games/casa-ofaydin/play/</code>. Recent public fixes copied the same build into <code>games/casa-ofaydin/v2/</code> as well.</p>
+<p>Always test the export in a real browser before asking Blake to publish. Confirm the town draws, not just the sky and the HUD buttons. Test on a phone-sized view (about 412×915) and on desktop. Twin-stick controls: left stick moves and strafes, right stick looks.</p>
+<p>Android and iOS exports are <strong>TBD</strong>. The build computer has had web export templates only.</p>
+<p>Headless tavern tests (these do not start the 3D town):</p>
+<pre><code>/tmp/Godot_v4.3-stable_linux.x86_64 --headless --path /workspace/casa-game/godot --script res://scripts/tavern/tavern_tests.gd</code></pre>
+<p>A passing run prints <code>RESULTS: 42 passed, 0 failed</code> and <code>ALL PASSED</code>.</p>
+<p>When publishing a game export, stage only the approved <code>games/casa-ofaydin/</code> paths (usually <code>play/</code> and/or <code>v2/</code>, plus source files if those changed). Pull, commit, push, wait, and verify as in sections 9 and 10. Do not publish an export until Blake has seen a preview and said OK, unless he has already given a standing OK that clearly covers that exact graphics or game push.</p>
+<h2 id="15-things-marked-tbd">15. Things marked TBD</h2>
+<ul>
+<li><strong>How to publish FGSTX.com.</strong> The business site is live on a separate Apache server and is not in the dynamisblake.com git repo. Deploy steps, file location on that server, and who has access were not verified here.</li>
+<li><strong>Android and iOS game exports.</strong> Only web export templates were found on the build computer.</li>
+<li><strong>A historical line on the Long Lunch page.</strong> <code>/fgsons/long-lunch/</code> still names the retired old business name in a sentence about where a Facebook post was shared. Do not copy that name into new writing. Ask Blake before changing that historical sentence.</li>
+<li><strong>The legal name &quot;Farthing Finds Trading Company&quot;</strong> is a house rule for game income. The public contact page currently describes Farthing Finds as antiques and resale. Whether that longer name should be added to the site is for Blake to decide.</li>
+</ul>
+<p>When something is TBD, ask Blake. Do not guess, and do not touch DNS, hosting panels, or other sites to find out.</p>
+<p class="motto">Brick by brick.</p>
+<a class="deeper" href="../">Back to the source page &rarr;</a>
+<section>
+<a class="btn alt" href="../">&larr; Source</a>
+<a class="btn alt" href="../WEBSITE-GUIDE.md">Open the Markdown file</a>
+<a class="btn alt" href="../../../../coding/">&larr; Back to Coding</a>
+</section>
+</main>
+<footer><p>El Campo, TX &middot; <a href="../../../../">DynamisBlake.com</a></p></footer>
+</body>
+</html>
