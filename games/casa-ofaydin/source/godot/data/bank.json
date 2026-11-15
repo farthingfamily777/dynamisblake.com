@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "note": "Harbor Counting House settings. Rates are percent per season. Interest is added once when the season changes. Coins are whole numbers.",
+  "bank_name": "Harbor Counting House",
+  "banker_name": "Clerk Aurelia Tallow",
+  "starting_purse": 50,
+  "savings_rate_percent": 2,
+  "loan_rate_percent": 5,
+  "max_loan": 200,
+  "coins_per_bug": 3,
+  "amount_choices": [5, 10, 25],
+  "ledger_size": 6,
+  "banker_lines": [
+    "Welcome to the Harbor Counting House. Your coins are safe with us.",
+    "Saved coins grow a little every season. Lira of the Quiet Purse would approve.",
+    "They say the Pale Ledger would love to buy this house. We are not for sale.",
+    "Some old depositors seem to live a very long time. Interest adds up for them.",
+    "The Aureate Compact and House Vesperine are quarreling again. Just a rumor, of course.",
+    "Pop bugs with Lux and the town pays a few coins for each one."
+  ]
+}

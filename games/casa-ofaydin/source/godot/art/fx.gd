@@ -1,4 +1,5 @@
 extends Node
+const LowPoly = preload("res://art/lowpoly_character.gd")
 # Runtime art ticks: lighthouse, neon, animals, market crowd, paddle wheel, compass.
 
 func _process(delta: float) -> void:
@@ -47,8 +48,14 @@ func _wander(list: Array, delta: float) -> void:
 		var target := home + Vector3(cos(ang) * r, 0, sin(ang * 0.7) * r * 0.6)
 		n.position = n.position.lerp(target, clampf(delta * 1.8, 0.0, 1.0))
 		var face := target - n.position
+		var step := n.position.distance_to(target)
 		if face.length() > 0.05:
 			n.rotation.y = lerp_angle(n.rotation.y, atan2(face.x, face.z), delta * 3.0)
+		if a.has("body"):
+			# limb swing for low-poly townsfolk
+			var amt := clampf(step * 6.0, 0.0, 1.0)
+			a["phase"] = float(a.get("phase", 0.0)) + amt * delta * 7.0
+			LowPoly.animate(a["body"], a["phase"], amt, Time.get_ticks_msec() / 1000.0 + a["home"].x)
 
 
 func _update_compass(main: Node) -> void:

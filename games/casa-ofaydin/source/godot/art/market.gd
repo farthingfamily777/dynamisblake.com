@@ -3,6 +3,7 @@ extends Object
 
 const Tex = preload("res://art/tex.gd")
 const Props = preload("res://art/props.gd")
+const LowPoly = preload("res://art/lowpoly_character.gd")
 
 const AWNINGS := [
 	Color(0.82, 0.14, 0.14),  # red
@@ -94,9 +95,9 @@ static func _bank(main: Node3D) -> void:
 	dark.albedo_color = Color(0.12, 0.09, 0.06)
 	Props.add_mesh(main, Props.box(0.1, 2.0, 1.2), dark, pos + Vector3(2.8, 1.1, 0))
 	var lb := Label3D.new()
-	lb.text = "BANK"
-	lb.font_size = 72
-	lb.pixel_size = 0.012
+	lb.text = "HARBOR\nCOUNTING HOUSE"
+	lb.font_size = 56
+	lb.pixel_size = 0.009
 	lb.modulate = Color(0.25, 0.18, 0.08)
 	lb.shaded = false
 	lb.position = pos + Vector3(3.1, 3.6, 0)
@@ -190,51 +191,84 @@ static func _tower(main: Node3D, pos: Vector3, col: Color, label: String) -> Dic
 
 
 static func _crowd(main: Node3D, fx: Dictionary) -> void:
+	# 20 low-poly townsfolk (PS1 / FF7 / N64 style) around the market and street.
 	var people: Array = []
-	# 20 walkers around the market / street, none blocking the road center.
 	var homes := [
 		Vector3(-3.2, 0, 2.5), Vector3(-3.4, 0, 0.2), Vector3(-3.3, 0, -2.5),
-		Vector3(-3.5, 0, -10.0), Vector3(-6.0, 0, -5.5), Vector3(-5.5, 0, 4.2),
+		Vector3(-3.5, 0, -10.0), Vector3(-6.4, 0, -3.2), Vector3(-5.5, 0, 4.2),
 		Vector3(3.2, 0, 2.2), Vector3(3.4, 0, -0.2), Vector3(3.3, 0, -2.8),
 		Vector3(3.5, 0, -10.2), Vector3(6.0, 0, -5.2), Vector3(5.4, 0, 4.0),
 		Vector3(-2.8, 0, 5.0), Vector3(2.6, 0, 5.2), Vector3(-6.5, 0, -1.0),
 		Vector3(6.6, 0, -1.2), Vector3(-5.8, 0, -12.5), Vector3(5.8, 0, -12.6),
-		Vector3(-2.4, 0, -7.0), Vector3(2.5, 0, -7.2)
+		Vector3(-1.2, 0, -12.0), Vector3(2.5, 0, -7.2)
 	]
+	var roles := ["merchant", "townsfolk", "merchant", "sailor", "townsfolk", "townsfolk",
+		"merchant", "townsfolk", "merchant", "sailor", "guard", "townsfolk",
+		"townsfolk", "townsfolk", "guard", "townsfolk", "sailor", "sailor",
+		"townsfolk", "merchant"]
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1171
 	for i in homes.size():
-		_person(main, homes[i], CLOTHES[i % CLOTHES.size()], people)
+		var root := Node3D.new()
+		root.position = homes[i]
+		main.add_child(root)
+		var body := LowPoly.build(root, LowPoly.random_params(roles[i], rng))
+		people.append({
+			"node": root,
+			"body": body,
+			"home": homes[i],
+			"r": rng.randf_range(1.0, 2.2),
+			"speed": rng.randf_range(0.4, 0.9),
+			"t": rng.randf() * TAU,
+			"kind": "person"
+		})
 	fx["people"] = people
+	_banker(main)
 
 
-static func _person(main: Node3D, pos: Vector3, cloth: Color, bag: Array) -> void:
-	# Cheap figure: boxed body, featureless head (no face, no eyes).
+static func _banker(main: Node3D) -> void:
+	# Harbor Counting House desk in the market row, in front of the bank.
+	# Walk up to the clerk and tap Bank.
+	var desk := Vector3(-4.6, 0, -7.0)
 	var root := Node3D.new()
-	root.position = pos
+	root.name = "Banker"
+	root.position = desk + Vector3(-0.55, 0, 0)
+	root.rotation_degrees = Vector3(0, 90, 0)
 	main.add_child(root)
-	var tunic := StandardMaterial3D.new()
-	tunic.albedo_color = cloth
-	tunic.roughness = 0.9
-	var skin := StandardMaterial3D.new()
-	# muted skin tones, no facial features
-	var tones := [Color(0.72, 0.56, 0.42), Color(0.45, 0.32, 0.22), Color(0.82, 0.68, 0.54)]
-	skin.albedo_color = tones[absi(int(pos.x * 7.0 + pos.z * 3.0)) % 3]
-	Props.add_mesh(root, Props.box(0.32, 0.7, 0.22), tunic, Vector3(0, 0.85, 0))
-	Props.add_mesh(root, Props.sph(0.13, 6), skin, Vector3(0, 1.32, 0))
-	# optional hat / hood (still no face)
-	if randf() > 0.45:
-		var hat := StandardMaterial3D.new()
-		hat.albedo_color = cloth.darkened(0.25)
-		Props.add_mesh(root, Props.cyl(0.16, 0.12, 6, 0.16), hat, Vector3(0, 1.44, 0))
-	# legs
-	var pant := StandardMaterial3D.new()
-	pant.albedo_color = Color(0.18, 0.16, 0.14)
-	Props.add_mesh(root, Props.cyl(0.05, 0.45, 5), pant, Vector3(-0.08, 0.28, 0))
-	Props.add_mesh(root, Props.cyl(0.05, 0.45, 5), pant, Vector3(0.08, 0.28, 0))
-	bag.append({
-		"node": root,
-		"home": pos,
-		"r": randf_range(1.0, 2.2),
-		"speed": randf_range(0.4, 0.9),
-		"t": randf() * TAU,
-		"kind": "person"
-	})
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 42
+	var p := LowPoly.random_params("banker", rng)
+	p["skin"] = LowPoly.SKIN[2]
+	p["hair"] = "braid"
+	p["beard"] = false
+	LowPoly.build(root, p)
+	var wood := Tex.mat("wood_fine", Color(0.55, 0.38, 0.22))
+	var trim := Tex.mat("trim", Color(0.78, 0.65, 0.35), 0.6, 0.2)
+	# counter with brass rail, ledger and coin stacks
+	Props.add_mesh(main, Props.box(0.7, 1.0, 2.0), wood, desk + Vector3(0.35, 0.5, 0))
+	Props.add_mesh(main, Props.box(0.78, 0.06, 2.08), trim, desk + Vector3(0.35, 1.03, 0))
+	Props.add_mesh(main, Props.box(0.36, 0.05, 0.46), Tex.mat("trim", Color(0.86, 0.8, 0.64)), desk + Vector3(0.3, 1.08, -0.3), Vector3(0, 0, -8))
+	var coin := Tex.mat("trim", Color(0.9, 0.72, 0.35), 0.4, 0.6)
+	for i in 3:
+		Props.add_mesh(main, Props.cyl(0.07, 0.05 + 0.04 * i, 8), coin, desk + Vector3(0.3, 1.08 + 0.02 * i, 0.35 + i * 0.16))
+	# posts and a muted canopy
+	for z in [-1.0, 1.0]:
+		Props.add_mesh(main, Props.cyl(0.06, 2.4, 6), wood, desk + Vector3(-0.9, 1.2, z))
+		Props.add_mesh(main, Props.cyl(0.06, 2.4, 6), wood, desk + Vector3(0.7, 1.2, z))
+	var cloth := StandardMaterial3D.new()
+	cloth.albedo_color = Color(0.30, 0.38, 0.32)
+	cloth.roughness = 0.9
+	cloth.cull_mode = BaseMaterial3D.CULL_DISABLED
+	Props.add_mesh(main, Props.box(1.9, 0.06, 2.3), cloth, desk + Vector3(-0.1, 2.38, 0), Vector3(0, 0, -6))
+	Props.add_mesh(main, Props.box(0.06, 0.5, 2.1), wood, desk + Vector3(0.82, 2.05, 0))
+	Props.collider(main, desk + Vector3(0.35, 0.5, 0), Vector3(0.7, 1.0, 2.0))
+	var lb := Label3D.new()
+	lb.text = "BANK"
+	lb.font_size = 56
+	lb.pixel_size = 0.008
+	lb.modulate = Color(0.95, 0.82, 0.5)
+	lb.outline_size = 8
+	lb.outline_modulate = Color(0.15, 0.1, 0.04)
+	lb.position = desk + Vector3(0.86, 2.08, 0)
+	lb.rotation_degrees = Vector3(0, 90, 0)
+	main.add_child(lb)

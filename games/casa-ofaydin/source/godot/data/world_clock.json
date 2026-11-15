@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "note": "Blake's clock: 1 game hour = 20 real minutes, so a full day is 8 real hours. Wait skips ahead a little; Sleep skips to morning.",
+  "real_seconds_per_game_hour": 1200,
+  "start_hour": 7.2,
+  "days_per_season": 7,
+  "seasons": ["Spring", "Summer", "Harvest", "Winter"],
+  "wait_hours": 1,
+  "sleep_wake_hour": 6
+}

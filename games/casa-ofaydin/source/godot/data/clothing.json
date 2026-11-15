@@ -1,0 +1,1121 @@
+{
+ "version": 1,
+ "note": "Casa O'Faydin clothing. 12 types, 5 items each. Paired types (pauldron, glove, ring) can be worn on the left and the right. 'style' picks the low-poly shape in art/lowpoly_character.gd; add new items by reusing a style. Colors are hex. Mods can add items with new ids.",
+ "slots": [
+  {
+   "slot": "head",
+   "label": "Head",
+   "type": "head"
+  },
+  {
+   "slot": "shirt",
+   "label": "Shirt",
+   "type": "shirt"
+  },
+  {
+   "slot": "cuirass",
+   "label": "Chest Plate",
+   "type": "cuirass"
+  },
+  {
+   "slot": "pauldron_l",
+   "label": "Left Pauldron",
+   "type": "pauldron"
+  },
+  {
+   "slot": "pauldron_r",
+   "label": "Right Pauldron",
+   "type": "pauldron"
+  },
+  {
+   "slot": "glove_l",
+   "label": "Left Glove",
+   "type": "glove"
+  },
+  {
+   "slot": "glove_r",
+   "label": "Right Glove",
+   "type": "glove"
+  },
+  {
+   "slot": "belt",
+   "label": "Belt",
+   "type": "belt"
+  },
+  {
+   "slot": "pants",
+   "label": "Pants",
+   "type": "pants"
+  },
+  {
+   "slot": "greaves",
+   "label": "Greaves",
+   "type": "greaves"
+  },
+  {
+   "slot": "boots",
+   "label": "Boots",
+   "type": "boots"
+  },
+  {
+   "slot": "robe",
+   "label": "Robe or Cloak",
+   "type": "robe"
+  },
+  {
+   "slot": "amulet",
+   "label": "Amulet",
+   "type": "amulet"
+  },
+  {
+   "slot": "ring_l",
+   "label": "Left Ring",
+   "type": "ring"
+  },
+  {
+   "slot": "ring_r",
+   "label": "Right Ring",
+   "type": "ring"
+  }
+ ],
+ "underclothes": "A plain shirt and shorts always stay on when everything else comes off.",
+ "hero_start": {
+  "head": "pilgrim_hood",
+  "shirt": "linen_tunic",
+  "cuirass": "boiled_leather_jerkin",
+  "pauldron_l": "round_iron_pauldron",
+  "pauldron_r": "round_iron_pauldron",
+  "glove_l": "leather_gloves",
+  "glove_r": "leather_gloves",
+  "belt": "plain_leather_belt",
+  "pants": "dock_trousers",
+  "greaves": "leather_greaves",
+  "boots": "tall_riding_boots",
+  "robe": "traveler_cloak",
+  "amulet": "copper_disc",
+  "ring_l": "plain_band",
+  "ring_r": "brass_signet"
+ },
+ "items": [
+  {
+   "id": "pilgrim_hood",
+   "name": "Pilgrim's Hood",
+   "type": "head",
+   "slot": "head",
+   "style": "hood",
+   "color": "#3a4566",
+   "trim": "#7a6440",
+   "stats": {
+    "armor": 1,
+    "warmth": 3,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 3,
+    "magic": 1
+   }
+  },
+  {
+   "id": "dockhand_cap",
+   "name": "Dockhand's Knit Cap",
+   "type": "head",
+   "slot": "head",
+   "style": "cap",
+   "color": "#6e4a36",
+   "trim": "#4a3526",
+   "stats": {
+    "armor": 0,
+    "warmth": 2,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "saltiron_kettle",
+   "name": "Saltiron Kettle Helm",
+   "type": "head",
+   "slot": "head",
+   "style": "kettle",
+   "color": "#7d7a72",
+   "trim": "#5a4a3a",
+   "stats": {
+    "armor": 4,
+    "warmth": 1,
+    "weight": 3,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "bronze_crest_helm",
+   "name": "Bronze Crest Helm",
+   "type": "head",
+   "slot": "head",
+   "style": "crest",
+   "color": "#8a6a3a",
+   "trim": "#6b2a22",
+   "stats": {
+    "armor": 5,
+    "warmth": 1,
+    "weight": 4,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "ledger_brim_hat",
+   "name": "Ledger-Keeper's Brim Hat",
+   "type": "head",
+   "slot": "head",
+   "style": "brim",
+   "color": "#3b2f2a",
+   "trim": "#8a7246",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 3,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "linen_tunic",
+   "name": "Linen Tunic",
+   "type": "shirt",
+   "slot": "shirt",
+   "style": "tunic",
+   "color": "#b8a888",
+   "trim": "#7a6a4e",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "fisher_smock",
+   "name": "Fisher's Smock",
+   "type": "shirt",
+   "slot": "shirt",
+   "style": "smock",
+   "color": "#5d6e6a",
+   "trim": "#3e4a46",
+   "stats": {
+    "armor": 0,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "patchwork_vest",
+   "name": "Patchwork Vest",
+   "type": "shirt",
+   "slot": "shirt",
+   "style": "vest",
+   "color": "#a89878",
+   "trim": "#6e4e34",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "quilted_gambeson",
+   "name": "Quilted Gambeson",
+   "type": "shirt",
+   "slot": "shirt",
+   "style": "quilted",
+   "color": "#8a7a5a",
+   "trim": "#5e5038",
+   "stats": {
+    "armor": 2,
+    "warmth": 3,
+    "weight": 2,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "silk_doublet",
+   "name": "Merchant's Silk Doublet",
+   "type": "shirt",
+   "slot": "shirt",
+   "style": "doublet",
+   "color": "#6a2e2a",
+   "trim": "#b8954a",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 4,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "boiled_leather_jerkin",
+   "name": "Boiled Leather Jerkin",
+   "type": "cuirass",
+   "slot": "cuirass",
+   "style": "leather",
+   "color": "#6e4a2e",
+   "trim": "#3a2618",
+   "stats": {
+    "armor": 3,
+    "warmth": 1,
+    "weight": 2,
+    "charm": 1,
+    "stealth": 2,
+    "magic": 0
+   }
+  },
+  {
+   "id": "rusted_chain_shirt",
+   "name": "Rusted Chain Shirt",
+   "type": "cuirass",
+   "slot": "cuirass",
+   "style": "chain",
+   "color": "#76726a",
+   "trim": "#5a4a3a",
+   "stats": {
+    "armor": 5,
+    "warmth": 0,
+    "weight": 4,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "harbor_plate",
+   "name": "Harbor Plate Cuirass",
+   "type": "cuirass",
+   "slot": "cuirass",
+   "style": "plate",
+   "color": "#8c8a84",
+   "trim": "#6e5a3a",
+   "stats": {
+    "armor": 8,
+    "warmth": 0,
+    "weight": 7,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "shellback_scale",
+   "name": "Shellback Scale Cuirass",
+   "type": "cuirass",
+   "slot": "cuirass",
+   "style": "scale",
+   "color": "#8a6a34",
+   "trim": "#5a3e1e",
+   "stats": {
+    "armor": 6,
+    "warmth": 1,
+    "weight": 4,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 1
+   }
+  },
+  {
+   "id": "brass_banded",
+   "name": "Brass-Banded Cuirass",
+   "type": "cuirass",
+   "slot": "cuirass",
+   "style": "brass",
+   "color": "#5e5a52",
+   "trim": "#b08a46",
+   "stats": {
+    "armor": 7,
+    "warmth": 0,
+    "weight": 6,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "round_iron_pauldron",
+   "name": "Round Iron Pauldron",
+   "type": "pauldron",
+   "slot": "pauldron",
+   "style": "round",
+   "color": "#7a7872",
+   "trim": "#5a4a36",
+   "stats": {
+    "armor": 2,
+    "warmth": 0,
+    "weight": 2,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "harbor_plate_pauldron",
+   "name": "Harbor Plate Pauldron",
+   "type": "pauldron",
+   "slot": "pauldron",
+   "style": "layered",
+   "color": "#8c8a84",
+   "trim": "#6e5a3a",
+   "stats": {
+    "armor": 3,
+    "warmth": 0,
+    "weight": 3,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "fur_mantle_pauldron",
+   "name": "Fur Mantle Pauldron",
+   "type": "pauldron",
+   "slot": "pauldron",
+   "style": "fur",
+   "color": "#6e5a44",
+   "trim": "#4a3a2a",
+   "stats": {
+    "armor": 1,
+    "warmth": 3,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "shellback_pauldron",
+   "name": "Shellback Pauldron",
+   "type": "pauldron",
+   "slot": "pauldron",
+   "style": "chitin",
+   "color": "#8a6a34",
+   "trim": "#5a3e1e",
+   "stats": {
+    "armor": 2,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 1
+   }
+  },
+  {
+   "id": "brass_pauldron",
+   "name": "Brass Pauldron",
+   "type": "pauldron",
+   "slot": "pauldron",
+   "style": "brass",
+   "color": "#5e5a52",
+   "trim": "#b08a46",
+   "stats": {
+    "armor": 3,
+    "warmth": 0,
+    "weight": 3,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "cloth_wraps",
+   "name": "Cloth Hand Wraps",
+   "type": "glove",
+   "slot": "glove",
+   "style": "wraps",
+   "color": "#a89a7a",
+   "trim": "#7a6a52",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 0,
+    "charm": 0,
+    "stealth": 2,
+    "magic": 0
+   }
+  },
+  {
+   "id": "leather_gloves",
+   "name": "Leather Gloves",
+   "type": "glove",
+   "slot": "glove",
+   "style": "leather",
+   "color": "#5e3e26",
+   "trim": "#3a2618",
+   "stats": {
+    "armor": 1,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "saltiron_gauntlet",
+   "name": "Saltiron Gauntlet",
+   "type": "glove",
+   "slot": "glove",
+   "style": "gauntlet",
+   "color": "#7d7a72",
+   "trim": "#5a4a3a",
+   "stats": {
+    "armor": 3,
+    "warmth": 0,
+    "weight": 2,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "hide_bracer",
+   "name": "Hide Bracer",
+   "type": "glove",
+   "slot": "glove",
+   "style": "bracer",
+   "color": "#7a5a3a",
+   "trim": "#b08a46",
+   "stats": {
+    "armor": 1,
+    "warmth": 0,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "shellback_gauntlet",
+   "name": "Shellback Gauntlet",
+   "type": "glove",
+   "slot": "glove",
+   "style": "chitin",
+   "color": "#8a6a34",
+   "trim": "#5a3e1e",
+   "stats": {
+    "armor": 2,
+    "warmth": 0,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 1
+   }
+  },
+  {
+   "id": "rope_belt",
+   "name": "Rope Belt",
+   "type": "belt",
+   "slot": "belt",
+   "style": "rope",
+   "color": "#9a8460",
+   "trim": "#6e5a3e",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "plain_leather_belt",
+   "name": "Plain Leather Belt",
+   "type": "belt",
+   "slot": "belt",
+   "style": "leather",
+   "color": "#4e3220",
+   "trim": "#a08446",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "dyed_sash",
+   "name": "Dyed Sash",
+   "type": "belt",
+   "slot": "belt",
+   "style": "sash",
+   "color": "#6e3a2e",
+   "trim": "#4a2a20",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 0,
+    "charm": 2,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "coin_pouch_belt",
+   "name": "Coin-Pouch Belt",
+   "type": "belt",
+   "slot": "belt",
+   "style": "pouches",
+   "color": "#5a3a24",
+   "trim": "#9a7a40",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 1,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "plate_war_belt",
+   "name": "Plate War Belt",
+   "type": "belt",
+   "slot": "belt",
+   "style": "plate",
+   "color": "#5a4a3a",
+   "trim": "#8c8a84",
+   "stats": {
+    "armor": 1,
+    "warmth": 0,
+    "weight": 2,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "dock_trousers",
+   "name": "Dock Trousers",
+   "type": "pants",
+   "slot": "pants",
+   "style": "trousers",
+   "color": "#4e4438",
+   "trim": "#3a3228",
+   "stats": {
+    "armor": 0,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "knee_breeches",
+   "name": "Knee Breeches",
+   "type": "pants",
+   "slot": "pants",
+   "style": "breeches",
+   "color": "#5e4a36",
+   "trim": "#8a7a5a",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "sailor_wide_trousers",
+   "name": "Sailor's Wide Trousers",
+   "type": "pants",
+   "slot": "pants",
+   "style": "wide",
+   "color": "#6a7468",
+   "trim": "#4a524a",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "weaver_kilt",
+   "name": "Weaver's Kilt",
+   "type": "pants",
+   "slot": "pants",
+   "style": "kilt",
+   "color": "#5e5a3a",
+   "trim": "#8a6a3a",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "padded_hose",
+   "name": "Padded Hose",
+   "type": "pants",
+   "slot": "pants",
+   "style": "padded",
+   "color": "#5a4e40",
+   "trim": "#3e342a",
+   "stats": {
+    "armor": 1,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "leather_greaves",
+   "name": "Leather Greaves",
+   "type": "greaves",
+   "slot": "greaves",
+   "style": "leather",
+   "color": "#6e4a2e",
+   "trim": "#3a2618",
+   "stats": {
+    "armor": 2,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "chain_leggings",
+   "name": "Chain Leggings",
+   "type": "greaves",
+   "slot": "greaves",
+   "style": "chain",
+   "color": "#76726a",
+   "trim": "#5a4a3a",
+   "stats": {
+    "armor": 3,
+    "warmth": 0,
+    "weight": 3,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "harbor_plate_greaves",
+   "name": "Harbor Plate Greaves",
+   "type": "greaves",
+   "slot": "greaves",
+   "style": "plate",
+   "color": "#8c8a84",
+   "trim": "#6e5a3a",
+   "stats": {
+    "armor": 5,
+    "warmth": 0,
+    "weight": 4,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "shellback_greaves",
+   "name": "Shellback Greaves",
+   "type": "greaves",
+   "slot": "greaves",
+   "style": "chitin",
+   "color": "#8a6a34",
+   "trim": "#5a3e1e",
+   "stats": {
+    "armor": 4,
+    "warmth": 1,
+    "weight": 2,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 1
+   }
+  },
+  {
+   "id": "brass_greaves",
+   "name": "Brass Greaves",
+   "type": "greaves",
+   "slot": "greaves",
+   "style": "brass",
+   "color": "#5e5a52",
+   "trim": "#b08a46",
+   "stats": {
+    "armor": 4,
+    "warmth": 0,
+    "weight": 4,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "reed_sandals",
+   "name": "Reed Sandals",
+   "type": "boots",
+   "slot": "boots",
+   "style": "sandals",
+   "color": "#8a7450",
+   "trim": "#5e4a30",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 0,
+    "stealth": 2,
+    "magic": 0
+   }
+  },
+  {
+   "id": "low_shoes",
+   "name": "Low Town Shoes",
+   "type": "boots",
+   "slot": "boots",
+   "style": "shoes",
+   "color": "#3e2a1c",
+   "trim": "#5e4430",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "tall_riding_boots",
+   "name": "Tall Riding Boots",
+   "type": "boots",
+   "slot": "boots",
+   "style": "tall",
+   "color": "#4a3020",
+   "trim": "#6e4a2e",
+   "stats": {
+    "armor": 1,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "saltiron_sabatons",
+   "name": "Saltiron Sabatons",
+   "type": "boots",
+   "slot": "boots",
+   "style": "sabatons",
+   "color": "#7d7a72",
+   "trim": "#5a4a3a",
+   "stats": {
+    "armor": 3,
+    "warmth": 0,
+    "weight": 3,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "fur_lined_boots",
+   "name": "Fur-Lined Boots",
+   "type": "boots",
+   "slot": "boots",
+   "style": "fur",
+   "color": "#5a4030",
+   "trim": "#8a7a62",
+   "stats": {
+    "armor": 1,
+    "warmth": 3,
+    "weight": 1,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "counting_robe",
+   "name": "Counting House Robe",
+   "type": "robe",
+   "slot": "robe",
+   "style": "robe",
+   "color": "#3e3448",
+   "trim": "#a08446",
+   "stats": {
+    "armor": 0,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 3,
+    "stealth": 0,
+    "magic": 2
+   }
+  },
+  {
+   "id": "traveler_cloak",
+   "name": "Traveler's Cloak",
+   "type": "robe",
+   "slot": "robe",
+   "style": "cloak",
+   "color": "#3a4566",
+   "trim": "#7a6440",
+   "stats": {
+    "armor": 0,
+    "warmth": 3,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 2,
+    "magic": 0
+   }
+  },
+  {
+   "id": "market_coat",
+   "name": "Long Market Coat",
+   "type": "robe",
+   "slot": "robe",
+   "style": "coat",
+   "color": "#5a3e2e",
+   "trim": "#8a6a3a",
+   "stats": {
+    "armor": 1,
+    "warmth": 2,
+    "weight": 2,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "watch_tabard",
+   "name": "Harbor Watch Tabard",
+   "type": "robe",
+   "slot": "robe",
+   "style": "tabard",
+   "color": "#5a2a24",
+   "trim": "#a08446",
+   "stats": {
+    "armor": 0,
+    "warmth": 1,
+    "weight": 1,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "shoulder_mantle",
+   "name": "Shoulder Mantle",
+   "type": "robe",
+   "slot": "robe",
+   "style": "mantle",
+   "color": "#4a5a4a",
+   "trim": "#7a6440",
+   "stats": {
+    "armor": 0,
+    "warmth": 2,
+    "weight": 1,
+    "charm": 1,
+    "stealth": 1,
+    "magic": 0
+   }
+  },
+  {
+   "id": "copper_disc",
+   "name": "Copper Disc Amulet",
+   "type": "amulet",
+   "slot": "amulet",
+   "style": "disc",
+   "color": "#a0683a",
+   "trim": "#6e4a2a",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 1
+   }
+  },
+  {
+   "id": "sea_tooth",
+   "name": "Sea-Beast Tooth",
+   "type": "amulet",
+   "slot": "amulet",
+   "style": "tooth",
+   "color": "#d8ccae",
+   "trim": "#5a4a36",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 0,
+    "stealth": 1,
+    "magic": 1
+   }
+  },
+  {
+   "id": "ledger_key",
+   "name": "Ledger Key",
+   "type": "amulet",
+   "slot": "amulet",
+   "style": "key",
+   "color": "#b08a46",
+   "trim": "#6e5a3a",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "river_knot",
+   "name": "River Knot Charm",
+   "type": "amulet",
+   "slot": "amulet",
+   "style": "knot",
+   "color": "#4e6a5e",
+   "trim": "#7a6a52",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 2
+   }
+  },
+  {
+   "id": "amber_drop",
+   "name": "Amber Drop",
+   "type": "amulet",
+   "slot": "amulet",
+   "style": "drop",
+   "color": "#c08a34",
+   "trim": "#6e5a3a",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 2
+   }
+  },
+  {
+   "id": "plain_band",
+   "name": "Plain Copper Band",
+   "type": "ring",
+   "slot": "ring",
+   "style": "band",
+   "color": "#a0683a",
+   "trim": "#a0683a",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "brass_signet",
+   "name": "Brass Signet Ring",
+   "type": "ring",
+   "slot": "ring",
+   "style": "signet",
+   "color": "#b08a46",
+   "trim": "#6e4a2a",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "sea_glass_ring",
+   "name": "Sea-Glass Ring",
+   "type": "ring",
+   "slot": "ring",
+   "style": "stone",
+   "color": "#8a8a7a",
+   "trim": "#5e8a7e",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 1,
+    "stealth": 0,
+    "magic": 1
+   }
+  },
+  {
+   "id": "iron_twist_ring",
+   "name": "Iron Twist Ring",
+   "type": "ring",
+   "slot": "ring",
+   "style": "twist",
+   "color": "#6e6c66",
+   "trim": "#4a4844",
+   "stats": {
+    "armor": 1,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 0,
+    "stealth": 0,
+    "magic": 0
+   }
+  },
+  {
+   "id": "garnet_ring",
+   "name": "Garnet Ring",
+   "type": "ring",
+   "slot": "ring",
+   "style": "gem",
+   "color": "#a08446",
+   "trim": "#7a2a26",
+   "stats": {
+    "armor": 0,
+    "warmth": 0,
+    "weight": 0,
+    "charm": 2,
+    "stealth": 0,
+    "magic": 1
+   }
+  }
+ ]
+}

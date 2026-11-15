@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "note": "Elements, wards, bolts, levitation, and enemy casters. Element wheel: each element BEATS one other. Two little triangles: Fire > Frost > Water > Fire, and Earth > Lightning > Wind > Earth. A bolt that beats a ward's element breaks that ward. A ward fully blocks its own element and softens the others.",
+  "elements": [
+    {"id": "fire",  "name": "Fire",  "ward": "Fire Ward",  "color": "#e07a3a", "beats": "frost"},
+    {"id": "frost", "name": "Frost", "ward": "Frost Ward", "color": "#a8d8ec", "beats": "water"},
+    {"id": "water", "name": "Water", "ward": "Water Ward", "color": "#3f8fb8", "beats": "fire"},
+    {"id": "earth", "name": "Earth", "ward": "Earth Ward", "color": "#a07c48", "beats": "lightning"},
+    {"id": "lightning", "name": "Lightning", "ward": "Lightning Ward", "color": "#f2e46a", "beats": "wind", "fingertips": true},
+    {"id": "wind",  "name": "Wind",  "ward": "Wind Ward",  "color": "#b6e2b0", "beats": "earth"}
+  ],
+  "weapons": {
+    "sword": {"damage": 16, "reach": 2.6, "arc_degrees": 110, "seconds": 0.55},
+    "crossbow": {"damage": 18, "speed": 26, "range": 30, "reload_seconds": 0.9, "arrows_start": 24, "arrows_max": 40, "arrow_price": 1, "note": "Bone arrows. Sleep refills your quiver."}
+  },
+  "bolt": {"mana": 12, "damage": 14, "speed": 13, "range": 22, "beats_bonus": 2.0, "soaked": 0.25},
+  "ward": {"mana": 25, "seconds": 15, "block_same": 1.0, "block_other": 0.4},
+  "levitate": {"mana_start": 10, "mana_per_second": 2, "seconds": 25, "rise_speed": 2.6, "max_height": 9, "land_speed": 2.2},
+  "enemy": {
+    "first_spawn_seconds": 10,
+    "respawn_seconds": 25,
+    "max_active": 2,
+    "health": 30,
+    "walk_speed": 2.0,
+    "keep_distance": 9,
+    "wind_up_seconds": 1.2,
+    "cooldown_seconds": 3.4,
+    "bolt_damage": 12,
+    "bolt_speed": 8,
+    "knockback": 3.0,
+    "ward_chance": 0.5,
+    "coins_drop": 6
+  },
+  "enemies": [
+    {"id": "rogue_mage", "name": "Rogue Mage", "when": "day", "elements": ["fire", "water", "earth"],
+     "look": {"skin": "#a8805c", "hair": "shag", "robe": "#5a2e26", "hood": "#4a2a22", "trim": "#8a6a3a"}},
+    {"id": "night_caster", "name": "Night Caster", "when": "night", "elements": ["frost", "lightning", "wind"],
+     "note": "A vampire caster. Spooky, never gory.",
+     "look": {"skin": "#cfc6bc", "hair": "long", "robe": "#26222e", "hood": "#1e1a26", "trim": "#6e2228"}}
+  ],
+  "faint": {"coins_lost": 5, "wake_place": "The Gilded Anchor"}
+}

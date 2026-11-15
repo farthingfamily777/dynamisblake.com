@@ -10,7 +10,7 @@ const Fx = preload("res://art/fx.gd")
 
 static func apply(main: Node3D) -> void:
 	ArtSky.setup(main.env, main.sun)
-	Hero.build(main.hero)
+	Hero.build(main.hero, main.hero_gear() if main.has_method("hero_gear") else {}, str(main.get("weapon")) if main.get("weapon") != null else "staff")
 	Props.style_fairy(main.fairy)
 	for b in main.bugs:
 		Props.style_bug(b)
@@ -25,6 +25,7 @@ static func apply(main: Node3D) -> void:
 	runner.set_meta("fx", fx)
 	if OS.get_environment("ART_SHOT") != "":
 		_queue_shots(main)
+
 
 
 static func style_new_bug(b: MeshInstance3D) -> void:
