@@ -10,6 +10,11 @@ func _ready() -> void:
 	if dir == "":
 		dir = "/tmp/art-shots"
 	DirAccess.make_dir_recursive_absolute(dir)
+	if OS.get_environment("ART_SHOT") == "4":
+		await _set4(main, dir)
+		if OS.get_environment("ART_SHOT_QUIT") == "1":
+			get_tree().quit()
+		return
 	if OS.get_environment("ART_SHOT") == "3":
 		await _set3(main, dir)
 		if OS.get_environment("ART_SHOT_QUIT") == "1":
@@ -279,6 +284,47 @@ func _set3(main: Node, dir: String) -> void:
 	main.do_sleep()
 	await _frames(3)
 	_shot(dir + "/38-sleep.png")
+
+
+## Close-ups for look reviews: hero plus three townsfolk on a quiet spot.
+func _set4(main: Node, dir: String) -> void:
+	var LP = preload("res://art/lowpoly_character.gd")
+	main.magic.enabled = false
+	main.time_of_day = 0.42
+	main.hero.position = Vector3(0, 1, 14.0)
+	main.look_yaw = 0.0
+	main.hero.rotation.y = 0.0
+	main.weapon = "sword"
+	main.rebuild_hero()
+	main.hp_bar.get_parent().visible = false
+	var free := Camera3D.new()
+	free.fov = 40
+	main.add_child(free)
+	free.current = true
+	free.position = main.hero.position + Vector3(1.4, 0.2, -3.6)
+	free.look_at(main.hero.position + Vector3(0, -0.15, 0))
+	await _frames(4)
+	_shot(dir + "/hero-front.png")
+	free.position = main.hero.position + Vector3(-1.8, 0.1, 3.0)
+	free.look_at(main.hero.position + Vector3(0, -0.15, 0))
+	await _frames(3)
+	_shot(dir + "/hero-back.png")
+	main.hero.position = Vector3(0, 1, 30.0)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 4242
+	var roles := ["sailor", "merchant", "townsfolk"]
+	for i in 3:
+		var root := Node3D.new()
+		main.add_child(root)
+		root.position = Vector3(0, 0, 14.0)
+		var b: Node3D = LP.build(root, LP.random_params(roles[i], rng))
+		LP.animate(b, 0.0, 0.0, 0.0)
+		free.position = Vector3(1.2, 1.2, 17.4)
+		free.look_at(Vector3(0, 0.95, 14.0))
+		await _frames(3)
+		_shot(dir + "/townsfolk-%d-%s.png" % [i + 1, roles[i]])
+		root.queue_free()
+		await _frames(1)
 
 
 func _frames(n: int) -> void:

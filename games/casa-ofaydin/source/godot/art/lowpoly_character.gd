@@ -42,8 +42,10 @@ static func material() -> StandardMaterial3D:
 		_mat = StandardMaterial3D.new()
 		_mat.vertex_color_use_as_albedo = true
 		_mat.vertex_color_is_srgb = true
-		_mat.roughness = 0.95
-		_mat.metallic_specular = 0.2
+		# N64-style Gouraud: lighting per vertex, smooth normals, soft spec.
+		_mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_VERTEX
+		_mat.roughness = 0.9
+		_mat.metallic_specular = 0.15
 	return _mat
 
 
@@ -86,6 +88,7 @@ const LOD_SWAP_M := 14.0
 const BONES := ["Hips", "Head", "ArmL", "ForeL", "ArmR", "ForeR", "LegL", "ShinL", "LegR", "ShinR"]
 const BONE_PARENT := [-1, -1, -1, 2, -1, 4, -1, 6, -1, 8]
 const RigBody = preload("res://art/rig_body.gd")
+const N64 = preload("res://art/n64_mesh.gd")
 
 
 static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
@@ -126,6 +129,7 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 	}
 	var gear: Dictionary = p.get("gear", {})
 	var tints: Dictionary = p.get("tints", {})
+	P["paint"] = _paint(P, gear, tints)
 	_body(parts, P, gear)
 	# Gear, inner to outer.
 	for slot in ["pants", "shirt", "boots", "greaves", "cuirass", "belt", "glove_l", "glove_r",
@@ -151,6 +155,7 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 	var weapon := str(p.get("weapon", "staff" if p.get("staff", false) else ""))
 	parts["_ess"] = true
 	_weapon(parts, weapon)
+	parts["_kind"] = ""
 	parts["_ess"] = false
 	# Skeleton mirrors the pivots.
 	var skel := Skeleton3D.new()
@@ -177,19 +182,19 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 		rest[key_of[BONES[i]]] = {"bone": i, "xf": g}
 	body.set("pivots", pivots)
 	body.set("skel", skel)
-	# Pick boxes for each LOD and build one skinned mesh per LOD.
-	var boxes: Array = parts["_boxes"]
-	_drop_hidden(boxes)
-	_cull_faces(boxes)
-	body.set_meta("tris_wanted", _tris(boxes))
-	var lod0 := _fit(boxes, LOD0_CAP, false)
-	var lod1 := _fit(boxes, LOD1_CAP, true)
-	var tri0 := _tris(lod0)
-	var tri1 := _tris(lod1)
-	for lod in [[lod0, "LOD0"], [lod1, "LOD1"]]:
+	# Generate both LODs, cull buried pieces, fit the budgets, one skinned mesh per LOD.
+	var shapes: Array = parts["_boxes"]
+	N64.prepare(shapes, 0, rest)
+	N64.prepare(shapes, 1, rest)
+	body.set_meta("tris_wanted", N64.count(shapes, 0))
+	var lod0 := N64.fit(shapes, 0, LOD0_CAP)
+	var lod1 := N64.fit(shapes, 1, LOD1_CAP)
+	var tri0 := N64.count(lod0, 0)
+	var tri1 := N64.count(lod1, 1)
+	for lod in [[lod0, "LOD0", 0], [lod1, "LOD1", 1]]:
 		var mi := MeshInstance3D.new()
 		mi.name = lod[1]
-		mi.mesh = _commit(lod[0], rest)
+		mi.mesh = N64.commit(lod[0], lod[2], rest)
 		mi.material_override = material()
 		skel.add_child(mi)
 		mi.skeleton = NodePath("..")
@@ -210,253 +215,160 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 	return body
 
 
-# ---------------------------------------------------------------- box primitive
+# ---------------------------------------------------------------- shape recording
 
-## Tapered, rotatable box with flat faces and a top-to-bottom color fade.
-## tt / tb scale the top / bottom face (x, z). rot is degrees.
-## Boxes are recorded first; build() picks which ones fit each LOD's budget.
+## Generic piece: tapered, rotatable, centred at c with size s. Picks its own
+## late-90s shape: thin front/back trim becomes a painted quad, tiny bits stay
+## little blocks, everything else is a 6- or 8-sided tapered cylinder with smooth
+## (Gouraud) normals. parts["_kind"] can force a kind ("dome", "ell", "box").
+## tt / tb scale the top / bottom (x, z). rot is degrees. shade darkens the bottom.
 static func bx(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color,
-		tt := Vector2.ONE, tb := Vector2.ONE, rot := Vector3.ZERO, shade := 0.22) -> void:
-	var area := s.x * s.y + s.y * s.z + s.x * s.z
-	parts["_boxes"].append({"part": part, "c": c, "s": s, "color": color, "tt": tt, "tb": tb,
-		"rot": rot, "shade": shade, "area": area, "ess": bool(parts.get("_ess", false)),
-		"order": parts["_boxes"].size(), "tris": 12, "main": false, "faces": [true, true, true, true, true, true]})
+		tt := Vector2.ONE, tb := Vector2.ONE, rot := Vector3.ZERO, shade := 0.22) -> Dictionary:
+	var kind := str(parts.get("_kind", ""))
+	var r := rot
+	if kind == "":
+		if minf(s.x, s.z) <= 0.026 and s.z <= s.x and absf(c.z) > 0.08 and part in ["chest", "head"]:
+			kind = "quad"
+			if c.z < 0.0:
+				r = rot + Vector3(0, 180, 0)
+		elif maxf(s.x, s.z) < 0.07 or minf(s.x, s.z) < 0.03:
+			kind = "box"
+		else:
+			kind = "cyl"
+	var sides := 4 if kind == "box" else (8 if maxf(s.x, s.z) >= 0.2 else 6)
+	var sh := {"part": part, "kind": kind, "c": c, "s": s, "color": color, "bot": color.darkened(shade),
+		"tt": tt, "tb": tb, "rot": r, "sides": sides, "segs": 1, "bulge": 0.0,
+		"area": s.x * s.y + s.y * s.z + s.x * s.z, "ess": bool(parts.get("_ess", false)),
+		"main": false, "order": parts["_boxes"].size(), "nu": 8, "nv": 6}
+	if kind == "dome":
+		sh["nu"] = 6; sh["nv"] = 2
+	parts["_boxes"].append(sh)
+	return sh
 
 
-## Drop boxes sealed inside a bigger box on the same part (skin under sleeves, etc.).
-static func _drop_hidden(boxes: Array) -> void:
-	var keep: Array = []
-	for a in boxes:
-		var hidden := false
-		for b in boxes:
-			if b == a or b["part"] != a["part"] or b["area"] <= a["area"] or b["rot"] != Vector3.ZERO:
-				continue
-			if _inside_all(a, b):
-				hidden = true
-				break
-		if not hidden:
-			keep.append(a)
-	boxes.clear()
-	boxes.append_array(keep)
+## Ellipsoid (heads, beards, hoods, hair). jaw < 1 narrows the lower half.
+static func ell(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color,
+		bot: Color, nu := 8, nv := 6, jaw := 1.0, rot := Vector3.ZERO) -> Dictionary:
+	parts["_kind"] = "ell"
+	var sh := bx(parts, part, c, s, color, Vector2.ONE, Vector2.ONE, rot, 0.0)
+	parts["_kind"] = ""
+	sh["bot"] = bot; sh["nu"] = nu; sh["nv"] = nv; sh["jaw"] = jaw
+	return sh
 
 
-const FACES := [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]
+## Dome: upper half-ellipsoid on a flat base (c = base centre, s.y = height).
+static func dome(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color,
+		bot: Color, nu := 6, nv := 2, rot := Vector3.ZERO) -> Dictionary:
+	parts["_kind"] = "dome"
+	var sh := bx(parts, part, c, s, color, Vector2.ONE, Vector2.ONE, rot, 0.0)
+	parts["_kind"] = ""
+	sh["bot"] = bot; sh["nu"] = nu; sh["nv"] = nv
+	return sh
 
 
-## Drop single faces buried inside another box on the same part (the top of a
-## shin inside a knee, a sleeve end inside a glove...). Saves triangles for gear.
-static func _cull_faces(boxes: Array) -> void:
-	var info := []
-	for b in boxes:
-		var cs := _corners(b)
-		var r := 0.0
-		for p in cs:
-			r = maxf(r, (p - (b["c"] as Vector3)).length())
-		info.append({"cs": cs, "r": r})
-	for i in boxes.size():
-		var a: Dictionary = boxes[i]
-		var cs: Array = info[i]["cs"]
-		var faces: Array = a["faces"]
-		var n := 0
-		for fi in 6:
-			var f: Array = FACES[fi]
-			for j in boxes.size():
-				if j == i:
-					continue
-				var b: Dictionary = boxes[j]
-				if b["part"] != a["part"] or b["rot"] != Vector3.ZERO:
-					continue
-				if ((a["c"] as Vector3) - (b["c"] as Vector3)).length() > info[i]["r"] + info[j]["r"]:
-					continue
-				var all_in := true
-				for k in f:
-					if not _point_in(cs[k], b, 0.003):
-						all_in = false
-						break
-				if all_in:
-					faces[fi] = false
-					break
-			if faces[fi]:
-				n += 1
-		a["tris"] = n * 2
+## Lofted tube through rings [[y, rx, rz, Color], ...] (y local to the part).
+static func loft(parts: Dictionary, part: String, rings: Array, sides := 8, x := 0.0, z := 0.0) -> Dictionary:
+	var y0 := float(rings[0][0]); var y1 := float(rings[rings.size() - 1][0])
+	var w := 0.0; var d := 0.0
+	for r in rings:
+		w = maxf(w, float(r[1]) * 2.0); d = maxf(d, float(r[2]) * 2.0)
+	parts["_kind"] = "loft"
+	var sh := bx(parts, part, Vector3(x, 0, z), Vector3(w, absf(y1 - y0), d), rings[rings.size() - 1][3])
+	parts["_kind"] = ""
+	sh["rings"] = rings
+	sh["sides"] = sides
+	return sh
 
 
-static func _point_in(p: Vector3, b: Dictionary, tol: float) -> bool:
-	var bs: Vector3 = b["s"]
-	var l: Vector3 = p - (b["c"] as Vector3)
-	var hy := bs.y * 0.5
-	if absf(l.y) > hy + tol:
-		return false
-	var f := clampf((l.y + hy) / (2.0 * hy), 0.0, 1.0)
-	var sx: float = lerpf(b["tb"].x, b["tt"].x, f) * bs.x * 0.5
-	var sz: float = lerpf(b["tb"].y, b["tt"].y, f) * bs.z * 0.5
-	return absf(l.x) <= sx + tol and absf(l.z) <= sz + tol
-
-
-static func _corners(a: Dictionary) -> Array:
-	var s: Vector3 = a["s"]; var tt: Vector2 = a["tt"]; var tb: Vector2 = a["tb"]
-	var hx := s.x * 0.5; var hy := s.y * 0.5; var hz := s.z * 0.5
-	var basis := Basis.from_euler(a["rot"] * (PI / 180.0))
-	var out := []
-	for v in [Vector3(-hx * tb.x, -hy, -hz * tb.y), Vector3(hx * tb.x, -hy, -hz * tb.y),
-			Vector3(hx * tb.x, -hy, hz * tb.y), Vector3(-hx * tb.x, -hy, hz * tb.y),
-			Vector3(-hx * tt.x, hy, -hz * tt.y), Vector3(hx * tt.x, hy, -hz * tt.y),
-			Vector3(hx * tt.x, hy, hz * tt.y), Vector3(-hx * tt.x, hy, hz * tt.y)]:
-		out.append(basis * v + a["c"])
-	return out
-
-
-static func _inside_all(a: Dictionary, b: Dictionary) -> bool:
-	var bs: Vector3 = b["s"]; var bc: Vector3 = b["c"]
-	var hy := bs.y * 0.5
-	for p in _corners(a):
-		var l: Vector3 = p - bc
-		if absf(l.y) > hy - 0.002:
-			return false
-		var f := (l.y + hy) / (2.0 * hy)
-		var sx: float = lerpf(b["tb"].x, b["tt"].x, f) * bs.x * 0.5
-		var sz: float = lerpf(b["tb"].y, b["tt"].y, f) * bs.z * 0.5
-		if absf(l.x) > sx - 0.002 or absf(l.z) > sz - 0.002:
-			return false
-	return true
-
-
-## Keep boxes until the triangle cap. LOD0 keeps everything if it fits, then sheds
-## the smallest trim first (never the body). LOD1 ranks purely by size.
-static func _fit(boxes: Array, cap: int, far: bool) -> Array:
-	var ranked := boxes.duplicate()
-	if far:
-		ranked.sort_custom(func(x, y): return x["area"] > y["area"])
-	else:
-		ranked.sort_custom(func(x, y):
-			if x["ess"] != y["ess"]:
-				return x["ess"]
-			if x["main"] != y["main"]:
-				return x["main"]
-			return x["area"] > y["area"])
-	var out: Array = []
-	var n := 0
-	for b in ranked:
-		var t := int(b["tris"])
-		if t == 0:
-			continue
-		if far and float(b["area"]) < 0.012:
-			continue
-		if n + t > cap:
-			continue
-		out.append(b)
-		n += t
-	out.sort_custom(func(x, y): return x["order"] < y["order"])
-	return out
-
-
-static func _tris(list: Array) -> int:
-	var n := 0
-	for b in list:
-		n += int(b["tris"])
-	return n
-
-
-static func _commit(list: Array, rest: Dictionary) -> ArrayMesh:
-	var st := SurfaceTool.new()
-	st.set_skin_weight_count(SurfaceTool.SKIN_4_WEIGHTS)
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var faces := [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]
-	var bones := PackedInt32Array([0, 0, 0, 0])
-	var weights := PackedFloat32Array([1.0, 0.0, 0.0, 0.0])
-	for a in list:
-		var r: Dictionary = rest[a["part"]]
-		var xf: Transform3D = r["xf"]
-		bones[0] = int(r["bone"])
-		var w := []
-		for v in _corners(a):
-			w.append(xf * v)
-		var cc: Vector3 = xf * (a["c"] as Vector3)
-		var color: Color = a["color"]
-		var bot := color.darkened(float(a["shade"]))
-		var cols := [bot, bot, bot, bot, color, color, color, color]
-		var mask: Array = a["faces"]
-		for fi in 6:
-			if not mask[fi]:
-				continue
-			var f: Array = faces[fi]
-			var fc: Vector3 = (w[f[0]] + w[f[1]] + w[f[2]] + w[f[3]]) * 0.25
-			var out: Vector3 = fc - cc
-			for tri in [[f[0], f[1], f[2]], [f[0], f[2], f[3]]]:
-				var p0: Vector3 = w[tri[0]]; var p1: Vector3 = w[tri[1]]; var p2: Vector3 = w[tri[2]]
-				var n := (p1 - p0).cross(p2 - p0)
-				if n.length_squared() < 1e-14:
-					n = out
-				var order := [tri[0], tri[1], tri[2]]
-				# Godot front faces are clockwise when seen from outside.
-				if n.dot(out) > 0.0:
-					order = [tri[0], tri[2], tri[1]]
-					n = -n
-				var nn := -n.normalized()
-				for idx in order:
-					st.set_normal(nn)
-					st.set_color(cols[idx])
-					st.set_bones(bones)
-					st.set_weights(weights)
-					st.add_vertex(w[idx])
-	return st.commit()
+## Smooth limb segment: 6-sided tapered cylinder with a muscle bulge.
+static func limb(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color,
+		tt := Vector2.ONE, tb := Vector2.ONE, bulge := 0.08, segs := 2, shade := 0.12) -> Dictionary:
+	parts["_kind"] = "cyl"
+	var sh := bx(parts, part, c, s, color, tt, tb, Vector3.ZERO, shade)
+	parts["_kind"] = ""
+	sh["sides"] = 6; sh["segs"] = segs; sh["bulge"] = bulge
+	return sh
 
 
 # ---------------------------------------------------------------- body + underclothes
 
 static func _body(parts: Dictionary, P: Dictionary, gear: Dictionary) -> void:
 	var skin: Color = P["skin"]
-	var sw: float = P["sw"]; var hw: float = P["hw"]; var limb: float = P["limb"]; var belly: float = P["belly"]
+	var sw: float = P["sw"]; var hw: float = P["hw"]; var L: float = P["limb"]; var belly: float = P["belly"]
 	var under: Color = P["under"]; var shorts: Color = P["shorts"]
+	var shadow := skin.darkened(0.18)
+	var pt: Dictionary = P["paint"]
 	parts["_ess"] = true
-	# chest part is local to Hips (y 0.92)
-	bx(parts, "chest", Vector3(0, 0.04, 0), Vector3(hw, 0.17, 0.22), shorts, Vector2(1.02, 1.0), Vector2(0.95, 0.95))
-	bx(parts, "chest", Vector3(0, 0.17, 0.0 + belly * 0.5), Vector3(hw * 0.92 + belly, 0.12, 0.2 + belly), under, Vector2(1.0, 1.0), Vector2(1.0, 1.0), Vector3.ZERO, 0.1)
-	bx(parts, "chest", Vector3(0, 0.35, 0), Vector3(sw, 0.26, 0.25), under, Vector2(1.0, 1.0), Vector2(0.78, 0.86), Vector3.ZERO, 0.12)
-	# trapezius / shoulder top in skin, neck base
-	bx(parts, "chest", Vector3(0, 0.5, -0.01), Vector3(sw * 0.72, 0.05, 0.2), skin, Vector2(0.7, 0.8))
-	# Head (local to neck pivot y 1.45)
+	# Torso: one 8-sided loft, hips -> waist -> chest -> rounded shoulders -> neck base.
+	# Chest wider than the waist; the stout build gets a belly ring.
+	var waist: Color = pt["waist"]
+	loft(parts, "chest", [
+		[-0.07, hw * 0.50, 0.105, (pt["hip"] as Color).darkened(0.15)],
+		[0.085, hw * 0.52 + belly * 0.5, 0.115 + belly * 0.5, pt["hip"]],
+		[0.20, hw * 0.47 + belly, 0.108 + belly, waist.darkened(0.06)],
+		[0.35, sw * 0.47, 0.135, pt["chest"]],
+		[0.465, sw * 0.5, 0.12, pt["shoulder"]],
+		[0.54, sw * 0.22, 0.075, (pt["shoulder"] as Color).darkened(0.05)],
+	], 8, 0.0, belly * 0.3)
+	# Head: ellipsoid with a jaw taper, chin, nose, mouth, brow shadow. No eyes.
 	var h := "head"
-	bx(parts, h, Vector3(0, 0.03, 0), Vector3(0.12, 0.09, 0.12), skin.darkened(0.08))
-	bx(parts, h, Vector3(0, 0.2, 0), Vector3(0.29, 0.31, 0.28), skin, Vector2(1.0, 1.0), Vector2(0.8, 0.88), Vector3.ZERO, 0.12)
-	# brow ridge: casts the shadow where eyes would be (no eyes drawn)
-	bx(parts, h, Vector3(0, 0.255, 0.145), Vector3(0.26, 0.045, 0.04), skin.darkened(0.12), Vector2(1, 1), Vector2(1, 1), Vector3(-12, 0, 0), 0.35)
-	# nose wedge
-	bx(parts, h, Vector3(0, 0.18, 0.15), Vector3(0.05, 0.09, 0.05), skin.darkened(0.05), Vector2(0.6, 0.4), Vector2(1.0, 1.2), Vector3.ZERO, 0.25)
-	# mouth
-	bx(parts, h, Vector3(0, 0.1, 0.143), Vector3(0.09, 0.018, 0.012), Color(0.38, 0.18, 0.15), Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
-	# cheeks / jaw planes for the faceted look
-	# Ears hide under hoods and helms (they used to poke through as two dots).
-	var hs := str(item(str(gear.get("head", ""))).get("style", ""))
-	for sx in [-1.0, 1.0]:
-		bx(parts, h, Vector3(sx * 0.1, 0.13, 0.12), Vector3(0.07, 0.08, 0.05), skin.darkened(0.04), Vector2(0.8, 0.8), Vector2(1, 1), Vector3(0, sx * 25.0, 0), 0.15)
-		if not hs in ["hood", "crest", "kettle"]:
-			bx(parts, h, Vector3(sx * 0.152, 0.19, 0.0), Vector3(0.03, 0.08, 0.06), skin.darkened(0.1))
+	limb(parts, h, Vector3(0, 0.035, -0.005), Vector3(0.11, 0.12, 0.11), skin.darkened(0.1), Vector2(0.95, 0.95), Vector2.ONE, 0.0, 1)
+	var head := ell(parts, h, Vector3(0, 0.205, 0.0), Vector3(0.27, 0.32, 0.28), skin.lightened(0.03), shadow, 8, 6, 0.7)
+	head["chin"] = 0.18
+	parts["_kind"] = "box"
+	bx(parts, h, Vector3(0, 0.175, 0.135), Vector3(0.042, 0.075, 0.05), skin.darkened(0.04), Vector2(0.55, 0.3), Vector2(1.0, 1.0), Vector3(-8, 0, 0), 0.25)
+	parts["_kind"] = "quad"
+	# brow shadow band where eyes would be (painted, no eyes), mouth, cheek blush
+	bx(parts, h, Vector3(0, 0.235, 0.123), Vector3(0.17, 0.035, 0.01), skin.darkened(0.3), Vector2(1.0, 1.0), Vector2(0.85, 1.0), Vector3(-8, 0, 0), 0.25)
+	bx(parts, h, Vector3(0, 0.112, 0.125), Vector3(0.07, 0.016, 0.01), Color(0.42, 0.20, 0.17), Vector2(1.1, 1), Vector2(0.9, 1), Vector3(14, 0, 0), 0.0)
+	parts["_kind"] = ""
 	parts["_ess"] = false
 	var head_item := item(str(gear.get("head", "")))
-	var covers := str(head_item.get("style", "")) in ["hood", "crest", "kettle"]
-	var cap := str(head_item.get("style", "")) in ["cap", "brim"]
+	var hs := str(head_item.get("style", ""))
+	var covers := hs in ["hood", "crest", "kettle"]
+	var cap := hs in ["cap", "brim"]
+	if not covers:
+		parts["_kind"] = "quad"
+		for sx in [-1.0, 1.0]:
+			bx(parts, h, Vector3(sx * 0.133, 0.19, 0.0), Vector3(0.05, 0.075, 0.0), skin.darkened(0.1), Vector2(0.8, 1), Vector2(0.9, 1), Vector3(0, sx * 90.0, 0), 0.2)
+		parts["_kind"] = ""
 	_hair(parts, P, covers, cap)
 	if P["beard"]:
 		var hc: Color = P["hair_col"]
-		bx(parts, h, Vector3(0, 0.065, 0.11), Vector3(0.22, 0.1, 0.1), hc, Vector2(1.0, 1.0), Vector2(0.6, 0.7))
-		bx(parts, h, Vector3(0, 0.125, 0.15), Vector3(0.12, 0.02, 0.02), hc)
-	# Arms: short undershirt sleeve, skin below, oversized hands
+		var bd := ell(parts, h, Vector3(0, 0.1, 0.055), Vector3(0.24, 0.17, 0.2), hc, hc.darkened(0.2), 6, 4, 0.55)
+		bd["chin"] = 0.25
 	parts["_ess"] = true
 	for s in ["l", "r"]:
-		var t := limb
-		bx(parts, "arm_" + s, Vector3(0, -0.02, 0), Vector3(0.15 * t, 0.12, 0.15 * t), under, Vector2(0.9, 0.9))
-		bx(parts, "arm_" + s, Vector3(0, -0.16, 0), Vector3(0.12 * t, 0.26, 0.12 * t), skin, Vector2(1, 1), Vector2(0.88, 0.88))
-		bx(parts, "fore_" + s, Vector3(0, -0.12, 0), Vector3(0.105 * t, 0.25, 0.105 * t), skin, Vector2(1, 1), Vector2(0.85, 0.85), Vector3.ZERO, 0.12)
-		bx(parts, "fore_" + s, Vector3(0, -0.31, 0.01), Vector3(0.115, 0.13, 0.095), skin, Vector2(1, 1), Vector2(0.9, 0.8))
-		# thumb block
 		var sx := 1.0 if s == "l" else -1.0
-		bx(parts, "fore_" + s, Vector3(-sx * 0.0, -0.29, 0.06), Vector3(0.04, 0.07, 0.04), skin.darkened(0.06))
-		# Legs: shorts top, skin below, bare feet
-		bx(parts, "leg_" + s, Vector3(0, -0.08, 0), Vector3(0.17, 0.17, 0.18), shorts, Vector2(1.0, 1.0), Vector2(0.95, 0.95))
-		bx(parts, "leg_" + s, Vector3(0, -0.29, 0), Vector3(0.14, 0.26, 0.15), skin, Vector2(1, 1), Vector2(0.85, 0.85))
-		bx(parts, "shin_" + s, Vector3(0, -0.2, 0), Vector3(0.12, 0.38, 0.13), skin, Vector2(1, 1), Vector2(0.8, 0.8))
-		bx(parts, "shin_" + s, Vector3(0, -0.445, 0.04), Vector3(0.12, 0.08, 0.22), skin.darkened(0.06), Vector2(1.0, 0.8))
+		# Upper arm with a rounded shoulder cap (sleeve colour at the top).
+		var up: Color = pt["upper"]
+		loft(parts, "arm_" + s, [
+			[0.055, 0.04 * L, 0.045 * L, up],
+			[-0.02, 0.06 * L, 0.063 * L, up.darkened(0.03)],
+			[-0.3, 0.05 * L, 0.052 * L, (pt["upper_lo"] as Color).darkened(0.08)],
+		], 6)
+		limb(parts, "fore_" + s, Vector3(0, -0.12, 0), Vector3(0.1 * L, 0.26, 0.1 * L), pt["fore"], Vector2(1.0, 1.0), Vector2(0.78, 0.74), 0.1, 1)
+		# Mitten hand with a thumb.
+		var hc2: Color = pt["hand"]
+		var hand := limb(parts, "fore_" + s, Vector3(0, -0.305, 0.008), Vector3(0.085, 0.13, 0.075), hc2.lightened(0.02), Vector2(0.95, 0.95), Vector2(0.72, 0.6), 0.15, 1, 0.15)
+		hand["main"] = true
+		parts["_kind"] = "box"
+		bx(parts, "fore_" + s, Vector3(-sx * 0.0, -0.285, 0.05), Vector3(0.035, 0.07, 0.035), hc2.darkened(0.05), Vector2(0.7, 0.7), Vector2.ONE, Vector3(-25, 0, 0))
+		parts["_kind"] = ""
+		# Thick thigh (shorts on top) and a calf with a bulge, bare foot with a toe.
+		loft(parts, "leg_" + s, [
+			[0.04, 0.085, 0.09, pt["thigh"]],
+			[-0.1, 0.094, 0.1, (pt["thigh"] as Color).darkened(0.04)],
+			[-0.43, 0.06, 0.066, (pt["knee"] as Color).darkened(0.1)],
+		], 6)
+		limb(parts, "shin_" + s, Vector3(0, -0.2, 0), Vector3(0.12, 0.42, 0.13), pt["calf"], Vector2(1.0, 1.0), Vector2(0.65, 0.68), 0.16, 2)
+		# Foot (a boot gets a bigger rounded toe).
+		var boot: bool = pt["boot"]
+		var fs := Vector3(0.13, 0.09, 0.27) if boot else Vector3(0.11, 0.07, 0.23)
+		var foot := limb(parts, "shin_" + s, Vector3(0, -0.44, 0.05), fs, (pt["foot"] as Color).darkened(0.04), Vector2(0.85, 0.8), Vector2(1.0, 1.0), 0.0, 1, 0.3)
+		foot["main"] = true
+		if boot:
+			foot["sides"] = 8
 	parts["_ess"] = false
 
 
@@ -466,31 +378,31 @@ static func _hair(parts: Dictionary, P: Dictionary, covered: bool, cap: bool) ->
 	var h := "head"
 	if covered or style == "bald":
 		return
+	var dark := hc.darkened(0.25)
 	if not cap:
-		bx(parts, h, Vector3(0, 0.37, -0.01), Vector3(0.31, 0.06, 0.3), hc, Vector2(0.9, 0.85))
-		# chunky fringe blocks above the brow
-		for i in 3:
-			bx(parts, h, Vector3(-0.09 + i * 0.09, 0.33, 0.13), Vector3(0.09, 0.07, 0.05), hc.lightened(0.04 * i), Vector2(1, 1), Vector2(0.7, 1.0), Vector3(-15, 0, 0))
-	# sides and back
-	bx(parts, h, Vector3(0, 0.25, -0.13), Vector3(0.31, 0.2, 0.06), hc)
-	for sx in [-1.0, 1.0]:
-		bx(parts, h, Vector3(sx * 0.15, 0.28, -0.03), Vector3(0.03, 0.14, 0.2), hc)
+		# Sculpted skull cap of hair, swept a little back, with a fringe.
+		dome(parts, h, Vector3(0, 0.235, -0.012), Vector3(0.295, 0.15, 0.305), hc.lightened(0.06), hc, 8, 3)
+		parts["_kind"] = "box"
+		bx(parts, h, Vector3(0, 0.3, 0.12), Vector3(0.2, 0.05, 0.05), hc, Vector2(1, 1), Vector2(0.8, 1.0), Vector3(-25, 0, 0))
+		parts["_kind"] = ""
+	# Back and sides of the hair: a rounded shell behind the ears.
+	var back := ell(parts, h, Vector3(0, 0.22, -0.05), Vector3(0.29, 0.26, 0.22), hc, dark, 6, 4, 0.9)
 	match style:
 		"long":
-			bx(parts, h, Vector3(0, 0.08, -0.15), Vector3(0.3, 0.3, 0.06), hc, Vector2(1, 1), Vector2(0.85, 1))
+			limb(parts, h, Vector3(0, 0.05, -0.11), Vector3(0.26, 0.28, 0.08), hc, Vector2(1, 1), Vector2(0.8, 1.1), 0.05, 1, 0.3)
 		"topknot":
 			if not cap:
-				bx(parts, h, Vector3(0, 0.44, -0.04), Vector3(0.1, 0.1, 0.1), hc, Vector2(0.7, 0.7))
+				ell(parts, h, Vector3(0, 0.41, -0.05), Vector3(0.09, 0.09, 0.09), hc, dark, 6, 4)
 		"shag":
-			for i in 4:
-				bx(parts, h, Vector3(-0.12 + i * 0.08, 0.12, -0.14), Vector3(0.07, 0.14, 0.05), hc.darkened(0.05 * (i % 2)))
+			limb(parts, h, Vector3(0, 0.1, -0.1), Vector3(0.28, 0.12, 0.1), hc, Vector2(1, 1), Vector2(1.1, 1.0), 0.0, 1, 0.3)
 		"braid":
-			bx(parts, h, Vector3(0, 0.08, -0.17), Vector3(0.07, 0.16, 0.07), hc)
-			bx(parts, h, Vector3(0, -0.06, -0.18), Vector3(0.06, 0.14, 0.06), hc.darkened(0.08))
+			limb(parts, h, Vector3(0, 0.06, -0.16), Vector3(0.07, 0.16, 0.07), hc, Vector2(0.9, 0.9), Vector2(0.8, 0.8), 0.15, 1)
+			limb(parts, h, Vector3(0, -0.08, -0.17), Vector3(0.06, 0.14, 0.06), dark, Vector2(0.9, 0.9), Vector2(0.6, 0.6), 0.15, 1)
 
 
 static func _weapon(parts: Dictionary, weapon: String) -> void:
 	var f := "fore_r"
+	parts["_kind"] = "" if weapon == "staff" else "box"
 	match weapon:
 		"staff":
 			var wood := Color(0.42, 0.30, 0.18)
@@ -541,6 +453,106 @@ static func _staff_glow(nodes: Dictionary) -> void:
 
 # ---------------------------------------------------------------- gear pieces
 
+## N64-style clothing: most cloth and armour is PAINTED onto the body's own
+## vertex colours (like the real late-90s models), so a full outfit costs few
+## extra triangles. Only silhouette pieces (skirts, robes, helmets, pauldrons,
+## cuffs, cloaks) and painted trim add geometry.
+static func _paint(P: Dictionary, gear: Dictionary, tints: Dictionary) -> Dictionary:
+	var skin: Color = P["skin"]
+	var under: Color = P["under"]
+	var shorts: Color = P["shorts"]
+	var pt := {"hip": shorts, "waist": under, "chest": under, "shoulder": under, "upper": under,
+		"upper_lo": skin, "fore": skin, "hand": skin, "thigh": shorts, "knee": skin, "calf": skin,
+		"foot": skin, "boot": false}
+	var get_it := func(slot: String) -> Dictionary:
+		var id := str(gear.get(slot, ""))
+		if id == "":
+			return {}
+		var it := item(id)
+		if it.is_empty():
+			return {}
+		if tints.has(slot):
+			it = it.duplicate()
+			it["color"] = tints[slot]
+		return it
+	var c: Color
+	var it: Dictionary = get_it.call("pants")
+	if not it.is_empty():
+		c = col(it.get("color", "#6b5a44"))
+		var st := str(it.get("style", ""))
+		pt["hip"] = c
+		if st != "kilt":
+			pt["thigh"] = c; pt["knee"] = c
+			pt["calf"] = Color(0.78, 0.72, 0.6) if st == "breeches" else c.darkened(0.05)
+	it = get_it.call("shirt")
+	if not it.is_empty():
+		c = col(it.get("color", "#6b5a44"))
+		pt["waist"] = c; pt["chest"] = c; pt["shoulder"] = c
+		if str(it.get("style", "")) != "vest":
+			pt["upper"] = c
+		if str(it.get("style", "")) in ["smock", "quilted", "doublet"]:
+			pt["upper_lo"] = c; pt["fore"] = c.darkened(0.04)
+	it = get_it.call("cuirass")
+	if not it.is_empty():
+		c = col(it.get("color", "#6b5a44"))
+		pt["chest"] = c; pt["shoulder"] = c.lightened(0.05)
+		if str(it.get("style", "")) != "chain":
+			pt["waist"] = c.darkened(0.08)
+		else:
+			pt["waist"] = c; pt["upper"] = c
+	it = get_it.call("greaves")
+	if not it.is_empty():
+		c = col(it.get("color", "#6b5a44"))
+		pt["calf"] = c
+		if str(it.get("style", "")) in ["plate", "brass", "chain"]:
+			pt["knee"] = c
+		if str(it.get("style", "")) == "chain":
+			pt["thigh"] = c
+	it = get_it.call("boots")
+	if not it.is_empty():
+		c = col(it.get("color", "#6b5a44"))
+		var bs := str(it.get("style", ""))
+		if bs != "sandals":
+			pt["foot"] = c
+			pt["boot"] = true
+		if bs in ["tall", "fur", "sabatons"]:
+			pt["calf"] = c.darkened(0.04)
+	for g in ["glove_l", "glove_r"]:
+		it = get_it.call(g)
+		if not it.is_empty():
+			c = col(it.get("color", "#6b5a44"))
+			var gs := str(it.get("style", ""))
+			if gs != "bracer":
+				pt["hand"] = c
+			if gs in ["bracer", "gauntlet", "chitin"]:
+				pt["fore"] = c
+	it = get_it.call("robe")
+	if not it.is_empty() and str(it.get("style", "")) in ["robe", "coat"]:
+		c = col(it.get("color", "#6b5a44"))
+		pt["waist"] = c; pt["chest"] = c; pt["shoulder"] = c; pt["upper"] = c
+		pt["upper_lo"] = c; pt["fore"] = c.darkened(0.05)
+	return pt
+
+
+## Open flared cylinder (skirts, sleeves, cuffs, bands): 8 or 6 sides, no end caps.
+static func skirt(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color,
+		flare := 1.3, sides := 8, shade := 0.3) -> Dictionary:
+	var sh := limb(parts, part, c, s, color, Vector2.ONE, Vector2(flare, flare), 0.0, 1, shade)
+	sh["sides"] = sides
+	sh["caps"] = false
+	return sh
+
+
+static func trim(parts: Dictionary, part: String, c: Vector3, s: Vector3, color: Color, rot := Vector3.ZERO) -> Dictionary:
+	parts["_kind"] = "quad"
+	var r := rot
+	if c.z < 0.0:
+		r = rot + Vector3(0, 180, 0)
+	var sh := bx(parts, part, c, s, color, Vector2.ONE, Vector2.ONE, r, 0.0)
+	parts["_kind"] = ""
+	return sh
+
+
 static func _draw_item(parts: Dictionary, P: Dictionary, slot: String, it: Dictionary) -> void:
 	var c := col(it.get("color", "#6b5a44"))
 	var t := col(it.get("trim", ""), c.darkened(0.3))
@@ -548,241 +560,179 @@ static func _draw_item(parts: Dictionary, P: Dictionary, slot: String, it: Dicti
 	var sw: float = P["sw"]; var hw: float = P["hw"]; var L: float = P["limb"]; var belly: float = P["belly"]
 	var side := slot.right(1)
 	var sx := 1.0 if side == "l" else -1.0
+	var fz := 0.142 + belly * 0.9   # front of the chest for painted trim
 	match slot:
 		"head":
 			_head_item(parts, style, c, t)
 		"shirt":
-			var long := style in ["smock", "quilted", "doublet"]
-			bx(parts, "chest", Vector3(0, 0.34, belly * 0.3), Vector3(sw + 0.02, 0.36, 0.27 + belly), c, Vector2(1, 1), Vector2(0.78, 0.86), Vector3.ZERO, 0.15)
-			bx(parts, "chest", Vector3(0, 0.12, belly * 0.5), Vector3(hw * 0.95 + 0.02 + belly, 0.14, 0.22 + belly), c.darkened(0.06))
-			if style == "vest":
-				bx(parts, "chest", Vector3(0, 0.3, 0.14 + belly * 0.5), Vector3(0.05, 0.4, 0.02), t)
-				for s2 in [-1.0, 1.0]:
-					bx(parts, "chest", Vector3(s2 * sw * 0.3, 0.3, 0.14), Vector3(sw * 0.26, 0.36, 0.02), t.lightened(0.05))
-			else:
-				for s3 in ["l", "r"]:
-					bx(parts, "arm_" + s3, Vector3(0, -0.06, 0), Vector3(0.16 * L, 0.2, 0.16 * L), c, Vector2(0.95, 0.95))
-					if long:
-						bx(parts, "arm_" + s3, Vector3(0, -0.2, 0), Vector3(0.135 * L, 0.2, 0.135 * L), c.darkened(0.04))
-						bx(parts, "fore_" + s3, Vector3(0, -0.11, 0), Vector3(0.12 * L, 0.24, 0.12 * L), c.darkened(0.06), Vector2(1, 1), Vector2(0.9, 0.9))
-			if style == "quilted":
-				for i in 4:
-					bx(parts, "chest", Vector3(0, 0.2 + i * 0.08, 0.135 + belly * 0.3), Vector3(sw * 0.9, 0.012, 0.012), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
-			if style == "doublet":
-				for i in 4:
-					bx(parts, "chest", Vector3(0, 0.2 + i * 0.08, 0.14 + belly * 0.3), Vector3(0.035, 0.03, 0.02), t)
-			if style == "tunic":
-				bx(parts, "chest", Vector3(0, 0.46, 0.11), Vector3(0.14, 0.05, 0.04), t)
+			match style:
+				"tunic", "smock":
+					# Body-shaped tunic with a flared skirt.
+					skirt(parts, "chest", Vector3(0, -0.04, belly * 0.4), Vector3(hw + 0.05 + belly, 0.2, 0.235 + belly), c.darkened(0.05), 1.22)
+					trim(parts, "chest", Vector3(0, 0.47, 0.115), Vector3(0.12, 0.05, 0.0), t)
+				"vest":
+					for s2 in [-1.0, 1.0]:
+						trim(parts, "chest", Vector3(s2 * sw * 0.16, 0.3, fz), Vector3(sw * 0.2, 0.32, 0.0), t)
+				"quilted":
+					for i in 3:
+						trim(parts, "chest", Vector3(0, 0.22 + i * 0.09, fz), Vector3(sw * 0.75, 0.014, 0.0), t)
+				"doublet":
+					trim(parts, "chest", Vector3(0, 0.3, fz), Vector3(0.03, 0.3, 0.0), t)
 		"pants":
 			if style == "kilt":
-				bx(parts, "chest", Vector3(0, -0.07, 0), Vector3(hw + 0.08, 0.36, 0.28), c, Vector2(1, 1), Vector2(1.18, 1.18), Vector3.ZERO, 0.25)
-				for i in 3:
-					bx(parts, "chest", Vector3(-0.1 + i * 0.1, -0.07, 0.15), Vector3(0.014, 0.34, 0.012), t, Vector2.ONE, Vector2(1.2, 1), Vector3.ZERO, 0.0)
-			else:
-				bx(parts, "chest", Vector3(0, 0.05, 0), Vector3(hw + 0.02, 0.19, 0.24), c)
-				for s4 in ["l", "r"]:
-					var wide := 1.15 if style == "wide" else 1.0
-					bx(parts, "leg_" + s4, Vector3(0, -0.2, 0), Vector3(0.18 * wide, 0.44, 0.19 * wide), c, Vector2(1, 1), Vector2(0.9, 0.9))
-					if style == "breeches":
-						bx(parts, "shin_" + s4, Vector3(0, -0.02, 0), Vector3(0.15, 0.08, 0.16), t)
-						bx(parts, "shin_" + s4, Vector3(0, -0.2, 0), Vector3(0.13, 0.32, 0.14), Color(0.78, 0.72, 0.6), Vector2(1, 1), Vector2(0.85, 0.85))
-					else:
-						bx(parts, "shin_" + s4, Vector3(0, -0.17, 0), Vector3(0.14 * wide, 0.36, 0.15 * wide), c.darkened(0.04), Vector2(1, 1), Vector2(0.9 * wide, 0.9 * wide))
-					if style == "padded":
-						for i in 3:
-							bx(parts, "leg_" + s4, Vector3(0, -0.06 - i * 0.12, 0.1), Vector3(0.17, 0.014, 0.012), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
+				var k := skirt(parts, "chest", Vector3(0, -0.1, belly * 0.3), Vector3(hw + 0.07 + belly, 0.34, 0.25 + belly), c, 1.28)
+				k["main"] = true
+				trim(parts, "chest", Vector3(0, -0.24, 0.16 + belly * 0.5), Vector3(0.18, 0.04, 0.0), t)
 		"boots":
 			for s5 in ["l", "r"]:
-				var foot_c := c
 				match style:
 					"sandals":
-						bx(parts, "shin_" + s5, Vector3(0, -0.478, 0.04), Vector3(0.14, 0.025, 0.25), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.1)
-						bx(parts, "shin_" + s5, Vector3(0, -0.44, 0.06), Vector3(0.13, 0.02, 0.04), t)
-						bx(parts, "shin_" + s5, Vector3(0, -0.36, 0), Vector3(0.13, 0.02, 0.14), t)
-					"shoes":
-						bx(parts, "shin_" + s5, Vector3(0, -0.44, 0.045), Vector3(0.14, 0.095, 0.25), foot_c, Vector2(1, 0.85))
-						bx(parts, "shin_" + s5, Vector3(0, -0.385, 0.0), Vector3(0.135, 0.04, 0.15), t)
+						var so := limb(parts, "shin_" + s5, Vector3(0, -0.478, 0.05), Vector3(0.13, 0.025, 0.25), c, Vector2.ONE, Vector2.ONE, 0.0, 1, 0.1)
+						so["main"] = true
 					"tall", "fur":
-						bx(parts, "shin_" + s5, Vector3(0, -0.44, 0.05), Vector3(0.15, 0.1, 0.27), foot_c, Vector2(1, 0.85))
-						bx(parts, "shin_" + s5, Vector3(0, -0.24, 0), Vector3(0.145, 0.34, 0.155), foot_c.darkened(0.05), Vector2(1.05, 1.05))
-						bx(parts, "shin_" + s5, Vector3(0, -0.06, 0), Vector3(0.17, 0.07, 0.18), t, Vector2(1.1, 1.1))
-						if style == "fur":
-							bx(parts, "shin_" + s5, Vector3(0, -0.02, 0), Vector3(0.19, 0.09, 0.2), t.lightened(0.1), Vector2(1.15, 1.15))
+						var cf := skirt(parts, "shin_" + s5, Vector3(0, -0.05, 0), Vector3(0.15, 0.08, 0.16), t if style == "tall" else t.lightened(0.15), 1.12, 6, 0.2)
+						cf["main"] = true
 					"sabatons":
-						bx(parts, "shin_" + s5, Vector3(0, -0.44, 0.05), Vector3(0.15, 0.1, 0.28), c, Vector2(0.9, 0.8), Vector2.ONE, Vector3.ZERO, 0.3)
-						for i in 3:
-							bx(parts, "shin_" + s5, Vector3(0, -0.41, 0.1 + i * 0.045), Vector3(0.152, 0.02, 0.02), t)
-						bx(parts, "shin_" + s5, Vector3(0, -0.33, 0), Vector3(0.145, 0.12, 0.155), c.darkened(0.05))
+						for i in 2:
+							trim(parts, "shin_" + s5, Vector3(0, -0.42, 0.175 - i * 0.05), Vector3(0.12, 0.018, 0.0), t, Vector3(-60, 0, 0))
 		"greaves":
 			for s6 in ["l", "r"]:
-				# knee cop
-				bx(parts, "shin_" + s6, Vector3(0, 0.0, 0.05), Vector3(0.15, 0.11, 0.1), t, Vector2(0.8, 0.8), Vector2(1, 1), Vector3.ZERO, 0.3)
-				match style:
-					"chain":
-						bx(parts, "leg_" + s6, Vector3(0, -0.22, 0), Vector3(0.195, 0.4, 0.2), c, Vector2(1, 1), Vector2(0.9, 0.9), Vector3.ZERO, 0.15)
-						bx(parts, "shin_" + s6, Vector3(0, -0.18, 0), Vector3(0.155, 0.3, 0.165), c.darkened(0.05))
-					"chitin":
-						bx(parts, "shin_" + s6, Vector3(0, -0.18, 0.03), Vector3(0.16, 0.32, 0.14), c, Vector2(1.1, 1.2), Vector2(0.8, 0.9), Vector3.ZERO, 0.35)
-						bx(parts, "leg_" + s6, Vector3(0, -0.24, 0.04), Vector3(0.19, 0.3, 0.16), c.darkened(0.05), Vector2(1.1, 1.1), Vector2(0.9, 0.9))
-					_:
-						bx(parts, "shin_" + s6, Vector3(0, -0.18, 0.02), Vector3(0.16, 0.32, 0.16), c, Vector2(1.08, 1.08), Vector2(0.88, 0.88), Vector3.ZERO, 0.3)
-						if style == "plate" or style == "brass":
-							bx(parts, "leg_" + s6, Vector3(0, -0.22, 0.03), Vector3(0.2, 0.36, 0.17), c.lightened(0.04), Vector2(1, 1), Vector2(0.88, 0.88), Vector3.ZERO, 0.3)
-						if style == "brass":
-							bx(parts, "shin_" + s6, Vector3(0, -0.1, 0.1), Vector3(0.162, 0.03, 0.02), t)
-							bx(parts, "shin_" + s6, Vector3(0, -0.26, 0.095), Vector3(0.15, 0.03, 0.02), t)
+				var kc := dome(parts, "shin_" + s6, Vector3(0, 0.0, 0.035), Vector3(0.13, 0.07, 0.1), t, t.darkened(0.3), 5, 1, Vector3(70, 0, 0))
+				kc["main"] = true
 		"cuirass":
-			var d := 0.3 + belly
-			var w := sw + 0.06
 			match style:
 				"chain":
-					bx(parts, "chest", Vector3(0, 0.3, belly * 0.4), Vector3(w, 0.44, d), c, Vector2(1, 1), Vector2(0.86, 0.9), Vector3.ZERO, 0.18)
-					bx(parts, "chest", Vector3(0, 0.0, 0), Vector3(hw + 0.08, 0.2, 0.27), c.darkened(0.06), Vector2(1, 1), Vector2(1.1, 1.1))
-					for s7 in ["l", "r"]:
-						bx(parts, "arm_" + s7, Vector3(0, -0.07, 0), Vector3(0.17 * L, 0.22, 0.17 * L), c)
+					skirt(parts, "chest", Vector3(0, 0.0, belly * 0.4), Vector3(hw + 0.06 + belly, 0.14, 0.24 + belly), c.darkened(0.06), 1.15)
 				"leather":
-					bx(parts, "chest", Vector3(0, 0.32, belly * 0.4), Vector3(w, 0.38, d), c, Vector2(1, 1), Vector2(0.8, 0.88), Vector3.ZERO, 0.2)
-					bx(parts, "chest", Vector3(0, 0.33, 0.155 + belly * 0.5), Vector3(0.025, 0.34, 0.02), t)
-					for s8 in [-1.0, 1.0]:
-						bx(parts, "chest", Vector3(s8 * 0.07, 0.3, 0.155 + belly * 0.5), Vector3(0.025, 0.02, 0.02), t)
+					trim(parts, "chest", Vector3(0, 0.32, fz + 0.003), Vector3(0.025, 0.3, 0.0), t)
+					trim(parts, "chest", Vector3(0, 0.18, fz - 0.01), Vector3(hw * 0.9, 0.025, 0.0), t)
 				_:
-					# plate / scale / brass: chunky breastplate + backplate + tassets
-					bx(parts, "chest", Vector3(0, 0.33, belly * 0.4 + 0.01), Vector3(w, 0.38, d), c, Vector2(1.05, 1.0), Vector2(0.8, 0.88), Vector3.ZERO, 0.32)
-					bx(parts, "chest", Vector3(0, 0.36, 0.16 + belly * 0.5), Vector3(sw * 0.55, 0.22, 0.03), c.lightened(0.08), Vector2(0.9, 1), Vector2(0.7, 1), Vector3(-6, 0, 0), 0.25)
-					bx(parts, "chest", Vector3(0, 0.5, 0), Vector3(sw * 0.7, 0.04, d - 0.02), t)
-					bx(parts, "chest", Vector3(0, 0.12, belly * 0.4), Vector3(hw + 0.08, 0.06, d - 0.04), t)
-					for s9 in [-1.0, 1.0]:
-						bx(parts, "chest", Vector3(s9 * hw * 0.3, -0.02, 0.07), Vector3(hw * 0.45, 0.2, 0.18), c.darkened(0.06), Vector2(1, 1), Vector2(1.1, 1.1), Vector3(-6, 0, s9 * 6), 0.3)
+					# Rounded breastplate shell plus flared tassets.
+					var bp := limb(parts, "chest", Vector3(0, 0.33, belly * 0.4 + 0.005), Vector3(sw * 0.97 + 0.02, 0.3, 0.29 + belly), c.lightened(0.06), Vector2(0.92, 0.8), Vector2(0.88, 0.92), 0.06, 1, 0.3)
+					bp["sides"] = 8; bp["caps"] = false; bp["main"] = true
+					skirt(parts, "chest", Vector3(0, 0.02, belly * 0.4), Vector3(hw + 0.07 + belly, 0.16, 0.25 + belly), c.darkened(0.08), 1.2)
 					if style == "scale":
-						for i in 4:
-							bx(parts, "chest", Vector3(0, 0.2 + i * 0.075, 0.165 + belly * 0.4), Vector3(w * 0.85 - i * 0.02, 0.015, 0.012), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
+						for i in 3:
+							trim(parts, "chest", Vector3(0, 0.24 + i * 0.075, 0.17 + belly * 0.4), Vector3(sw * 0.7 - i * 0.02, 0.014, 0.0), t)
 					if style == "brass":
-						bx(parts, "chest", Vector3(0, 0.26, 0.165 + belly * 0.5), Vector3(w * 0.8, 0.03, 0.02), t)
-						bx(parts, "chest", Vector3(0, 0.38, 0.17 + belly * 0.5), Vector3(w * 0.7, 0.03, 0.02), t)
+						trim(parts, "chest", Vector3(0, 0.28, 0.17 + belly * 0.5), Vector3(sw * 0.7, 0.03, 0.0), t)
+						trim(parts, "chest", Vector3(0, 0.40, 0.165 + belly * 0.5), Vector3(sw * 0.6, 0.03, 0.0), t)
 		"belt":
-			var bw := hw * 0.98 + 0.05 + belly
+			var bw := hw * 0.98 + 0.03 + belly
 			var y := 0.12
+			var band := skirt(parts, "chest", Vector3(0, y, belly * 0.5), Vector3(bw, 0.05 if style != "sash" else 0.08, 0.23 + belly), c, 1.0, 8, 0.15)
+			band["main"] = true
 			match style:
 				"rope":
-					bx(parts, "chest", Vector3(0, y, belly * 0.5), Vector3(bw, 0.035, 0.24 + belly), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.1)
-					bx(parts, "chest", Vector3(0.06, y - 0.08, 0.13 + belly), Vector3(0.025, 0.14, 0.025), c)
+					trim(parts, "chest", Vector3(0.06, y - 0.07, 0.125 + belly), Vector3(0.025, 0.12, 0.0), c)
 				"sash":
-					bx(parts, "chest", Vector3(0, y, belly * 0.5), Vector3(bw, 0.09, 0.25 + belly), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.15)
-					bx(parts, "chest", Vector3(-0.09, y - 0.12, 0.13 + belly), Vector3(0.07, 0.2, 0.02), c.darkened(0.08), Vector2(1, 1), Vector2(1.2, 1))
+					trim(parts, "chest", Vector3(-0.08, y - 0.11, 0.125 + belly), Vector3(0.07, 0.18, 0.0), c.darkened(0.08))
 				_:
-					bx(parts, "chest", Vector3(0, y, belly * 0.5), Vector3(bw, 0.06, 0.25 + belly), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.1)
-					bx(parts, "chest", Vector3(0, y, 0.13 + belly), Vector3(0.07, 0.07, 0.02), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
+					trim(parts, "chest", Vector3(0, y, 0.124 + belly), Vector3(0.06, 0.05, 0.0), t)
 					if style == "pouches" or style == "coin":
+						parts["_kind"] = "box"
 						for s10 in [-1.0, 1.0]:
-							bx(parts, "chest", Vector3(s10 * bw * 0.4, y - 0.07, 0.1), Vector3(0.08, 0.1, 0.06), t.darkened(0.2), Vector2(0.9, 0.9))
-					if style == "plate":
-						bx(parts, "chest", Vector3(0, y + 0.02, 0.13 + belly), Vector3(bw * 0.6, 0.1, 0.02), t)
+							bx(parts, "chest", Vector3(s10 * bw * 0.4, y - 0.06, 0.09), Vector3(0.07, 0.09, 0.05), t.darkened(0.2), Vector2(0.9, 0.9))
+						parts["_kind"] = ""
 		"glove_l", "glove_r":
 			var f := "fore_" + side
 			match style:
-				"wraps":
-					bx(parts, f, Vector3(0, -0.29, 0.01), Vector3(0.122, 0.07, 0.1), c)
-					bx(parts, f, Vector3(0, -0.2, 0), Vector3(0.112, 0.06, 0.112), c.darkened(0.06))
 				"bracer":
-					bx(parts, f, Vector3(0, -0.13, 0), Vector3(0.125 * L, 0.2, 0.125 * L), c, Vector2(1.1, 1.1), Vector2(0.95, 0.95), Vector3.ZERO, 0.3)
-					bx(parts, f, Vector3(0, -0.13, 0.0), Vector3(0.13 * L, 0.03, 0.13 * L), t)
+					var br := skirt(parts, f, Vector3(0, -0.15, 0), Vector3(0.105 * L, 0.16, 0.105 * L), t, 1.0, 6, 0.2)
+					br["main"] = true
 				"gauntlet", "chitin":
-					bx(parts, f, Vector3(0, -0.32, 0.01), Vector3(0.14, 0.15, 0.115), c, Vector2(1, 1), Vector2(0.9, 0.8), Vector3.ZERO, 0.3)
-					bx(parts, f, Vector3(0, -0.17, 0), Vector3(0.14 * L, 0.18, 0.14 * L), c.lightened(0.04), Vector2(1.18, 1.18), Vector2(0.95, 0.95), Vector3.ZERO, 0.3)
-					bx(parts, f, Vector3(0, -0.26, 0.065), Vector3(0.12, 0.025, 0.02), t)
-				_:
-					bx(parts, f, Vector3(0, -0.31, 0.01), Vector3(0.128, 0.14, 0.108), c, Vector2(1, 1), Vector2(0.9, 0.8))
-					bx(parts, f, Vector3(0, -0.21, 0), Vector3(0.125 * L, 0.08, 0.125 * L), t, Vector2(1.1, 1.1))
+					var gc := skirt(parts, f, Vector3(0, -0.2, 0), Vector3(0.115 * L, 0.1, 0.115 * L), c.lightened(0.05), 0.85, 6, 0.3)
+					gc["main"] = true
+				"leather":
+					var lc := skirt(parts, f, Vector3(0, -0.225, 0), Vector3(0.1 * L, 0.05, 0.1 * L), t, 0.95, 6, 0.1)
+					lc["main"] = true
 		"pauldron_l", "pauldron_r":
+			# Rounded shoulder guards: domes tipped out over the shoulder.
 			var a := "arm_" + side
-			var tilt := Vector3(0, 0, sx * 18.0)
+			var tilt := Vector3(0, 0, sx * 22.0)
 			match style:
 				"fur":
-					bx(parts, a, Vector3(sx * 0.02, 0.02, 0), Vector3(0.24 * L, 0.12, 0.24 * L), c, Vector2(0.8, 0.8), Vector2(1.1, 1.1), tilt, 0.35)
-				"chitin":
-					bx(parts, a, Vector3(sx * 0.03, 0.03, 0), Vector3(0.22 * L, 0.1, 0.24 * L), c, Vector2(0.55, 0.7), Vector2(1.1, 1.1), tilt, 0.4)
-					bx(parts, a, Vector3(sx * 0.05, -0.05, 0), Vector3(0.2 * L, 0.07, 0.22 * L), c.darkened(0.08), Vector2(0.9, 0.9), Vector2(1.1, 1.1), tilt, 0.3)
-				"layered", "brass":
-					for i in 3:
-						bx(parts, a, Vector3(sx * (0.02 + i * 0.012), 0.04 - i * 0.055, 0), Vector3((0.22 - i * 0.01) * L, 0.06, (0.23 - i * 0.01) * L), c.darkened(0.05 * i), Vector2(0.85, 0.85), Vector2(1, 1), tilt, 0.3)
-					if style == "brass":
-						bx(parts, a, Vector3(sx * 0.01, 0.075, 0), Vector3(0.14 * L, 0.03, 0.16 * L), t, Vector2(0.8, 0.8))
+					var pf := dome(parts, a, Vector3(sx * 0.01, -0.02, 0), Vector3(0.22 * L, 0.12, 0.23 * L), c.lightened(0.05), c.darkened(0.2), 6, 2, tilt)
+					pf["main"] = true
+				"chitin", "layered", "brass":
+					var p1 := dome(parts, a, Vector3(sx * 0.015, 0.0, 0), Vector3(0.22 * L, 0.1, 0.23 * L), c, c.darkened(0.3), 6, 2, tilt)
+					p1["main"] = true
+					dome(parts, a, Vector3(sx * 0.04, -0.07, 0), Vector3(0.2 * L, 0.07, 0.22 * L), c.darkened(0.08), c.darkened(0.3), 6, 1, tilt)
 				_:
-					bx(parts, a, Vector3(sx * 0.02, 0.02, 0), Vector3(0.23 * L, 0.13, 0.24 * L), c, Vector2(0.6, 0.7), Vector2(1.05, 1.05), tilt, 0.35)
-					bx(parts, a, Vector3(sx * 0.035, -0.045, 0), Vector3(0.235 * L, 0.025, 0.245 * L), t, Vector2.ONE, Vector2.ONE, tilt)
+					var pd := dome(parts, a, Vector3(sx * 0.01, -0.03, 0), Vector3(0.23 * L, 0.13, 0.24 * L), c.lightened(0.06), c.darkened(0.25), 6, 2, tilt)
+					pd["main"] = true
 		"robe":
 			match style:
 				"robe", "coat":
-					var length := 0.98 if style == "robe" else 0.7
-					var cy := 0.14 - length * 0.5
-					bx(parts, "chest", Vector3(0, 0.33, belly * 0.4), Vector3(sw + 0.08, 0.4, 0.31 + belly), c, Vector2(1, 1), Vector2(0.85, 0.9), Vector3.ZERO, 0.15)
-					bx(parts, "chest", Vector3(0, cy, 0), Vector3(hw + 0.14 + belly, length, 0.3 + belly), c.darkened(0.04), Vector2(1, 1), Vector2(1.45, 1.35), Vector3.ZERO, 0.3)
-					bx(parts, "chest", Vector3(0, cy, 0.16 + belly * 0.5), Vector3(0.05, length, 0.02), t, Vector2.ONE, Vector2(1.0, 1.4), Vector3(-9, 0, 0), 0.1)
+					var length := 0.9 if style == "robe" else 0.62
+					var cy := 0.12 - length * 0.5
+					var rb := skirt(parts, "chest", Vector3(0, cy, belly * 0.3), Vector3(hw + 0.07 + belly, length, 0.25 + belly), c.darkened(0.04), 1.55)
+					rb["main"] = true
+					trim(parts, "chest", Vector3(0, cy, 0.17 + belly * 0.5), Vector3(0.05, length, 0.0), t, Vector3(-11, 0, 0))
 					for s11 in ["l", "r"]:
-						bx(parts, "arm_" + s11, Vector3(0, -0.12, 0), Vector3(0.18 * L, 0.3, 0.18 * L), c, Vector2(1, 1), Vector2(1.05, 1.05))
-						bx(parts, "fore_" + s11, Vector3(0, -0.1, 0), Vector3(0.15 * L, 0.24, 0.15 * L), c.darkened(0.05), Vector2(1, 1), Vector2(1.25, 1.25))
-						bx(parts, "fore_" + s11, Vector3(0, -0.22, 0), Vector3(0.19 * L, 0.03, 0.19 * L), t)
+						skirt(parts, "fore_" + s11, Vector3(0, -0.17, 0), Vector3(0.12 * L, 0.14, 0.12 * L), c.darkened(0.06), 1.35, 6)
 				"cloak":
-					bx(parts, "chest", Vector3(0, -0.02, -0.17 - belly * 0.3), Vector3(sw + 0.16, 1.02, 0.05), c, Vector2(0.85, 1), Vector2(1.25, 1), Vector3(8, 0, 0), 0.3)
-					bx(parts, "chest", Vector3(0, 0.5, -0.02), Vector3(sw + 0.1, 0.07, 0.3), c.lightened(0.04), Vector2(0.85, 0.9))
-					bx(parts, "chest", Vector3(0, 0.49, 0.15), Vector3(0.06, 0.06, 0.03), t)
+					var ck := limb(parts, "chest", Vector3(0, -0.02, -0.165 - belly * 0.3), Vector3(sw + 0.14, 1.0, 0.06), c, Vector2(0.8, 1), Vector2(1.2, 1), 0.0, 1, 0.3)
+					ck["rot"] = Vector3(7, 0, 0); ck["sides"] = 8; ck["main"] = true
+					skirt(parts, "chest", Vector3(0, 0.49, -0.01), Vector3(sw * 0.62, 0.07, 0.24), c.lightened(0.05), 1.25, 8, 0.2)
+					trim(parts, "chest", Vector3(0, 0.47, 0.135), Vector3(0.05, 0.05, 0.0), t)
 				"tabard":
-					bx(parts, "chest", Vector3(0, 0.12, 0.16 + belly * 0.5), Vector3(sw * 0.6, 0.78, 0.025), c, Vector2(1, 1), Vector2(0.9, 1), Vector3.ZERO, 0.2)
-					bx(parts, "chest", Vector3(0, 0.12, -0.16), Vector3(sw * 0.6, 0.78, 0.025), c, Vector2(1, 1), Vector2(0.9, 1), Vector3.ZERO, 0.2)
-					bx(parts, "chest", Vector3(0, 0.3, 0.175 + belly * 0.5), Vector3(sw * 0.3, 0.12, 0.01), t)
+					var tb1 := trim(parts, "chest", Vector3(0, 0.14, 0.15 + belly * 0.5), Vector3(sw * 0.55, 0.74, 0.0), c)
+					tb1["main"] = true
+					trim(parts, "chest", Vector3(0, 0.14, -0.15), Vector3(sw * 0.55, 0.74, 0.0), c)
+					trim(parts, "chest", Vector3(0, 0.32, 0.153 + belly * 0.5), Vector3(sw * 0.26, 0.12, 0.0), t)
 				"mantle":
-					bx(parts, "chest", Vector3(0, 0.45, 0), Vector3(sw + 0.2, 0.18, 0.36 + belly), c, Vector2(0.8, 0.8), Vector2(1.05, 1.05), Vector3.ZERO, 0.3)
-					bx(parts, "chest", Vector3(0, 0.37, 0), Vector3(sw + 0.22, 0.03, 0.37 + belly), t)
+					var mt := dome(parts, "chest", Vector3(0, 0.37, belly * 0.2), Vector3(sw + 0.18, 0.18, 0.34 + belly), c, c.darkened(0.2), 8, 2)
+					mt["main"] = true
 		"amulet":
-			var z := 0.17 + belly * 0.5
-			bx(parts, "chest", Vector3(0, 0.44, z - 0.01), Vector3(0.16, 0.012, 0.012), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
-			match style:
-				"tooth":
-					bx(parts, "chest", Vector3(0, 0.37, z), Vector3(0.035, 0.08, 0.02), c, Vector2(1, 1), Vector2(0.2, 0.5), Vector3.ZERO, 0.1)
-				"key":
-					bx(parts, "chest", Vector3(0, 0.36, z), Vector3(0.02, 0.09, 0.015), c)
-					bx(parts, "chest", Vector3(0.015, 0.33, z), Vector3(0.03, 0.015, 0.015), c)
-				"knot":
-					bx(parts, "chest", Vector3(0, 0.375, z), Vector3(0.05, 0.05, 0.02), c, Vector2.ONE, Vector2.ONE, Vector3(0, 0, 45))
-				_:
-					bx(parts, "chest", Vector3(0, 0.375, z), Vector3(0.06, 0.06, 0.02), c, Vector2(0.7, 1), Vector2(0.7, 1), Vector3.ZERO, 0.1)
+			var z := 0.15 + belly * 0.5
+			trim(parts, "chest", Vector3(0, 0.44, z - 0.012), Vector3(0.14, 0.012, 0.0), t)
+			var am := trim(parts, "chest", Vector3(0, 0.38, z), Vector3(0.05 if style != "tooth" else 0.03, 0.06, 0.0), c)
+			am["main"] = true
 		"ring_l", "ring_r":
-			bx(parts, "fore_" + side, Vector3(0, -0.34, 0.058), Vector3(0.05, 0.02, 0.02), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
-			if style != "band":
-				bx(parts, "fore_" + side, Vector3(0, -0.34, 0.07), Vector3(0.025, 0.025, 0.012), t, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
+			parts["_kind"] = "box"
+			var rg := bx(parts, "fore_" + side, Vector3(0, -0.33, 0.042), Vector3(0.045, 0.02, 0.02), c, Vector2.ONE, Vector2.ONE, Vector3.ZERO, 0.0)
+			parts["_kind"] = ""
+			rg["main"] = true
 
 
 static func _head_item(parts: Dictionary, style: String, c: Color, t: Color) -> void:
 	var h := "head"
+	var dk := c.darkened(0.25)
 	match style:
 		"hood":
-			# Deep hood: open face, brow shadow under the rim. No eyes.
-			bx(parts, h, Vector3(0, 0.25, -0.02), Vector3(0.36, 0.37, 0.35), c, Vector2(0.86, 0.88), Vector2(1, 1), Vector3.ZERO, 0.25)
-			bx(parts, h, Vector3(0, 0.44, -0.06), Vector3(0.16, 0.1, 0.16), c, Vector2(0.3, 0.3), Vector2(1, 1), Vector3(-15, 0, 0))
-			bx(parts, h, Vector3(0, 0.33, 0.15), Vector3(0.3, 0.07, 0.06), c.darkened(0.08), Vector2(1, 1), Vector2(1, 1), Vector3(-20, 0, 0))
-			for s in [-1.0, 1.0]:
-				bx(parts, h, Vector3(s * 0.155, 0.17, 0.08), Vector3(0.045, 0.3, 0.14), c.darkened(0.05))
-			bx(parts, h, Vector3(0, -0.02, -0.01), Vector3(0.36, 0.1, 0.32), c.darkened(0.1), Vector2(1, 1), Vector2(1.2, 1.15))
+			# Sculpted deep hood: a rounded shell set back so the face shows, a soft
+			# peak, a rim that shades the brow, and a drape over the shoulders. No eyes.
+			var shell := ell(parts, h, Vector3(0, 0.235, -0.045), Vector3(0.345, 0.385, 0.33), c, dk, 8, 5, 0.92)
+			shell["main"] = true
+			ell(parts, h, Vector3(0, 0.40, -0.09), Vector3(0.14, 0.14, 0.15), c, c.darkened(0.1), 5, 3, 1.0, Vector3(-30, 0, 0))
+			limb(parts, h, Vector3(0, 0.33, 0.085), Vector3(0.3, 0.05, 0.1), c.darkened(0.12), Vector2(0.9, 0.9), Vector2(1, 1), 0.0, 1, 0.3)
+			limb(parts, h, Vector3(0, 0.0, -0.02), Vector3(0.34, 0.12, 0.3), c.darkened(0.08), Vector2(1, 1), Vector2(1.25, 1.2), 0.0, 1, 0.3)
 		"cap":
-			bx(parts, h, Vector3(0, 0.37, -0.01), Vector3(0.32, 0.1, 0.31), c, Vector2(0.85, 0.85), Vector2(1, 1), Vector3.ZERO, 0.2)
-			bx(parts, h, Vector3(0, 0.33, 0), Vector3(0.325, 0.04, 0.315), t)
+			dome(parts, h, Vector3(0, 0.27, -0.01), Vector3(0.315, 0.13, 0.32), c, c.darkened(0.12), 8, 2)
+			limb(parts, h, Vector3(0, 0.275, 0.0), Vector3(0.32, 0.035, 0.325), t, Vector2.ONE, Vector2.ONE, 0.0, 1, 0.1)
 		"brim":
-			bx(parts, h, Vector3(0, 0.38, 0), Vector3(0.3, 0.13, 0.29), c, Vector2(0.85, 0.85), Vector2(1, 1), Vector3.ZERO, 0.2)
-			bx(parts, h, Vector3(0, 0.33, 0.01), Vector3(0.52, 0.025, 0.5), c.darkened(0.08), Vector2.ONE, Vector2.ONE, Vector3(-4, 0, 0), 0.1)
-			bx(parts, h, Vector3(0, 0.36, 0), Vector3(0.305, 0.035, 0.295), t)
+			dome(parts, h, Vector3(0, 0.28, 0.0), Vector3(0.3, 0.17, 0.3), c, c.darkened(0.1), 8, 2)
+			limb(parts, h, Vector3(0, 0.29, 0.01), Vector3(0.52, 0.02, 0.5), c.darkened(0.08), Vector2.ONE, Vector2.ONE, 0.0, 1, 0.1)
+			limb(parts, h, Vector3(0, 0.31, 0), Vector3(0.305, 0.035, 0.305), t, Vector2.ONE, Vector2.ONE, 0.0, 1, 0.1)
 		"kettle":
-			bx(parts, h, Vector3(0, 0.37, -0.01), Vector3(0.33, 0.14, 0.32), c, Vector2(0.7, 0.7), Vector2(1, 1), Vector3.ZERO, 0.3)
-			bx(parts, h, Vector3(0, 0.3, 0), Vector3(0.46, 0.03, 0.44), c.darkened(0.06), Vector2.ONE, Vector2(0.95, 0.95), Vector3.ZERO, 0.2)
-			bx(parts, h, Vector3(0, 0.22, -0.12), Vector3(0.32, 0.18, 0.07), Color(0.42, 0.40, 0.38))
+			dome(parts, h, Vector3(0, 0.27, -0.01), Vector3(0.33, 0.18, 0.33), c, c.darkened(0.15), 8, 3)
+			limb(parts, h, Vector3(0, 0.27, 0), Vector3(0.46, 0.025, 0.44), c.darkened(0.06), Vector2.ONE, Vector2(0.95, 0.95), 0.0, 1, 0.2)
+			ell(parts, h, Vector3(0, 0.18, -0.08), Vector3(0.3, 0.2, 0.2), Color(0.42, 0.40, 0.38), Color(0.30, 0.29, 0.28), 6, 4)
 		"crest":
-			# Open-faced bronze helm with nose guard and crest. No eye slits.
-			bx(parts, h, Vector3(0, 0.34, -0.01), Vector3(0.34, 0.2, 0.33), c, Vector2(0.75, 0.75), Vector2(1, 1), Vector3.ZERO, 0.3)
-			bx(parts, h, Vector3(0, 0.2, 0.152), Vector3(0.035, 0.12, 0.03), c.darkened(0.05))
+			# Open-faced bronze helm, nose guard, cheek guards, crest. No eye slits.
+			var helm := dome(parts, h, Vector3(0, 0.245, -0.01), Vector3(0.33, 0.2, 0.33), c, c.darkened(0.2), 8, 3)
+			helm["main"] = true
+			parts["_kind"] = "box"
+			bx(parts, h, Vector3(0, 0.22, 0.155), Vector3(0.03, 0.11, 0.025), c.darkened(0.05))
+			parts["_kind"] = ""
 			for s2 in [-1.0, 1.0]:
-				bx(parts, h, Vector3(s2 * 0.16, 0.16, 0.06), Vector3(0.035, 0.18, 0.13), c.darkened(0.06), Vector2(1, 1), Vector2(0.9, 0.8))
-			bx(parts, h, Vector3(0, 0.18, -0.15), Vector3(0.3, 0.22, 0.04), c.darkened(0.08))
-			bx(parts, h, Vector3(0, 0.49, -0.02), Vector3(0.05, 0.1, 0.34), t, Vector2(1, 0.8), Vector2(1, 1), Vector3.ZERO, 0.2)
-			bx(parts, h, Vector3(0, 0.29, 0.0), Vector3(0.345, 0.03, 0.335), t)
+				limb(parts, h, Vector3(s2 * 0.145, 0.15, 0.04), Vector3(0.04, 0.17, 0.13), c.darkened(0.08), Vector2(1, 1), Vector2(0.8, 0.7), 0.0, 1, 0.25)
+			ell(parts, h, Vector3(0, 0.17, -0.09), Vector3(0.3, 0.22, 0.18), c.darkened(0.08), c.darkened(0.25), 6, 4)
+			parts["_kind"] = "box"
+			bx(parts, h, Vector3(0, 0.46, -0.02), Vector3(0.04, 0.09, 0.32), t, Vector2(1, 0.8), Vector2(1, 1), Vector3.ZERO, 0.2)
+			parts["_kind"] = ""
+			limb(parts, h, Vector3(0, 0.25, 0.0), Vector3(0.335, 0.03, 0.335), t, Vector2.ONE, Vector2.ONE, 0.0, 1, 0.1)
 
 
 # ---------------------------------------------------------------- animation
