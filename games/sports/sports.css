@@ -1,10 +1,12 @@
-/* OSN Sports — old newspaper sports section, on top of site style.css */
+/* OSN Sports — old newspaper sports section, large type for ages 7 to 90 */
 :root{
   --paper:#f1e6c8;
   --paper-dark:#e8d9b0;
   --ink:#1a1a1a;
   --spot:#8B1A1A;
   --rule:#1a1a1a;
+  --row:#fffdf6;
+  --row-alt:#efe3bd;
 }
 
 body.osn-paper{
@@ -13,7 +15,7 @@ body.osn-paper{
     repeating-linear-gradient(0deg, rgba(40,20,0,.035) 0, rgba(40,20,0,.035) 1px, transparent 1px, transparent 32px);
   color:var(--ink);
   font-family:"Lexend",sans-serif;
-  font-size:1.15rem;
+  font-size:20px;
   line-height:1.55;
 }
 
@@ -21,7 +23,7 @@ body.osn-paper a{color:var(--spot)}
 body.osn-paper a:hover,body.osn-paper a:focus{color:var(--ink);outline:3px solid var(--spot);outline-offset:2px}
 body.osn-paper .sports-nav a{color:var(--ink)}
 body.osn-paper .sports-nav a:hover,body.osn-paper .sports-nav a:focus{color:var(--spot);background:transparent;outline:3px solid var(--spot);outline-offset:2px}
-body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:transparent;box-shadow:inset 0 -3px 0 var(--spot)}
+body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:transparent;box-shadow:inset 0 -4px 0 var(--spot)}
 
 /* Masthead */
 .osn-masthead{
@@ -35,8 +37,8 @@ body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:t
 .osn-kicker{
   font-family:"Lexend",sans-serif;
   font-weight:800;
-  font-size:.95rem;
-  letter-spacing:.16em;
+  font-size:20px;
+  letter-spacing:.12em;
   text-transform:uppercase;
   margin:0 0 .25rem;
   color:var(--ink);
@@ -44,7 +46,7 @@ body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:t
 .osn-banner{
   font-family:"Playfair Display",Georgia,"Times New Roman",serif;
   font-weight:800;
-  font-size:clamp(2.4rem, 9vw, 4.4rem);
+  font-size:clamp(2.6rem, 9vw, 4.4rem);
   letter-spacing:.04em;
   line-height:.95;
   margin:.15rem 0 .35rem;
@@ -59,30 +61,44 @@ body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:t
 .osn-dateline{
   font-family:"Lexend",sans-serif;
   font-weight:600;
-  font-size:.95rem;
+  font-size:18px;
   letter-spacing:.08em;
   text-transform:uppercase;
   margin:.4rem auto 0;
   padding:.35rem 0 0;
   border-top:1px solid var(--ink);
-  max-width:40rem;
+  max-width:42rem;
   color:var(--ink);
 }
 
-/* Top crumbs on ink */
-body.osn-paper .top{background:var(--ink);color:var(--paper)}
-body.osn-paper .top a,body.osn-paper .top .back{color:var(--paper)}
+/* Top crumbs on ink — large, tappable */
+body.osn-paper .top{background:var(--ink);color:var(--paper);padding:.7rem 1rem}
+body.osn-paper .top a,body.osn-paper .top .back{
+  color:var(--paper);
+  font-size:18px;
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+}
 body.osn-paper .top a:hover,body.osn-paper .top a:focus{color:#fff;outline-color:var(--paper)}
-body.osn-paper .crumbs,body.osn-paper .crumbs a{color:#e8d6ae}
-body.osn-paper .crumbs li+li:before{color:var(--spot)}
+body.osn-paper .crumbs,body.osn-paper .crumbs a{
+  color:#f1e6c8;
+  font-size:16px;
+  letter-spacing:.06em;
+}
+body.osn-paper .crumbs a{
+  min-height:48px;
+  padding:.35rem 0;
+}
+body.osn-paper .crumbs li+li:before{color:#f1e6c8}
 body.osn-paper .crumbs [aria-current]{color:#fff}
 
-/* Section nav: column-rule links, wrap on phones */
+/* Section nav */
 .sports-nav{
   display:flex;
   flex-wrap:wrap;
   gap:0;
-  padding:.55rem .6rem;
+  padding:.55rem .4rem;
   justify-content:center;
   background:var(--paper);
   border-bottom:2px solid var(--ink);
@@ -91,12 +107,17 @@ body.osn-paper .crumbs [aria-current]{color:#fff}
   color:var(--ink);
   text-decoration:none;
   font-weight:800;
-  font-size:.95rem;
+  font-size:18px;
   border:0;
   border-right:1px solid var(--ink);
   border-radius:0;
-  padding:.4rem .7rem;
+  padding:.55rem .75rem;
   line-height:1.2;
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
 }
 .sports-nav a:last-child{border-right:0}
 .sports-nav a:hover,.sports-nav a:focus{
@@ -108,7 +129,7 @@ body.osn-paper .crumbs [aria-current]{color:#fff}
 .sports-nav a[aria-current="page"]{
   background:transparent;
   color:var(--spot);
-  box-shadow:inset 0 -3px 0 var(--spot);
+  box-shadow:inset 0 -4px 0 var(--spot);
 }
 
 /* Article headline */
@@ -124,82 +145,124 @@ body.osn-paper h1,body.osn-paper .hero h1,body.osn-paper h2,body.osn-paper h3{
   color:var(--ink);
 }
 body.osn-paper .hero h1{
-  font-size:clamp(2rem, 5.5vw, 3.1rem);
+  font-size:clamp(2.3rem, 6vw, 3.4rem);
   line-height:1.15;
   margin:.2rem 0 .4rem;
 }
 body.osn-paper .lead{
   font-family:"Lexend",sans-serif;
-  font-size:1.25rem;
-  font-weight:600;
+  font-size:22px;
+  font-weight:700;
   color:var(--spot);
 }
 body.osn-paper h2{
-  font-size:1.7rem;
+  font-size:clamp(1.8rem, 4vw, 2.2rem);
   border-bottom:2px solid var(--ink);
   padding-bottom:.2rem;
   margin-top:1.4rem;
 }
-body.osn-paper h3{font-size:1.4rem;margin:.2rem 0 .4rem;color:var(--ink)}
-body.osn-paper .summary{font-size:1.2rem;font-weight:600}
+body.osn-paper h3{font-size:1.55rem;margin:.2rem 0 .4rem;color:var(--ink)}
+body.osn-paper .summary,body.osn-paper .intro-easy{font-size:22px;font-weight:600;color:var(--ink)}
 body.osn-paper .quote{
   font-family:"Playfair Display",Georgia,serif;
   font-style:italic;
-  font-size:1.3rem;
+  font-size:1.35rem;
   border-left:4px solid var(--spot);
   padding:.2rem 0 .2rem 1rem;
   margin:1rem 0;
+  color:var(--ink);
 }
-body.osn-paper .note{font-size:1.05rem;color:#3a2a1a}
+body.osn-paper .note{font-size:20px;color:var(--ink)}
+body.osn-paper p,body.osn-paper li,body.osn-paper figcaption{color:var(--ink);font-size:20px}
+body.osn-paper .item figcaption{font-size:20px}
 
-/* Tables like a box score */
-.chart-wrap{overflow-x:auto;margin:1rem 0;-webkit-overflow-scrolling:touch}
+/* Tables like a box score: big rows, zebra, sticky header, no shrink */
+.chart-wrap{
+  overflow-x:auto;
+  margin:1rem 0;
+  -webkit-overflow-scrolling:touch;
+  border:2px solid var(--ink);
+  background:var(--row);
+}
 .chart{
   width:100%;
+  min-width:40rem;
   border-collapse:collapse;
-  background:#fffdf6;
-  border:2px solid var(--ink);
-  font-size:1.05rem;
+  background:var(--row);
+  border:0;
+  font-size:18px;
+  color:var(--ink);
 }
 .chart th{
   background:var(--ink);
   color:var(--paper);
   text-align:left;
-  padding:.55rem .65rem;
+  padding:.85rem .8rem;
   font-weight:800;
   font-family:"Lexend",sans-serif;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:1;
+  box-shadow:0 2px 0 var(--ink);
 }
-.chart td{border-bottom:1px solid #c9b98a;padding:.55rem .65rem;vertical-align:top}
-.chart tr:nth-child(even) td{background:#f6edd4}
+.chart td{
+  border-bottom:1px solid #c9b98a;
+  padding:.85rem .8rem;
+  vertical-align:top;
+  font-size:18px;
+  color:var(--ink);
+  background:var(--row);
+}
+.chart tr:nth-child(even) td{background:var(--row-alt)}
 
 /* Sidebars, share, cards */
 .soon-box{
-  background:#fffdf6;
+  background:var(--row);
   border:2px solid var(--ink);
   border-left:8px solid var(--spot);
   border-radius:0;
   padding:1rem 1.2rem;
   margin:1.2rem 0;
 }
-.soon-box h3{margin:.2rem 0 .4rem;color:var(--spot);font-size:1.4rem}
+.soon-box h3{margin:.2rem 0 .4rem;color:var(--spot);font-size:1.5rem}
 .share{
-  background:#fffdf6;
+  background:var(--row);
   border:2px solid var(--ink);
   border-radius:0;
   padding:1rem 1.2rem;
   margin:1.2rem 0;
 }
-.share code,.share a.share-url{font-size:1.05rem;font-weight:800;color:var(--spot);word-break:break-all}
+.share code,.share a.share-url{
+  font-size:20px;
+  font-weight:800;
+  color:var(--spot);
+  word-break:break-all;
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+}
 .play-art{width:100%;height:auto;border:2px solid var(--ink);border-radius:0;background:#0b2418;margin:.8rem 0}
 
 body.osn-paper .item{
-  background:#fffdf6;
+  background:var(--row);
   border:2px solid var(--ink);
   border-radius:0;
 }
 body.osn-paper .item img{background:var(--ink);border-bottom:2px solid var(--ink)}
-body.osn-paper .item figcaption b{color:var(--ink);font-family:"Playfair Display",Georgia,serif;font-size:1.25rem}
-body.osn-paper .badge,body.osn-paper .badge.fact{background:var(--spot);color:#fffdf6;border:2px solid var(--ink);border-radius:0}
+body.osn-paper .item figcaption b{color:var(--ink);font-family:"Playfair Display",Georgia,serif;font-size:1.35rem}
+body.osn-paper .badge,body.osn-paper .badge.fact{
+  background:var(--spot);
+  color:#fffdf6;
+  border:2px solid var(--ink);
+  border-radius:0;
+  font-size:16px;
+}
+body.osn-paper a.item,body.osn-paper .item a,body.osn-paper figcaption a{
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+}
 
 /* Staff / columnist headshots */
 .staff-box{margin:1.4rem 0 1.8rem;padding-top:.2rem}
@@ -211,27 +274,45 @@ body.osn-paper .badge,body.osn-paper .badge.fact{background:var(--spot);color:#f
 }
 .staff{
   margin:0;
-  background:#fffdf6;
+  background:var(--row);
   border:2px solid var(--ink);
   display:flex;
   flex-direction:column;
 }
 .staff img{width:100%;height:auto;display:block;background:var(--ink);border-bottom:2px solid var(--ink)}
-.staff figcaption{padding:.7rem .85rem}
+.staff figcaption{padding:.7rem .85rem;font-size:20px;color:var(--ink)}
 .staff figcaption b{
   display:block;
   font-family:"Playfair Display",Georgia,serif;
-  font-size:1.25rem;
+  font-size:1.35rem;
   color:var(--ink);
 }
-.staff figcaption span{display:block;margin-top:.2rem}
+.staff figcaption span{display:block;margin-top:.2rem;font-size:20px;color:var(--ink)}
 
-/* Buttons: big, tappable, newsprint */
+.feature-banner{
+  margin:1rem 0 1.4rem;
+  border:2px solid var(--ink);
+  background:var(--row);
+}
+.feature-banner img{width:100%;height:auto;display:block;background:var(--ink)}
+.feature-banner figcaption{
+  padding:.7rem .9rem;
+  font-size:20px;
+  font-weight:600;
+  color:var(--ink);
+}
+
+/* Buttons: at least 48px */
 body.osn-paper .btn,body.osn-paper .btn.alt,body.osn-paper a.btn,body.osn-paper a.btn.alt{
   background:var(--ink);
   color:var(--paper);
   border:3px solid var(--ink);
   border-radius:.25rem;
+  min-height:48px;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 body.osn-paper .btn.alt,body.osn-paper a.btn.alt{
   background:var(--paper);
@@ -245,9 +326,31 @@ body.osn-paper .btn.alt:hover,body.osn-paper .btn.alt:focus{
   outline-offset:2px;
 }
 
-body.osn-paper footer{background:var(--ink);color:var(--paper)}
+body.osn-paper footer{background:var(--ink);color:var(--paper);font-size:20px}
 body.osn-paper footer a{color:var(--paper)}
 body.osn-paper footer a:hover,body.osn-paper footer a:focus{color:#fff}
+
+/* Lang toggle: 48px taps */
+body.osn-paper .lang-toggle button{min-height:48px;min-width:48px}
+
+/* Timeline entries must not pick up portfolio-card styles */
+body.osn-paper .timeline .item{
+  display:block;
+  overflow:visible;
+  background:var(--row);
+  border:2px solid var(--ink);
+  border-radius:0;
+  margin:0 0 1rem;
+  padding:1rem 1rem 1.1rem;
+}
+body.osn-paper .timeline .item img{border:0}
+body.osn-paper .timeline .more a{
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+  font-size:20px;
+  font-weight:800;
+}
 
 @media (min-width:700px){
   .staff-grid,body.osn-paper .gallery{grid-template-columns:1fr 1fr}
@@ -255,7 +358,18 @@ body.osn-paper footer a:hover,body.osn-paper footer a:focus{color:#fff}
 @media (min-width:1100px){
   .staff-grid{grid-template-columns:1fr 1fr 1fr}
 }
-@media (max-width:519px){
-  .sports-nav a{border-right:0;border-bottom:1px solid #c9b98a;flex:1 1 46%;text-align:center}
-  body.osn-paper{font-size:1.12rem}
+/* Phones: one simple column, never shrink the type */
+@media (max-width:699px){
+  .staff-grid,body.osn-paper .gallery{grid-template-columns:1fr}
+  .sports-nav{flex-direction:column;align-items:stretch;padding:.2rem 0}
+  .sports-nav a{
+    border-right:0;
+    border-bottom:1px solid #c9b98a;
+    flex:1 1 auto;
+    width:100%;
+    text-align:center;
+    min-height:48px;
+  }
+  body.osn-paper{font-size:20px}
+  .chart{min-width:36rem;font-size:18px}
 }
