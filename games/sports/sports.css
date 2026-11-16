@@ -1,16 +1,261 @@
-/* Sports Universe portfolio — extras on top of site style.css */
-.sports-nav{display:flex;flex-wrap:wrap;gap:.5rem;padding:.9rem 1rem;justify-content:center;background:var(--deep)}
-.sports-nav a{color:var(--gold);text-decoration:none;font-weight:800;border:2px solid var(--gold);border-radius:.7rem;padding:.45rem .75rem;font-size:.95rem}
-.sports-nav a:hover,.sports-nav a:focus{background:var(--green);outline:3px solid var(--gold);outline-offset:2px}
-.sports-nav a[aria-current="page"]{background:var(--gold);color:var(--deep)}
+/* OSN Sports — old newspaper sports section, on top of site style.css */
+:root{
+  --paper:#f1e6c8;
+  --paper-dark:#e8d9b0;
+  --ink:#1a1a1a;
+  --spot:#8B1A1A;
+  --rule:#1a1a1a;
+}
+
+body.osn-paper{
+  background-color:var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(40,20,0,.035) 0, rgba(40,20,0,.035) 1px, transparent 1px, transparent 32px);
+  color:var(--ink);
+  font-family:"Lexend",sans-serif;
+  font-size:1.15rem;
+  line-height:1.55;
+}
+
+body.osn-paper a{color:var(--spot)}
+body.osn-paper a:hover,body.osn-paper a:focus{color:var(--ink);outline:3px solid var(--spot);outline-offset:2px}
+body.osn-paper .sports-nav a{color:var(--ink)}
+body.osn-paper .sports-nav a:hover,body.osn-paper .sports-nav a:focus{color:var(--spot);background:transparent;outline:3px solid var(--spot);outline-offset:2px}
+body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:transparent;box-shadow:inset 0 -3px 0 var(--spot)}
+
+/* Masthead */
+.osn-masthead{
+  text-align:center;
+  padding:1.1rem 1rem .85rem;
+  background:var(--paper-dark);
+  border-bottom:3px solid var(--ink);
+  box-shadow:0 4px 0 var(--ink);
+  margin-bottom:4px;
+}
+.osn-kicker{
+  font-family:"Lexend",sans-serif;
+  font-weight:800;
+  font-size:.95rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin:0 0 .25rem;
+  color:var(--ink);
+}
+.osn-banner{
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif;
+  font-weight:800;
+  font-size:clamp(2.4rem, 9vw, 4.4rem);
+  letter-spacing:.04em;
+  line-height:.95;
+  margin:.15rem 0 .35rem;
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.8rem;
+}
+.osn-banner .spot{color:var(--spot)}
+.osn-goalpost{flex:0 0 auto;color:var(--spot);display:block;width:36px;height:44px}
+.osn-dateline{
+  font-family:"Lexend",sans-serif;
+  font-weight:600;
+  font-size:.95rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin:.4rem auto 0;
+  padding:.35rem 0 0;
+  border-top:1px solid var(--ink);
+  max-width:40rem;
+  color:var(--ink);
+}
+
+/* Top crumbs on ink */
+body.osn-paper .top{background:var(--ink);color:var(--paper)}
+body.osn-paper .top a,body.osn-paper .top .back{color:var(--paper)}
+body.osn-paper .top a:hover,body.osn-paper .top a:focus{color:#fff;outline-color:var(--paper)}
+body.osn-paper .crumbs,body.osn-paper .crumbs a{color:#e8d6ae}
+body.osn-paper .crumbs li+li:before{color:var(--spot)}
+body.osn-paper .crumbs [aria-current]{color:#fff}
+
+/* Section nav: column-rule links, wrap on phones */
+.sports-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0;
+  padding:.55rem .6rem;
+  justify-content:center;
+  background:var(--paper);
+  border-bottom:2px solid var(--ink);
+}
+.sports-nav a{
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:800;
+  font-size:.95rem;
+  border:0;
+  border-right:1px solid var(--ink);
+  border-radius:0;
+  padding:.4rem .7rem;
+  line-height:1.2;
+}
+.sports-nav a:last-child{border-right:0}
+.sports-nav a:hover,.sports-nav a:focus{
+  background:transparent;
+  color:var(--spot);
+  outline:3px solid var(--spot);
+  outline-offset:2px;
+}
+.sports-nav a[aria-current="page"]{
+  background:transparent;
+  color:var(--spot);
+  box-shadow:inset 0 -3px 0 var(--spot);
+}
+
+/* Article headline */
+body.osn-paper .hero,body.osn-paper .hero.small-hero{
+  background:transparent;
+  color:var(--ink);
+  text-align:center;
+  padding:1.3rem 1rem .6rem;
+}
+body.osn-paper h1,body.osn-paper .hero h1,body.osn-paper h2,body.osn-paper h3{
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif;
+  font-weight:800;
+  color:var(--ink);
+}
+body.osn-paper .hero h1{
+  font-size:clamp(2rem, 5.5vw, 3.1rem);
+  line-height:1.15;
+  margin:.2rem 0 .4rem;
+}
+body.osn-paper .lead{
+  font-family:"Lexend",sans-serif;
+  font-size:1.25rem;
+  font-weight:600;
+  color:var(--spot);
+}
+body.osn-paper h2{
+  font-size:1.7rem;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:.2rem;
+  margin-top:1.4rem;
+}
+body.osn-paper h3{font-size:1.4rem;margin:.2rem 0 .4rem;color:var(--ink)}
+body.osn-paper .summary{font-size:1.2rem;font-weight:600}
+body.osn-paper .quote{
+  font-family:"Playfair Display",Georgia,serif;
+  font-style:italic;
+  font-size:1.3rem;
+  border-left:4px solid var(--spot);
+  padding:.2rem 0 .2rem 1rem;
+  margin:1rem 0;
+}
+body.osn-paper .note{font-size:1.05rem;color:#3a2a1a}
+
+/* Tables like a box score */
 .chart-wrap{overflow-x:auto;margin:1rem 0;-webkit-overflow-scrolling:touch}
-.chart{width:100%;border-collapse:collapse;background:#fff;border:4px solid var(--gold);font-size:1.05rem}
-.chart th{background:var(--green);color:var(--gold);text-align:left;padding:.55rem .65rem;font-weight:800}
-.chart td{border-bottom:2px solid #eee8d4;padding:.55rem .65rem;vertical-align:top}
-.chart tr:nth-child(even) td{background:#fff8e8}
-.soon-box{background:#fff3c4;border:3px dashed #b8860b;border-radius:.8rem;padding:1rem 1.2rem;margin:1.2rem 0}
-.soon-box h3{margin:.2rem 0 .4rem;color:var(--green);font-size:1.4rem}
-.note{font-size:1.05rem;color:#8a6d2a}
-.share{background:#fff;border:4px solid var(--gold);border-radius:1rem;padding:1rem 1.2rem;margin:1.2rem 0}
-.share code,.share a.share-url{font-size:1.05rem;font-weight:800;color:var(--green);word-break:break-all}
-.play-art{width:100%;height:auto;border:4px solid var(--gold);border-radius:1rem;background:#0b2418;margin:.8rem 0}
+.chart{
+  width:100%;
+  border-collapse:collapse;
+  background:#fffdf6;
+  border:2px solid var(--ink);
+  font-size:1.05rem;
+}
+.chart th{
+  background:var(--ink);
+  color:var(--paper);
+  text-align:left;
+  padding:.55rem .65rem;
+  font-weight:800;
+  font-family:"Lexend",sans-serif;
+}
+.chart td{border-bottom:1px solid #c9b98a;padding:.55rem .65rem;vertical-align:top}
+.chart tr:nth-child(even) td{background:#f6edd4}
+
+/* Sidebars, share, cards */
+.soon-box{
+  background:#fffdf6;
+  border:2px solid var(--ink);
+  border-left:8px solid var(--spot);
+  border-radius:0;
+  padding:1rem 1.2rem;
+  margin:1.2rem 0;
+}
+.soon-box h3{margin:.2rem 0 .4rem;color:var(--spot);font-size:1.4rem}
+.share{
+  background:#fffdf6;
+  border:2px solid var(--ink);
+  border-radius:0;
+  padding:1rem 1.2rem;
+  margin:1.2rem 0;
+}
+.share code,.share a.share-url{font-size:1.05rem;font-weight:800;color:var(--spot);word-break:break-all}
+.play-art{width:100%;height:auto;border:2px solid var(--ink);border-radius:0;background:#0b2418;margin:.8rem 0}
+
+body.osn-paper .item{
+  background:#fffdf6;
+  border:2px solid var(--ink);
+  border-radius:0;
+}
+body.osn-paper .item img{background:var(--ink);border-bottom:2px solid var(--ink)}
+body.osn-paper .item figcaption b{color:var(--ink);font-family:"Playfair Display",Georgia,serif;font-size:1.25rem}
+body.osn-paper .badge,body.osn-paper .badge.fact{background:var(--spot);color:#fffdf6;border:2px solid var(--ink);border-radius:0}
+
+/* Staff / columnist headshots */
+.staff-box{margin:1.4rem 0 1.8rem;padding-top:.2rem}
+.staff-grid{
+  display:grid;
+  gap:1rem;
+  grid-template-columns:1fr;
+  margin:1rem 0;
+}
+.staff{
+  margin:0;
+  background:#fffdf6;
+  border:2px solid var(--ink);
+  display:flex;
+  flex-direction:column;
+}
+.staff img{width:100%;height:auto;display:block;background:var(--ink);border-bottom:2px solid var(--ink)}
+.staff figcaption{padding:.7rem .85rem}
+.staff figcaption b{
+  display:block;
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:1.25rem;
+  color:var(--ink);
+}
+.staff figcaption span{display:block;margin-top:.2rem}
+
+/* Buttons: big, tappable, newsprint */
+body.osn-paper .btn,body.osn-paper .btn.alt,body.osn-paper a.btn,body.osn-paper a.btn.alt{
+  background:var(--ink);
+  color:var(--paper);
+  border:3px solid var(--ink);
+  border-radius:.25rem;
+}
+body.osn-paper .btn.alt,body.osn-paper a.btn.alt{
+  background:var(--paper);
+  color:var(--ink);
+}
+body.osn-paper .btn:hover,body.osn-paper .btn:focus,
+body.osn-paper .btn.alt:hover,body.osn-paper .btn.alt:focus{
+  background:var(--spot);
+  color:#fff;
+  outline:3px solid var(--ink);
+  outline-offset:2px;
+}
+
+body.osn-paper footer{background:var(--ink);color:var(--paper)}
+body.osn-paper footer a{color:var(--paper)}
+body.osn-paper footer a:hover,body.osn-paper footer a:focus{color:#fff}
+
+@media (min-width:700px){
+  .staff-grid,body.osn-paper .gallery{grid-template-columns:1fr 1fr}
+}
+@media (min-width:1100px){
+  .staff-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:519px){
+  .sports-nav a{border-right:0;border-bottom:1px solid #c9b98a;flex:1 1 46%;text-align:center}
+  body.osn-paper{font-size:1.12rem}
+}
