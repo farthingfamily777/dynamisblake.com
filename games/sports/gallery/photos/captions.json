@@ -1,0 +1,159 @@
+{
+ "title": "Photo Desk: from Blake's TV",
+ "note": "Phone photos of Blake's TV, College Football 27 dynasty and Madden franchise. Captions are short and plain. No em-dashes.",
+ "photos": [
+  {
+   "order": 1,
+   "file": "01-texas-51-georgia-7.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Texas 51, Georgia 7. Texas led 38-0 at halftime.",
+   "alt": "Final score by quarter: Georgia 7, Texas 51",
+   "source_photo": "/workspace/sports-universe-stage/album/001.jpg"
+  },
+  {
+   "order": 2,
+   "file": "02-iyiegbuniwe-player-of-the-game.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Lee Iyiegbuniwe was Player of the Game. The A&M receiver caught 3 touchdowns, and A&M beat Texas 41-37.",
+   "alt": "Player of the Game card for Texas A&M receiver Lee Iyiegbuniwe: 4 catches, 115 yards, 3 touchdowns",
+   "source_photo": "/workspace/sports-universe-stage/album/038.jpg"
+  },
+  {
+   "order": 3,
+   "file": "03-super-bowl-lxii-patriots-lead.jpg",
+   "width": 1600,
+   "height": 972,
+   "caption": "Super Bowl LXII: the Patriots lead the Giants 14-0. New England won 21-0.",
+   "alt": "Patriots on offense against the Giants in Super Bowl LXII, score 14-0",
+   "source_photo": "/workspace/sports-universe-stage/album/050.jpg"
+  },
+  {
+   "order": 4,
+   "file": "04-sec-title-winning-kick.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "SEC title game, tied 34-34 with 3 seconds left. A&M kicked a field goal and won 37-34.",
+   "alt": "Texas A&M lines up a field goal with the score tied 34-34 and 3 seconds left",
+   "source_photo": "/workspace/sports-universe-stage/album/062.jpg"
+  },
+  {
+   "order": 5,
+   "file": "05-heisman-lashawn-waddy.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "LaShawn Waddy won the 2032 Heisman Trophy. He caught 106 passes for 1,893 yards and 27 touchdowns.",
+   "alt": "2032 Heisman Trophy winner screen for receiver LaShawn Waddy",
+   "source_photo": "/workspace/sports-universe-stage/album/064.jpg"
+  },
+  {
+   "order": 6,
+   "file": "06-broyles-award-dion-swayne.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Dion Swayne won the Broyles Award. He was named Coordinator of the Year.",
+   "alt": "Broyles Award screen for offensive coordinator Dion Swayne",
+   "source_photo": "/workspace/sports-universe-stage/album/066.jpg"
+  },
+  {
+   "order": 7,
+   "file": "07-jet-award-david-keenoy.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "David Keenoy won the Jet Award as the best return man. He had 688 return yards.",
+   "alt": "2032 Jet Award screen for running back David Keenoy: 30 returns, 688 yards, 1 touchdown",
+   "source_photo": "/workspace/sports-universe-stage/album/067.jpg"
+  },
+  {
+   "order": 8,
+   "file": "08-fuehne-79-yard-pick-six.jpg",
+   "width": 1600,
+   "height": 1080,
+   "caption": "Vai Fuehne ran an interception back 79 yards for a touchdown. A&M beat Iowa State in the Peach Bowl.",
+   "alt": "Texas A&M number 7 Vai Fuehne after a 79-yard interception return touchdown",
+   "source_photo": "/workspace/sports-universe-stage/album/073.jpg"
+  },
+  {
+   "order": 9,
+   "file": "09-cadet-player-of-the-week.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Kameel Cadet caught 3 touchdowns. Clemson beat Pittsburgh in the first round of the playoff.",
+   "alt": "National Offensive Player of the Week screen for Clemson receiver Kameel Cadet: 6 catches, 140 yards, 3 touchdowns",
+   "source_photo": "/workspace/sports-universe-stage/album/087.jpg"
+  },
+  {
+   "order": 10,
+   "file": "10-cotton-bowl-clemson-indiana.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "The Cotton Bowl, set for Clemson and Indiana. Clemson won and moved on.",
+   "alt": "Wide view of the Cotton Bowl field painted for Clemson and Indiana",
+   "source_photo": "/workspace/sports-universe-stage/album/090.jpg"
+  },
+  {
+   "order": 11,
+   "file": "11-rose-bowl-ohio-state-14-ole-miss-10.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Ohio State 14, Ole Miss 10. Ohio State won the Rose Bowl.",
+   "alt": "Rose Bowl scoreboard at the end of the game: Ole Miss 10, Ohio State 14",
+   "source_photo": "/workspace/sports-universe-stage/album/108.jpg"
+  },
+  {
+   "order": 12,
+   "file": "12-sugar-bowl-aggies-10-clemson-7.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Texas A&M 10, Clemson 7. A&M won the Sugar Bowl and went to the title game.",
+   "alt": "Sugar Bowl final score with the Texas A&M head coach: Texas A&M 10, Clemson 7",
+   "source_photo": "/workspace/sports-universe-stage/album/114.jpg"
+  },
+  {
+   "order": 13,
+   "file": "13-northrop-player-of-the-game.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Brian Northrop was Player of the Game. Texas beat Ohio State in the Orange Bowl.",
+   "alt": "Player of the Game card for Texas running back Brian Northrop: 6 carries, 77 yards, 1 touchdown",
+   "source_photo": "/workspace/sports-universe-stage/album/128.jpg"
+  },
+  {
+   "order": 14,
+   "file": "14-texas-runs-free-orange-bowl.jpg",
+   "width": 1600,
+   "height": 1080,
+   "caption": "Texas runs free in the Orange Bowl. Texas beat Ohio State to reach the title game.",
+   "alt": "Texas number 7 runs alone toward the end zone past two Ohio State players",
+   "source_photo": "/workspace/sports-universe-stage/album/131.jpg"
+  },
+  {
+   "order": 15,
+   "file": "15-title-game-texas-vs-aggies.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "The national title game: Texas against Texas A&M. It was their third game against each other that season.",
+   "alt": "Texas and Texas A&M line up on a field painted 2033 for the national title game",
+   "source_photo": "/workspace/sports-universe-stage/album/132.jpg"
+  },
+  {
+   "order": 16,
+   "file": "16-perkins-49-yard-pass.jpg",
+   "width": 1600,
+   "height": 1200,
+   "caption": "Texas quarterback Paul Perkins threw for 49 yards on this play in the title game.",
+   "alt": "Replay banner: Texas quarterback Paul Perkins, 49 yards gained on a pass",
+   "source_photo": "/workspace/sports-universe-stage/album/146.jpg"
+  },
+  {
+   "order": 17,
+   "file": "17-national-title-aggies-23-texas-17.jpg",
+   "width": 1600,
+   "height": 671,
+   "caption": "Texas A&M 23, Texas 17. A&M won the national title.",
+   "alt": "Final score of the national title game: Texas Longhorns 17, Texas A&M Aggies 23",
+   "source_photo": "/workspace/sports-universe-stage/album/147.jpg"
+  }
+ ]
+}

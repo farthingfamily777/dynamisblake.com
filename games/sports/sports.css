@@ -374,3 +374,24 @@ body.osn-paper .timeline .more a{
   body.osn-paper{font-size:20px}
   .chart{min-width:36rem;font-size:18px}
 }
+
+/* TV screenshots: always one large column */
+.tv-gallery{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1.4rem;
+  margin:1.2rem 0 1.8rem;
+}
+.tv-gallery .item{margin:0}
+.tv-gallery .item img{
+  width:100%;
+  height:auto;
+  display:block;
+  background:var(--ink);
+}
+.tv-gallery figcaption{
+  padding:.85rem 1rem;
+  font-size:20px;
+  color:var(--ink);
+  font-weight:600;
+}
