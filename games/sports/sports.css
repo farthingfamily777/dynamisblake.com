@@ -72,7 +72,7 @@ body.osn-paper .sports-nav a[aria-current="page"]{color:var(--spot);background:t
 }
 
 /* Top crumbs on ink — large, tappable */
-body.osn-paper .top{background:var(--ink);color:var(--paper);padding:.7rem 1rem}
+body.osn-paper .top{background:var(--ink);color:var(--paper);padding:.7rem 11rem .7rem 1rem}
 body.osn-paper .top a,body.osn-paper .top .back{
   color:var(--paper);
   font-size:18px;
@@ -360,6 +360,7 @@ body.osn-paper .timeline .more a{
 }
 /* Phones: one simple column, never shrink the type */
 @media (max-width:699px){
+  body.osn-paper .top{padding-right:1rem}
   .staff-grid,body.osn-paper .gallery{grid-template-columns:1fr}
   .sports-nav{flex-direction:column;align-items:stretch;padding:.2rem 0}
   .sports-nav a{
