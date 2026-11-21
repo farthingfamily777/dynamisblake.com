@@ -3,173 +3,334 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Dynamis Blake: music, education, coding, faith, apps, and more.">
-<title>Dynamis Blake | DynamisBlake.com</title>
+<meta name="description" content="Blake Dylan: songs, scrolls and threads. Busking and open mics around Austin. God is the center of everything.">
+<meta name="theme-color" content="#140a2e">
+<title>Blake Dylan | DynamisBlake.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=Lexend:wght@400;600;800&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/lang.css">
+<style>
+:root{
+  --indigo:#140a2e;--indigo2:#1e1046;--magenta:#ff2e9a;--saffron:#ffb627;--teal:#19e3c8;--violet:#9b5cff;
+  --brass:#c8963e;--brass2:#7a5320;--parch:#f3e2b8;--parch2:#dcc28a;--ink:#2a1606;
+  --w95:#c0c0c0;--w95hi:#ffffff;--w95lo:#808080;--w95dk:#0a0a0a;--w95blue:#000080;--w95blue2:#1084d0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;color:#fff8ea;font:400 19px/1.6 'Lexend',system-ui,sans-serif;overflow-x:hidden;
+  background-color:var(--indigo);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='none' stroke-width='3'%3E%3Cpath d='M0 6h12' stroke='%23ff2e9a' stroke-opacity='.16'/%3E%3Cpath d='M12 18h12' stroke='%23ff2e9a' stroke-opacity='.16'/%3E%3Cpath d='M6 12v12' stroke='%2319e3c8' stroke-opacity='.14'/%3E%3Cpath d='M18 0v12' stroke='%2319e3c8' stroke-opacity='.14'/%3E%3Cpath d='M12 6h12M0 18h12' stroke='%23ffb627' stroke-opacity='.08'/%3E%3Cpath d='M6 0v12M18 12v12' stroke='%239b5cff' stroke-opacity='.12'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 0%,#3b1670 0%,transparent 60%),
+    radial-gradient(ellipse at 0% 100%,#0d3a4a 0%,transparent 55%);
+}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:4px solid var(--saffron);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:0 14px 40px;position:relative}
+
+/* the golden thread running down the middle, from the cross to every section */
+.thread{position:absolute;left:50%;top:0;bottom:0;width:0;border-left:4px dashed var(--saffron);opacity:.55;transform:translateX(-2px);z-index:0;pointer-events:none}
+.thread::after{content:"";position:absolute;left:4px;top:0;bottom:0;border-left:3px dotted var(--magenta);opacity:.8}
+
+/* Win95 taskbar */
+.taskbar{display:flex;align-items:center;gap:8px;background:var(--w95);color:#000;padding:4px 6px;border-bottom:2px solid var(--w95dk);box-shadow:inset 0 2px 0 var(--w95hi);font:700 16px/1 'Lexend',sans-serif;position:relative;z-index:3}
+.start{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:var(--w95);border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);box-shadow:inset -1px -1px 0 var(--w95lo);color:#000;text-decoration:none}
+.start svg{width:20px;height:20px}
+.taskbar .path{font-family:'VT323',monospace;font-size:22px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;padding:3px 8px;background:#fff;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo)}
+
+/* PORTAL */
+.portal-zone{position:relative;text-align:center;padding:26px 0 6px;z-index:1;overflow:hidden}
+.portal{position:relative;width:min(86vw,440px);aspect-ratio:1;margin:0 auto}
+.portal .swirl{position:absolute;inset:8%;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--magenta),var(--saffron),var(--teal),var(--violet),var(--magenta),var(--saffron),var(--teal),var(--violet),var(--magenta));
+  filter:saturate(1.3);animation:spin 22s linear infinite;
+  -webkit-mask:repeating-radial-gradient(circle,#000 0 9px,rgba(0,0,0,.55) 9px 15px);mask:repeating-radial-gradient(circle,#000 0 9px,rgba(0,0,0,.55) 9px 15px)}
+.portal .swirl2{position:absolute;inset:20%;border-radius:50%;background:conic-gradient(from 90deg,transparent,var(--teal),transparent,var(--magenta),transparent,var(--saffron),transparent);animation:spin 9s linear infinite reverse;opacity:.85;mix-blend-mode:screen}
+.portal .core{position:absolute;inset:31%;border-radius:50%;background:radial-gradient(circle,#fffbe8 0%,#ffe28a 30%,rgba(255,182,39,.55) 55%,rgba(20,10,46,0) 72%);animation:breathe 5s ease-in-out infinite}
+.portal .gear{position:absolute;inset:0;animation:spin 60s linear infinite}
+.portal .gear2{position:absolute;width:30%;right:-6%;bottom:2%;animation:spin 18s linear infinite reverse}
+.portal .gear3{position:absolute;width:22%;left:-3%;top:6%;animation:spin 14s linear infinite}
+.portal .cross{position:absolute;left:50%;top:50%;width:26%;transform:translate(-50%,-52%);filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 26px var(--saffron)) drop-shadow(0 0 50px var(--magenta))}
+.rays{position:absolute;inset:-12%;border-radius:50%;background:repeating-conic-gradient(rgba(255,226,138,.16) 0 4deg,transparent 4deg 15deg);animation:spin 80s linear infinite;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{50%{transform:scale(1.08);opacity:.9}}
+@keyframes flicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.6}94%{opacity:1}97%{opacity:.75}}
+
+h1.name{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(2.7rem,12vw,5.6rem);line-height:.95;margin:4px 0 6px;letter-spacing:.02em;color:#fff3d6;
+  text-shadow:3px 3px 0 var(--magenta),6px 6px 0 var(--violet),0 0 30px rgba(25,227,200,.6)}
+.musicname{display:inline-block;font-family:'VT323',monospace;font-size:clamp(1.6rem,6.4vw,2.3rem);color:var(--teal);letter-spacing:.08em;padding:2px 14px;border:2px solid var(--teal);
+  text-shadow:0 0 8px var(--teal),0 0 18px var(--teal);box-shadow:0 0 14px rgba(25,227,200,.5),inset 0 0 14px rgba(25,227,200,.25);animation:flicker 7s infinite;background:rgba(10,4,30,.6)}
+
+/* PARCHMENT SCROLL with rolled ends */
+.scroll{position:relative;margin:30px auto;max-width:760px;z-index:1;padding:0 18px}
+.scroll .sheet{position:relative;color:var(--ink);padding:30px 22px 28px;text-align:center;
+  background:
+   radial-gradient(ellipse at 20% 30%,rgba(140,90,30,.18),transparent 40%),
+   radial-gradient(ellipse at 80% 70%,rgba(140,90,30,.2),transparent 45%),
+   linear-gradient(180deg,var(--parch) 0%,#f8ebc7 50%,var(--parch2) 100%);
+  clip-path:polygon(0 2%,3% 0,7% 1.5%,12% 0,18% 1.2%,25% 0,33% 1.6%,41% .2%,50% 1.4%,58% 0,66% 1.5%,74% .3%,82% 1.6%,90% 0,96% 1.3%,100% .2%,100% 98%,97% 100%,92% 98.4%,85% 100%,77% 98.6%,69% 100%,60% 98.4%,51% 100%,43% 98.5%,35% 100%,27% 98.6%,19% 100%,11% 98.4%,5% 100%,0 98.5%);
+  box-shadow:inset 0 0 40px rgba(120,70,20,.35)}
+.scroll::before,.scroll::after{content:"";position:absolute;left:0;right:0;height:26px;border-radius:13px;z-index:2;
+  background:linear-gradient(180deg,#5a3410 0%,var(--brass) 30%,#f1d08a 50%,var(--brass) 70%,#4a2a0c 100%);box-shadow:0 4px 8px rgba(0,0,0,.5)}
+.scroll::before{top:-12px}.scroll::after{bottom:-12px}
+.scroll .knob{position:absolute;width:30px;height:38px;border-radius:50%;z-index:3;background:radial-gradient(circle at 35% 35%,#ffe8a8,var(--brass) 45%,#3d220a);}
+.scroll .k1{left:-8px;top:-18px}.scroll .k2{right:-8px;top:-18px}.scroll .k3{left:-8px;bottom:-18px}.scroll .k4{right:-8px;bottom:-18px}
+.scroll .god{font-family:'IM Fell English',serif;font-size:clamp(1.5rem,5.6vw,2.15rem);line-height:1.3;margin:0;color:#3a1a04}
+.scroll .god b{font-family:'Cinzel Decorative',serif;font-weight:900;color:#7a1048;display:block;font-size:1.06em;margin-bottom:6px}
+.scroll .sig{font-family:'IM Fell English',serif;font-style:italic;font-size:1.15rem;margin:14px 0 0;color:#5a3410}
+.scroll .sheet a{color:#7a1048;font-weight:800}
+
+/* WIN95 WINDOWS as frames */
+.win{position:relative;z-index:1;margin:30px auto;max-width:860px;background:var(--w95);color:#000;padding:3px;
+  border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,8px 8px 0 rgba(255,46,154,.55),16px 16px 0 rgba(25,227,200,.25)}
+.win:nth-of-type(even){box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,-8px 8px 0 rgba(255,182,39,.55),-16px 16px 0 rgba(155,92,255,.3)}
+.titlebar{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--w95blue),var(--w95blue2));color:#fff;padding:4px 4px 4px 8px;font:800 17px/1.2 'Lexend',sans-serif}
+.titlebar .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.titlebar .ico{width:20px;height:20px;flex:none}
+.tbtn{width:26px;height:24px;flex:none;background:var(--w95);border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);display:grid;place-items:center;color:#000;font:900 14px/1 monospace}
+.menubar{font-size:16px;padding:3px 6px;display:flex;gap:16px;flex-wrap:wrap}
+.menubar span::first-letter{text-decoration:underline}
+.pane{margin:3px;padding:22px 18px;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo)}
+.pane.dark{background:#0c0622;color:#fff8ea;
+  background-image:repeating-linear-gradient(0deg,rgba(25,227,200,.05) 0 2px,transparent 2px 4px)}
+.pane.weave{color:#fff8ea;background-color:#2a0f4a;
+  background-image:repeating-linear-gradient(45deg,rgba(255,46,154,.35) 0 6px,transparent 6px 12px),repeating-linear-gradient(-45deg,rgba(25,227,200,.28) 0 6px,transparent 6px 12px)}
+.pane h2{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(1.8rem,7vw,2.8rem);line-height:1.1;margin:0 0 12px}
+.pane.dark h2{color:var(--saffron);text-shadow:0 0 12px rgba(255,182,39,.6),2px 2px 0 var(--magenta)}
+.pane p{margin:0 0 14px;font-size:clamp(1.15rem,4.4vw,1.3rem)}
+.status{display:flex;gap:4px;margin:0 3px 3px;font-size:15px}
+.status span{flex:1;padding:3px 8px;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* stitched buttons */
+.btns{display:grid;gap:14px;margin-top:16px}
+@media(min-width:640px){.btns.two{grid-template-columns:1fr 1fr}}
+.stitch{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:64px;padding:14px 16px;text-align:center;text-decoration:none;font:800 clamp(1.2rem,5vw,1.45rem)/1.2 'Lexend',sans-serif;color:#140a2e;border-radius:6px;
+  outline:3px dashed rgba(20,10,46,.55);outline-offset:-9px;box-shadow:0 5px 0 rgba(0,0,0,.45);transition:transform .12s}
+.stitch:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.45)}
+.stitch:hover{transform:translateY(-2px) rotate(-.4deg)}
+.stitch small{display:block;font-weight:600;font-size:.72em}
+.s-mag{background:var(--magenta);color:#fff;outline-color:rgba(255,255,255,.6)}
+.s-saf{background:var(--saffron)}
+.s-teal{background:var(--teal)}
+.s-vio{background:var(--violet);color:#fff;outline-color:rgba(255,255,255,.6)}
+.s-brass{background:linear-gradient(180deg,#f1d08a,var(--brass));color:#2a1606}
+.s-parch{background:var(--parch);color:#3a1a04}
+
+.tipnote{margin-top:18px;padding:14px 16px;background:var(--parch);color:var(--ink);font-family:'IM Fell English',serif;font-size:1.3rem;line-height:1.35;border:3px dashed var(--brass2);text-align:center;transform:rotate(-.6deg)}
+
+.tipbig{margin-top:18px;min-height:84px;font-size:clamp(1.6rem,7vw,2.2rem);background:#00d64f;color:#06210f;outline:4px dashed rgba(6,33,15,.6);box-shadow:0 6px 0 #04501f,0 0 24px rgba(0,214,79,.6);text-decoration:none}
+.scroll .sheet a.tipbig{color:#06210f}
+.tipbig small{font-size:.6em;font-weight:800}
+.tipthanks{text-align:center;font-family:'IM Fell English',serif;font-size:1.3rem!important;margin:12px 0 0!important}
+/* the tapestry of worlds */
+.tapestry{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:560px){.tapestry{grid-template-columns:1fr 1fr}}
+@media(min-width:860px){.tapestry{grid-template-columns:1fr 1fr 1fr}}
+.patch{position:relative;display:block;padding:18px 16px 16px 60px;min-height:92px;text-decoration:none;color:#fff8ea;border-radius:4px;
+  background:rgba(12,6,34,.88);border:3px dashed var(--c,var(--saffron));box-shadow:0 0 0 4px rgba(12,6,34,.9),0 0 18px color-mix(in srgb,var(--c,var(--saffron)) 45%,transparent)}
+.patch:nth-child(3n+1){transform:rotate(-.7deg)}.patch:nth-child(3n+2){transform:rotate(.5deg)}
+.patch:hover{background:rgba(40,16,80,.95)}
+.patch svg{position:absolute;left:14px;top:18px;width:34px;height:34px;stroke:var(--c,var(--saffron));fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.patch .pt{display:block;font-weight:800;font-size:1.25rem;line-height:1.2;color:var(--c,var(--saffron))}
+.patch .ps{display:block;font-size:1.02rem;line-height:1.4;margin-top:4px;color:#f2e8ff}
+
+.rivets{position:relative}
+.rivets::before,.rivets::after{content:"";position:absolute;top:8px;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe8a8,var(--brass) 50%,#3d220a);box-shadow:0 1px 2px #000}
+.rivets::before{left:8px}.rivets::after{right:8px}
+
+/* lang toggle restyled as a Win95 control on this page only */
+.lang-toggle{background:var(--w95)!important;border:2px solid!important;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi)!important;border-radius:0!important;box-shadow:4px 4px 0 var(--magenta)!important}
+.lang-toggle span{color:#000!important}
+.lang-toggle button{color:#000!important;border-radius:0!important}
+.lang-toggle button.on{background:var(--w95blue)!important;color:#fff!important}
+
+footer{position:relative;z-index:1;text-align:center;padding:26px 14px 40px;font-family:'VT323',monospace;font-size:1.5rem;color:var(--teal);text-shadow:0 0 8px rgba(25,227,200,.6)}
+footer a{color:var(--saffron)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media(max-width:700px){
+  body{font-size:18px}
+  .taskbar .path{font-size:19px}
+  .pane{padding:18px 14px}
+  .win{box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,6px 6px 0 rgba(255,46,154,.55)!important;margin-right:6px}
+  .scroll{padding:0 12px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-<nav class="home-crumbs"><ol class="crumbs" aria-label="You are here"><li aria-current="page">Level 1 · Surface</li><li>Level 2 · Overview: tap a tile</li><li><a href="deep/">Level 3 · Deep Dive</a></li></ol></nav>
-<header class="hero">
-  <img class="logo" src="assets/dbd-logo.png" alt="Dynamis Blake Designs logo">
-  <h1>Dynamis Blake</h1>
-  <p class="lead">Share the love of God. Love God. Love people. Teach. Learn. Build. Pass it on.</p>
+<div class="taskbar">
+  <a class="start" href="deep/"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="8" height="8" fill="#ff2e9a"/><rect x="11" y="1" width="8" height="8" fill="#19e3c8"/><rect x="1" y="11" width="8" height="8" fill="#ffb627"/><rect x="11" y="11" width="8" height="8" fill="#9b5cff"/></svg>Start</a>
+  <span class="path" aria-hidden="true">C:\BLAKE\WORLDVIEW.EXE</span>
+</div>
+
+<div class="wrap">
+<div class="thread" aria-hidden="true"></div>
+
+<header class="portal-zone">
+  <div class="portal" role="img" aria-label="A glowing cross at the center of a swirling, colorful portal ringed by brass gears">
+    <div class="rays"></div>
+    <svg class="gear" viewBox="0 0 200 200" aria-hidden="true">
+      <defs><radialGradient id="br" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe8a8"/><stop offset=".5" stop-color="#c8963e"/><stop offset="1" stop-color="#5a3410"/></radialGradient></defs>
+      <g fill="url(#br)">
+        <path fill-rule="evenodd" d="M100 2l6 0 2 9a90 90 0 0 1 14 3.6l5-8 5.6 2.3-1.6 9.3a90 90 0 0 1 12.4 7.4l7.4-5.8 4.5 4-4.4 8.4a90 90 0 0 1 9 11.2l8.9-3 3 5.2-6.8 6.5a90 90 0 0 1 4.6 13.8l9.4.2.9 6-8.9 3.2a90 90 0 0 1 0 14.4l8.9 3.2-.9 6-9.4.2a90 90 0 0 1-4.6 13.8l6.8 6.5-3 5.2-8.9-3a90 90 0 0 1-9 11.2l4.4 8.4-4.5 4-7.4-5.8a90 90 0 0 1-12.4 7.4l1.6 9.3-5.6 2.3-5-8A90 90 0 0 1 108 189l-2 9h-12l-2-9a90 90 0 0 1-14-3.6l-5 8-5.6-2.3 1.6-9.3a90 90 0 0 1-12.4-7.4l-7.4 5.8-4.5-4 4.4-8.4a90 90 0 0 1-9-11.2l-8.9 3-3-5.2 6.8-6.5a90 90 0 0 1-4.6-13.8l-9.4-.2-.9-6 8.9-3.2a90 90 0 0 1 0-14.4l-8.9-3.2.9-6 9.4-.2a90 90 0 0 1 4.6-13.8l-6.8-6.5 3-5.2 8.9 3a90 90 0 0 1 9-11.2l-4.4-8.4 4.5-4 7.4 5.8a90 90 0 0 1 12.4-7.4l-1.6-9.3 5.6-2.3 5 8A90 90 0 0 1 92 11l2-9zM100 22a78 78 0 1 0 .1 0z"/>
+      </g>
+      <g fill="#3d220a"><circle cx="100" cy="16" r="2.6"/><circle cx="184" cy="100" r="2.6"/><circle cx="100" cy="184" r="2.6"/><circle cx="16" cy="100" r="2.6"/></g>
+    </svg>
+    <div class="swirl"></div>
+    <div class="swirl2"></div>
+    <div class="core"></div>
+    <svg class="gear2" viewBox="0 0 100 100" aria-hidden="true"><path fill="url(#br)" fill-rule="evenodd" d="M44 2h12l2 12 8 3 10-7 8 8-7 10 3 8 12 2v12l-12 2-3 8 7 10-8 8-10-7-8 3-2 12H44l-2-12-8-3-10 7-8-8 7-10-3-8-12-2V44l12-2 3-8-7-10 8-8 10 7 8-3zM50 34a16 16 0 1 0 .1 0z"/></svg>
+    <svg class="gear3" viewBox="0 0 100 100" aria-hidden="true"><path fill="url(#br)" fill-rule="evenodd" d="M44 2h12l2 12 8 3 10-7 8 8-7 10 3 8 12 2v12l-12 2-3 8 7 10-8 8-10-7-8 3-2 12H44l-2-12-8-3-10 7-8-8 7-10-3-8-12-2V44l12-2 3-8-7-10 8-8 10 7 8-3zM50 34a16 16 0 1 0 .1 0z"/></svg>
+    <svg class="cross" viewBox="0 0 60 90" aria-hidden="true"><path d="M23 0h14v24h23v14H37v52H23V38H0V24h23z" fill="#fffbe8" stroke="#ffb627" stroke-width="2"/></svg>
+  </div>
+  <h1 class="name">Blake Dylan</h1>
+  <p class="musicname">BlakeDylan Music</p>
 </header>
-<section class="ff-hero" id="faith-and-friends" aria-label="Faith and Friends">
-  <p class="ff-kicker">You're invited</p>
-  <h2>Faith and Friends</h2>
-  <p class="ff-live">Live Christian Music</p>
-  <p class="ff-when">Tuesday, November 17</p>
-  <p class="ff-time">5:30 to 7:30 PM</p>
-  <p class="ff-where">El Campo</p>
-  <p class="ff-blurb">Family and friends. Kids are welcome. We'll play songs about God, and the kids can play too. Hot dogs, Coke, and candy.</p>
-  <p class="ff-place">Call or text Blake for the place.</p>
-  <div class="ff-btns">
-    <a class="b1" href="tel:+19795782069">Call (979) 578-2069</a>
-    <a class="b2" href="sms:+19795782069">Text 979-578-2069</a>
-    <a class="b3" href="faith-and-friends/">Learn more</a>
+
+<section class="scroll" aria-label="God is the center">
+  <span class="knob k1"></span><span class="knob k2"></span><span class="knob k3"></span><span class="knob k4"></span>
+  <div class="sheet">
+    <p class="god"><b>God is the center of everything.</b>I'm here to spread His love and blessings, as He has loved and blessed me.</p>
+    <p class="sig">Love God. Love people. Pass it on. <a href="faith/">Read about my faith</a></p>
   </div>
 </section>
-<style>
-.fgs-hero{background:linear-gradient(160deg,#fff4dc 0%,#ffd9a8 55%,#ffb46b 100%);border-top:8px solid #1f4d2b;border-bottom:8px solid #a5482a;padding:28px 16px 32px;text-align:center;font-family:'Lexend',sans-serif;color:#1f4d2b;margin:0 calc(50% - 50vw);width:100vw;box-sizing:border-box}
-.fgs-hero img{width:min(70vw,260px);aspect-ratio:1;object-fit:cover;border-radius:50%;border:6px solid #1f4d2b;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.fgs-hero h2{font-size:clamp(2.1rem,9vw,4.5rem);font-weight:800;line-height:1.05;margin:18px 0 6px;letter-spacing:.02em}
-.fgs-hero .fgs-paint{font-size:clamp(1.7rem,7.5vw,3.5rem);font-weight:800;color:#a5482a;margin:0 0 10px}
-.fgs-hero .fgs-svc{font-size:clamp(1.1rem,4.5vw,1.5rem);font-weight:600;margin:0 0 14px}
-.fgs-hero .fgs-faith{display:inline-block;background:#1f4d2b;color:#fff4dc;font-weight:800;font-size:clamp(1.2rem,5vw,1.6rem);padding:8px 18px;border-radius:999px;margin:4px 0 10px}
-.fgs-hero .fgs-pay{font-size:clamp(1.1rem,4.5vw,1.4rem);font-weight:600;margin:0 0 18px}
-.fgs-btns{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto}
-.fgs-btns a{display:block;padding:18px 14px;border-radius:14px;font-size:1.3rem;font-weight:800;text-decoration:none;box-shadow:0 4px 0 rgba(0,0,0,.25)}
-.fgs-btns .b1{background:#a5482a;color:#fff}.fgs-btns .b2{background:#1f4d2b;color:#fff}
-.fgs-btns .b3{background:#fff;color:#1f4d2b;border:3px solid #1f4d2b}.fgs-btns .b4{background:#ffe9c2;color:#a5482a;border:3px solid #a5482a}
-</style>
-<section class="fgs-hero" id="fgsons-hero" aria-label="Farthing Grace Services">
-  <img src="fgsons/logo-mark.png" alt="Farthing Grace Services oak tree logo">
-  <h2>FARTHING GRACE SERVICES</h2>
-  <p class="fgs-paint">AFFORDABLE PAINTING</p>
-  <p class="fgs-svc">General Contracting · Pressure Washing · Yard Work · El Campo, TX</p>
-  <p class="fgs-faith">Faith First &amp; Family Owned</p>
-  <p class="fgs-pay">Pay in full and save 10%, or pay half to start and half on completion.</p>
-  <div class="fgs-btns">
-    <a class="b1" href="sms:+19795782069?&amp;body=Hi%2C%20I%27d%20like%20a%20quote">Get a Quote</a>
-    <a class="b2" href="tel:+19795782069">Call Blake (979) 578-2069</a>
-    <a class="b3" href="fgsons/sample-quote/">See a Sample Quote</a>
-    <a class="b4" href="fgsons/">Learn More</a>
+
+<section class="win" id="austin" aria-labelledby="austin-h">
+  <div class="titlebar"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#ffb627"/><path d="M7 14V6l7-1v7" stroke="#000080" stroke-width="2" fill="none"/></svg><span class="t">AUSTIN.TXT</span><span class="tbtn" aria-hidden="true">_</span><span class="tbtn" aria-hidden="true">&#9633;</span><span class="tbtn" aria-hidden="true">x</span></div>
+  <div class="menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Songs</span><span>Help</span></div>
+  <div class="pane dark">
+    <h2 id="austin-h">Catch me in Austin</h2>
+    <p>Busking and open mics around Austin. Come say hi.</p>
+    <p>Live acoustic covers and originals on guitar and harmonica: 90s hits, classic rock, and Texas country.</p>
+    <div class="btns two">
+      <a class="stitch s-mag" href="sms:+19795782069">Text Blake<small>979-578-2069</small></a>
+      <a class="stitch s-saf" href="tel:+19795782069">Call Blake<small>(979) 578-2069</small></a>
+    </div>
+    <a class="stitch tipbig" href="https://cash.app/$blakers1776">Tip the busker<small>Cash App $blakers1776</small></a>
+    <p class="tipthanks">If a song blessed you, one tap sends a tip. Thank you, and God bless!</p>
+  </div>
+  <div class="status" aria-hidden="true"><span>Ready</span><span>Open mics + busking</span></div>
+</section>
+
+<section class="win" id="listen" aria-labelledby="listen-h">
+  <div class="titlebar"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="4" width="16" height="12" fill="#ff2e9a"/><path d="M8 7l5 3-5 3z" fill="#fff"/></svg><span class="t">FOLLOW.EXE</span><span class="tbtn" aria-hidden="true">_</span><span class="tbtn" aria-hidden="true">&#9633;</span><span class="tbtn" aria-hidden="true">x</span></div>
+  <div class="pane weave">
+    <h2 id="listen-h" style="color:#fff;text-shadow:3px 3px 0 #140a2e,0 0 16px #ff2e9a">Follow me</h2>
+    <div class="btns two">
+      <a class="stitch s-mag" href="https://www.youtube.com/@fteam777">YouTube<small>@fteam777</small></a>
+      <a class="stitch s-teal" href="https://www.tiktok.com/@blakedylan1313">TikTok<small>@blakedylan1313</small></a>
+      <a class="stitch s-vio" href="https://www.instagram.com/blakewhy">Instagram<small>@blakewhy</small></a>
+      <a class="stitch s-saf" href="https://www.facebook.com/blaketexasmusic">Facebook<small>Blake Texas Music</small></a>
+      <a class="stitch s-brass" href="https://fgstx.com/">Farthing Grace Services<small>fgstx.com</small></a>
+      <a class="stitch s-parch" href="https://dynamisblake.com/">DynamisBlake.com<small>You are here</small></a>
+    </div>
+    <div class="btns"><a class="stitch s-mag" href="music/">Book Blake Dylan<small>Bars, patios, private events</small></a></div>
   </div>
 </section>
-<main>
-<section class="quick" aria-label="Quick contact">
-  <p class="quick-name">Blake Farthing</p>
-  <p class="quick-what">Musician (Blake Dylan) · Teacher · AI consultant · Builder of websites and apps · Founder of Dynamis Blake Designs (DBD)</p>
-  <div class="quick-links">
-    <a href="tel:+19795782069">Call (979) 578-2069</a>
-    <a href="mailto:blake@dynamisblake.com">blake@dynamisblake.com</a>
-    <a href="deep/#read">Read My Memoir</a>
+
+<section class="win" id="worlds" aria-labelledby="worlds-h">
+  <div class="titlebar"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" fill="#ffb627"/><rect x="2" y="3" width="7" height="3" fill="#ffb627"/></svg><span class="t">C:\BLAKE\WORLDS</span><span class="tbtn" aria-hidden="true">_</span><span class="tbtn" aria-hidden="true">&#9633;</span><span class="tbtn" aria-hidden="true">x</span></div>
+  <div class="pane dark">
+    <h2 id="worlds-h">The worlds I weave</h2>
+    <p>Every thread runs back to the center. Pick one and follow it.</p>
+    <nav class="tapestry" aria-label="Sections">
+      <a class="patch" href="music/" style="--c:#ff2e9a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="pt">Music</span><span class="ps">Blake Dylan, live acoustic</span></a>
+      <a class="patch" href="faith/" style="--c:#ffb627"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="M5 8h14"/></svg><span class="pt">Faith</span><span class="ps">The center of it all</span></a>
+      <a class="patch" href="faith-and-friends/" style="--c:#19e3c8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11z"/></svg><span class="pt">Faith and Friends</span><span class="ps">Live Christian music for everybody</span></a>
+      <a class="patch" href="archive/almalexia/" style="--c:#9b5cff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 9h8M8 13h6"/></svg><span class="pt">Seedy Almalexia District</span><span class="ps">My Morrowind mod, built at 16</span></a>
+      <a class="patch" href="coding/" style="--c:#19e3c8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg><span class="pt">Coding</span><span class="ps">Games, apps and the sports universe</span></a>
+      <a class="patch" href="education/" style="--c:#ffb627"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 2 3 3 6 3s6-1 6-3V9"/></svg><span class="pt">Education</span><span class="ps">Teach. Learn. Pass it on.</span></a>
+      <a class="patch" href="apps/" style="--c:#ff2e9a"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="pt">Apps</span><span class="ps">Things I've built</span></a>
+      <a class="patch" href="archive/" style="--c:#9b5cff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v4H4z"/><path d="M5 8v12h14V8"/><path d="M10 12h4"/></svg><span class="pt">Family Archive</span><span class="ps">Scrolls kept for the ones who come after</span></a>
+      <a class="patch" href="council/" style="--c:#19e3c8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span class="pt">The Council</span><span class="ps">Casa O'Faydin</span></a>
+      <a class="patch" href="deep/#read" style="--c:#ffb627"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg><span class="pt">Read My Memoir</span><span class="ps">The Pilgrim Chronicle</span></a>
+      <a class="patch" href="deep/" style="--c:#ff2e9a"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span class="pt">The Full Story</span><span class="ps">Go deeper, Level 3</span></a>
+      <a class="patch" href="contact/" style="--c:#9b5cff"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 7 10-7"/></svg><span class="pt">More &amp; Contact</span><span class="ps">Dynamis Blake Designs (DBD)</span></a>
+    </nav>
   </div>
 </section>
-<nav class="hub" aria-label="Sections">
-  <a class="hub-card" href="music/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="hub-title">Music</span><span class="hub-sub">Blake Dylan</span></a>
-  <a class="hub-card" href="education/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 2 3 3 6 3s6-1 6-3V9"/></svg><span class="hub-title">Education</span></a>
-  <a class="hub-card" href="coding/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg><span class="hub-title">Coding</span></a>
-  <a class="hub-card" href="faith/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="M5 8h14"/></svg><span class="hub-title">Faith</span></a>
-  <a class="hub-card" href="apps/"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="hub-title">Apps</span></a>
-  <a class="hub-card" href="archive/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v4H4z"/><path d="M5 8v12h14V8"/><path d="M10 12h4"/></svg><span class="hub-title">Family Archive</span></a>
-  <a class="hub-card" href="council/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span class="hub-title">The Council</span><span class="hub-sub">Casa O'Faydin</span></a>
-  <a class="hub-card" href="contact/"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 7 10-7"/></svg><span class="hub-title">More</span><span class="hub-sub">&amp; Contact</span></a>
-</nav>
-<a class="deeper" href="deep/">Go deeper &rarr; Level 3: The Full Story</a>
-<a class="btn big" href="deep/#read">Read My Memoir</a>
-</main>
-<footer><p>El Campo, TX · DynamisBlake.com</p></footer>
+
+<section class="win" id="work" aria-labelledby="work-h">
+  <div class="titlebar"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 15l9-9 3 3-9 9H3z" fill="#ffb627"/><path d="M13 4l3 3" stroke="#fff" stroke-width="2"/></svg><span class="t">WORKSHOP.BAT</span><span class="tbtn" aria-hidden="true">_</span><span class="tbtn" aria-hidden="true">&#9633;</span><span class="tbtn" aria-hidden="true">x</span></div>
+  <div class="pane rivets" style="background:linear-gradient(180deg,#3a2410,#21140a);color:#fff3d6">
+    <h2 id="work-h" style="color:#f1d08a;text-shadow:2px 2px 0 #000">The workshop</h2>
+    <p>Musician, teacher, AI consultant, and builder of websites and apps. Founder of Dynamis Blake Designs (DBD).</p>
+    <p>Farthing Grace Services: painting, general contracting, pressure washing and yard work in El Campo, TX. Faith first and family owned.</p>
+    <div class="btns two">
+      <a class="stitch s-brass" href="fgsons/">Farthing Grace Services</a>
+      <a class="stitch s-parch" href="https://fgstx.com/">FGSTX.com</a>
+      <a class="stitch s-teal" href="https://www.facebook.com/DynamisBlakeDesigns">DBD on Facebook</a>
+      <a class="stitch s-saf" href="mailto:blake@dynamisblake.com">Email Blake<small>blake@dynamisblake.com</small></a>
+    </div>
+  </div>
+</section>
+
+<section class="scroll" aria-label="Blessing">
+  <span class="knob k1"></span><span class="knob k2"></span><span class="knob k3"></span><span class="knob k4"></span>
+  <div class="sheet">
+    <p class="god" style="font-size:clamp(1.3rem,5vw,1.8rem)">Thank you for stopping by. May God bless you and keep you.</p>
+    <a class="stitch tipbig" href="https://cash.app/$blakers1776" style="margin-top:18px">Tip the busker<small>Cash App $blakers1776</small></a>
+  </div>
+</section>
+</div>
+
+<footer><p>El Campo, TX &middot; <a href="./">DynamisBlake.com</a> &middot; Austin bound</p></footer>
 <!-- i18n:start -->
 <script type="application/json" id="i18n-es">
 {
-"← Home": "← Inicio",
-"Level 1 · Surface": "Nivel 1 · Superficie",
-"Level 3 · Deep Dive": "Nivel 3 · A fondo",
-"Level 2 · Overview": "Nivel 2 · Resumen",
-"More coming soon.": "Pronto habrá más.",
-"Portfolio": "Portafolio",
-"Fact": "Hecho",
-"means real and finished.": "quiere decir real y terminado.",
-"Possibility": "Posibilidad",
-"means an idea or AI-made preview, not finished work yet.": "quiere decir una idea o una vista previa hecha con IA, todavía no es trabajo terminado.",
-"Possibility · AI concept": "Posibilidad · Idea hecha con IA",
-"Go deeper → Level 3: The Full Story": "Más a fondo → Nivel 3: La historia completa",
-"← Back to Home": "← Volver al inicio",
-"El Campo, TX ·": "El Campo, TX ·",
-"You are here": "Usted está aquí",
-"Coming soon": "Muy pronto",
-"Possibility · Design concept": "Posibilidad · Idea de diseño",
-"Fact · Draft": "Hecho · Borrador",
-"Fact · Real book": "Hecho · Libro real",
-"Faith First & Family Owned": "La fe primero y negocio familiar",
-"We ALWAYS leave it better than we found it.": "SIEMPRE lo dejamos mejor de como lo encontramos.",
-"Painting · General Contracting": "Pintura · Contratista general",
-"See a Sample Quote": "Vea un presupuesto de muestra",
-"Treasure": "Tesoro",
-"Download PDF": "Descargar PDF",
-"PDF · 275 pages · Large, clear type": "PDF · 275 páginas · Letra grande y clara",
-"My Kids are ONLY little ONCE!": "¡Mis hijos son pequeños UNA SOLA VEZ!",
-"These are the GOOD OLD DAYS NOW!": "¡Estos son los BUENOS TIEMPOS, AHORA!",
-"The Pilgrim Chronicle: Full Edition": "The Pilgrim Chronicle: Edición completa",
-"The Pilgrim Chronicle, first draft": "The Pilgrim Chronicle, primer borrador",
-"Brick 001: The Archive Charter": "Ladrillo 001: La carta del archivo",
-"Blake's First Songs": "Las primeras canciones de Blake",
-"The High School Band": "La banda de la prepa",
-"Email Blake": "Escríbale un correo a Blake",
-"Call (979) 578-2069": "Llame al (979) 578-2069",
+"Blake Dylan | DynamisBlake.com": "Blake Dylan | DynamisBlake.com",
+"Start": "Inicio",
+"God is the center of everything.": "Dios es el centro de todo.",
+"I'm here to spread His love and blessings, as He has loved and blessed me.": "Estoy aquí para compartir Su amor y Sus bendiciones, así como Él me ha amado y bendecido.",
+"Love God. Love people. Pass it on.": "Ame a Dios. Ame a la gente. Páselo a otros.",
+"Read about my faith": "Lea sobre mi fe",
+"Catch me in Austin": "Búsqueme en Austin",
+"Busking and open mics around Austin. Come say hi.": "Tocando en la calle y en micrófonos abiertos por Austin. Venga a saludar.",
+"Live acoustic covers and originals on guitar and harmonica: 90s hits, classic rock, and Texas country.": "Covers y canciones originales en vivo con guitarra y armónica: éxitos de los 90, rock clásico y country de Texas.",
 "Text Blake": "Mándele un mensaje a Blake",
+"Call Blake": "Llame a Blake",
+"Tip the busker": "Propina para el músico",
+"If a song blessed you, one tap sends a tip. Thank you, and God bless!": "Si una canción le bendijo, con un toque manda una propina. ¡Gracias, y que Dios le bendiga!",
+"Follow me": "Sígame",
+"You are here": "Usted está aquí",
+"Listen & follow": "Escuche y siga",
+"Book Blake Dylan": "Contrate a Blake Dylan",
+"Bars, patios, private events": "Bares, patios, eventos privados",
+"The worlds I weave": "Los mundos que tejo",
+"Every thread runs back to the center. Pick one and follow it.": "Cada hilo regresa al centro. Escoja uno y sígalo.",
 "Music": "Música",
-"Education": "Educación",
-"Coding": "Programación",
+"Blake Dylan, live acoustic": "Blake Dylan, acústico en vivo",
 "Faith": "Fe",
+"The center of it all": "El centro de todo",
+"Live Christian music for everybody": "Música cristiana en vivo para todos",
+"My Morrowind mod, built at 16": "Mi mod de Morrowind, hecho a los 16",
+"Coding": "Programación",
+"Games, apps and the sports universe": "Juegos, aplicaciones y el universo deportivo",
+"Education": "Educación",
+"Teach. Learn. Pass it on.": "Enseñe. Aprenda. Páselo a otros.",
 "Apps": "Aplicaciones",
-"The Council": "El Consejo",
-"Casa O'Faydin": "Casa O'Faydin",
+"Things I've built": "Cosas que he creado",
 "Family Archive": "Archivo familiar",
-"More": "Más",
-"& Contact": "y contacto",
-"Dynamis Blake | DynamisBlake.com": "Dynamis Blake | DynamisBlake.com",
-"Level 2 · Overview: tap a tile": "Nivel 2 · Resumen: toque un cuadro",
-"Share the love of God. Love God. Love people. Teach. Learn. Build. Pass it on.": "Comparta el amor de Dios. Ame a Dios. Ame a la gente. Enseñe. Aprenda. Construya. Páselo a otros.",
-"FARTHING GRACE SERVICES": "FARTHING GRACE SERVICES",
-"AFFORDABLE PAINTING": "PINTURA A BUEN PRECIO",
-"General Contracting · Pressure Washing · Yard Work · El Campo, TX": "Contratista general · Lavado a presión · Trabajo de jardín · El Campo, TX",
-"Pay in full and save 10%, or pay half to start and half on completion.": "Paga completo y ahorra 10%, o la mitad al empezar y la mitad al terminar.",
-"Get a Quote": "Pida un presupuesto",
-"Call Blake (979) 578-2069": "Llame a Blake (979) 578-2069",
-"Learn More": "Más información",
-"Musician (Blake Dylan) · Teacher · AI consultant · Builder of websites and apps · Founder of Dynamis Blake Designs (DBD)": "Músico (Blake Dylan) · Maestro · Asesor de IA · Creador de sitios web y aplicaciones · Fundador de Dynamis Blake Designs (DBD)",
+"Scrolls kept for the ones who come after": "Pergaminos guardados para los que vienen después",
+"The Council": "El Consejo",
 "Read My Memoir": "Lea mis memorias",
-"El Campo, TX · DynamisBlake.com": "El Campo, TX · DynamisBlake.com",
-"Farthing Grace Services": "Farthing Grace Services",
-"Quick contact": "Contacto rápido",
+"The Full Story": "La historia completa",
+"Go deeper, Level 3": "Más a fondo, Nivel 3",
+"More & Contact": "Más y contacto",
+"The workshop": "El taller",
+"Musician, teacher, AI consultant, and builder of websites and apps. Founder of Dynamis Blake Designs (DBD).": "Músico, maestro, asesor de IA y creador de sitios web y aplicaciones. Fundador de Dynamis Blake Designs (DBD).",
+"Farthing Grace Services: painting, general contracting, pressure washing and yard work in El Campo, TX. Faith first and family owned.": "Farthing Grace Services: pintura, contratista general, lavado a presión y trabajo de jardín en El Campo, TX. La fe primero y negocio familiar.",
+"DBD on Facebook": "DBD en Facebook",
+"Email Blake": "Escríbale un correo a Blake",
+"Thank you for stopping by. May God bless you and keep you.": "Gracias por visitarnos. Que Dios le bendiga y le guarde.",
+"Ready": "Listo",
+"Open mics + busking": "Micrófonos abiertos + música en la calle",
+"Austin bound": "Rumbo a Austin",
 "Sections": "Secciones",
-"You're invited": "Está invitado",
-"Faith and Friends": "Faith and Friends",
-"Live Christian Music": "Música cristiana en vivo",
-"Tuesday, November 17": "Martes, 17 de noviembre",
-"Tuesday, November 17, 2026": "Martes, 17 de noviembre de 2026",
-"5:30 to 7:30 PM": "5:30 a 7:30 p.m.",
-"El Campo": "El Campo",
-"Family and friends. Kids are welcome. We'll play songs about God, and the kids can play too. Hot dogs, Coke, and candy.": "Familia y amigos. Los niños son bienvenidos. Tocaremos canciones sobre Dios, y los niños también pueden tocar. Hay hot dogs, Coca-Cola y dulces.",
-"Call or text Blake for the place.": "Llame o mándele un mensaje a Blake para saber el lugar.",
-"Text 979-578-2069": "Mande mensaje al 979-578-2069",
-"Learn more": "Más información",
-"Faith and Friends | Live Christian Music | DynamisBlake.com": "Faith and Friends | Música cristiana en vivo | DynamisBlake.com",
-"Level 2 · Overview: Faith and Friends": "Nivel 2 · Resumen: Faith and Friends",
-"Faith and Friends is live Christian music for everybody.": "Faith and Friends es música cristiana en vivo, para todos.",
-"Open to family and friends. Kids are welcome.": "Abierto a familia y amigos. Los niños son bienvenidos.",
-"When": "Cuándo",
-"Where": "Dónde",
-"What to expect": "Qué esperar",
-"El Campo. Call or text Blake Farthing at 979-578-2069 for the place.": "El Campo. Llame o mándele un mensaje a Blake Farthing al 979-578-2069 para saber el lugar.",
-"We'll play songs about God, and the kids can play too. Hot dogs, Coke, and candy.": "Tocaremos canciones sobre Dios, y los niños también pueden tocar. Hay hot dogs, Coca-Cola y dulces.",
-"Call Blake": "Llame a Blake"
+"God is the center": "Dios es el centro",
+"Blessing": "Bendición"
 }
 </script>
 <script src="assets/lang.js" defer></script>
