@@ -8,7 +8,7 @@
 <title>Blake Dylan | DynamisBlake.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=Lexend:wght@400;600;800&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Shrikhand&family=IM+Fell+English:ital@0;1&family=Lexend:wght@400;600;800&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/lang.css">
 <style>
 :root{
@@ -156,6 +156,47 @@ footer a{color:var(--saffron)}
   .win{box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,6px 6px 0 rgba(255,46,154,.55)!important;margin-right:6px}
   .scroll{padding:0 12px}
 }
+
+/* ===== poster layer ===== */
+body{background-color:#0a0618}
+.poster{position:relative;z-index:1;margin:18px -14px 0;background:#07030f;
+  background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 20%,#fff,transparent),radial-gradient(2px 2px at 85% 60%,#ffe28a,transparent),radial-gradient(1.5px 1.5px at 35% 75%,#fff,transparent),radial-gradient(2px 2px at 55% 88%,#19e3c8,transparent),radial-gradient(1.5px 1.5px at 10% 85%,#fff,transparent);
+  border-top:6px solid #ffb627;border-bottom:6px solid #ffb627;overflow:hidden;text-align:center}
+.moonband{height:44px;background-color:#1b0f5a;border-block:4px solid #140a2e;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='44'%3E%3Cpath d='M28 8a14 14 0 1 0 0 28a9 14 0 0 1 0-28z' fill='%23ffe28a' stroke='%23140a2e' stroke-width='2'/%3E%3Cpath d='M64 10l3.5 8 8.5.6-6.5 5.6 2 8.3-7.5-4.4-7.5 4.4 2-8.3-6.5-5.6 8.5-.6z' fill='%23ff2e9a' stroke='%23140a2e' stroke-width='2'/%3E%3C/svg%3E");background-position:center}
+.poster-in{position:relative;padding:8px 10px 26px;min-height:620px}
+.rainbow{position:absolute;left:50%;top:150px;width:min(150vw,1100px);aspect-ratio:2/1;transform:translateX(-50%);border-radius:50% 50% 0 0/100% 100% 0 0;
+  background:radial-gradient(circle at 50% 100%,transparent 0 44%,#9b5cff 44% 49%,#2457ff 49% 54%,#19e3c8 54% 59%,#7ddc3a 59% 64%,#ffb627 64% 69%,#ff7a1a 69% 74%,#ff2e9a 74% 79%,transparent 79%);opacity:.95}
+.sunburst{position:absolute;left:50%;top:400px;width:1400px;height:1400px;transform:translate(-50%,-50%);border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,182,39,.28) 0 6deg,transparent 6deg 12deg,rgba(255,46,154,.22) 12deg 18deg,transparent 18deg 24deg);animation:spin 120s linear infinite;
+  -webkit-mask:radial-gradient(circle,#000 0 22%,transparent 46%);mask:radial-gradient(circle,#000 0 22%,transparent 46%)}
+.arch{position:relative;display:block;overflow:visible;width:min(100%,640px);margin:0 auto -30px}
+.archtxt{font-family:'Shrikhand',cursive;font-size:66px;fill:#ff2e9a;stroke:#140a2e;stroke-width:9px;paint-order:stroke;letter-spacing:2px;filter:drop-shadow(5px 5px 0 #ffb627) drop-shadow(4px 4px 0 #19e3c8)}
+.poster .portal{width:min(80vw,380px)}
+.poster .portal .gear{inset:0;animation:none}
+.poster .portal .spiral{position:absolute;inset:6%;animation:spin 14s linear infinite reverse}
+.poster .portal .core{inset:34%}
+.poster .portal .gear3{width:26%;left:-6%;top:auto;bottom:-2%}
+.dove{position:absolute;left:50%;top:150px;width:min(44vw,190px);transform:translateX(-50%) rotate(-4deg);z-index:3;filter:drop-shadow(0 0 12px rgba(255,255,255,.7));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateX(-50%) translateY(-10px) rotate(3deg)}}
+.daisy{position:absolute;width:74px;z-index:2;animation:spin 30s linear infinite}
+.d1{left:4%;top:60px}.d2{right:5%;top:110px;width:56px}.d3{left:8%;bottom:90px;width:60px}.d4{right:7%;bottom:60px}
+.poster .musicname{position:relative;z-index:2;margin-top:16px}
+.sub-poster{position:relative;z-index:2;font-family:'Shrikhand',cursive;font-size:clamp(1.4rem,6vw,2.1rem);color:#ffb627;-webkit-text-stroke:1.5px #140a2e;text-shadow:3px 3px 0 #ff2e9a;margin:14px 0 0}
+.pane h2,.poster-h{font-family:'Shrikhand',cursive!important;font-weight:400!important;letter-spacing:.01em}
+.cosmic{position:relative;z-index:1;margin:30px -14px;padding:26px 14px 30px;background:#05020c;border-block:5px solid #19e3c8;box-shadow:0 0 30px rgba(25,227,200,.45);text-align:center;
+  background-image:radial-gradient(circle at 50% 50%,rgba(155,92,255,.35),transparent 60%)}
+.cosmic-grid{display:grid;gap:18px;max-width:860px;margin:0 auto}
+@media(min-width:700px){.cosmic-grid{grid-template-columns:1fr 1fr}}
+.cosmic figure{margin:0}
+.cosmic svg{width:min(78vw,300px);display:block;margin:0 auto;filter:drop-shadow(0 0 14px rgba(25,227,200,.5))}
+.cosmic figcaption{font-family:'IM Fell English',serif;font-size:1.4rem;color:#ffe9b0;margin-top:8px}
+.mandala-spin{transform-origin:150px 150px;animation:spin 50s linear infinite}
+.poster-h{font-size:clamp(1.8rem,8vw,3rem);margin:18px 0 0;color:#19e3c8;-webkit-text-stroke:1.5px #140a2e;text-shadow:3px 3px 0 #ff2e9a,0 0 20px rgba(25,227,200,.6)}
+.starry{position:relative;z-index:1;margin:30px auto;max-width:860px;border:6px solid #ffb627;outline:3px dashed #ff2e9a;outline-offset:4px;border-radius:14px;overflow:hidden;background:#0b1d5c}
+.starry svg{display:block;width:100%;height:auto;min-height:220px}
+.starry-cap{margin:0;padding:12px 14px;background:#140a2e;color:#ffe9b0;text-align:center;font-family:'IM Fell English',serif;font-size:1.4rem}
+@media(max-width:700px){.poster-in{min-height:560px}.dove{top:min(20vw,80px)}.rainbow{top:120px}.sunburst{top:330px}.d1{top:40px;width:54px}.d2{top:80px;width:44px}.d3,.d4{width:46px;bottom:8px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -168,25 +209,40 @@ footer a{color:var(--saffron)}
 <div class="wrap">
 <div class="thread" aria-hidden="true"></div>
 
-<header class="portal-zone">
-  <div class="portal" role="img" aria-label="A glowing cross at the center of a swirling, colorful portal ringed by brass gears">
-    <div class="rays"></div>
-    <svg class="gear" viewBox="0 0 200 200" aria-hidden="true">
-      <defs><radialGradient id="br" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe8a8"/><stop offset=".5" stop-color="#c8963e"/><stop offset="1" stop-color="#5a3410"/></radialGradient></defs>
-      <g fill="url(#br)">
-        <path fill-rule="evenodd" d="M100 2l6 0 2 9a90 90 0 0 1 14 3.6l5-8 5.6 2.3-1.6 9.3a90 90 0 0 1 12.4 7.4l7.4-5.8 4.5 4-4.4 8.4a90 90 0 0 1 9 11.2l8.9-3 3 5.2-6.8 6.5a90 90 0 0 1 4.6 13.8l9.4.2.9 6-8.9 3.2a90 90 0 0 1 0 14.4l8.9 3.2-.9 6-9.4.2a90 90 0 0 1-4.6 13.8l6.8 6.5-3 5.2-8.9-3a90 90 0 0 1-9 11.2l4.4 8.4-4.5 4-7.4-5.8a90 90 0 0 1-12.4 7.4l1.6 9.3-5.6 2.3-5-8A90 90 0 0 1 108 189l-2 9h-12l-2-9a90 90 0 0 1-14-3.6l-5 8-5.6-2.3 1.6-9.3a90 90 0 0 1-12.4-7.4l-7.4 5.8-4.5-4 4.4-8.4a90 90 0 0 1-9-11.2l-8.9 3-3-5.2 6.8-6.5a90 90 0 0 1-4.6-13.8l-9.4-.2-.9-6 8.9-3.2a90 90 0 0 1 0-14.4l-8.9-3.2.9-6 9.4-.2a90 90 0 0 1 4.6-13.8l-6.8-6.5 3-5.2 8.9 3a90 90 0 0 1 9-11.2l-4.4-8.4 4.5-4 7.4 5.8a90 90 0 0 1 12.4-7.4l-1.6-9.3 5.6-2.3 5 8A90 90 0 0 1 92 11l2-9zM100 22a78 78 0 1 0 .1 0z"/>
-      </g>
-      <g fill="#3d220a"><circle cx="100" cy="16" r="2.6"/><circle cx="184" cy="100" r="2.6"/><circle cx="100" cy="184" r="2.6"/><circle cx="16" cy="100" r="2.6"/></g>
+<header class="poster">
+  <div class="moonband" aria-hidden="true"></div>
+  <div class="poster-in">
+    <div class="rainbow" aria-hidden="true"></div>
+    <div class="sunburst" aria-hidden="true"></div>
+    <svg class="daisy d1" viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff" stroke="#140a2e" stroke-width="3"><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(0 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(30 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(60 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(120 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(150 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(210 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(240 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(300 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(330 50 50)"/></g><circle cx="50" cy="50" r="14" fill="#ffb627" stroke="#140a2e" stroke-width="3"/></svg><svg class="daisy d2" viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff" stroke="#140a2e" stroke-width="3"><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(0 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(30 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(60 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(120 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(150 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(210 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(240 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(300 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(330 50 50)"/></g><circle cx="50" cy="50" r="14" fill="#ffb627" stroke="#140a2e" stroke-width="3"/></svg><svg class="daisy d3" viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff" stroke="#140a2e" stroke-width="3"><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(0 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(30 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(60 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(120 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(150 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(210 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(240 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(300 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(330 50 50)"/></g><circle cx="50" cy="50" r="14" fill="#ffb627" stroke="#140a2e" stroke-width="3"/></svg><svg class="daisy d4" viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff" stroke="#140a2e" stroke-width="3"><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(0 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(30 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(60 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(120 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(150 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(210 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(240 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(300 50 50)"/><ellipse cx="50" cy="22" rx="11" ry="22" transform="rotate(330 50 50)"/></g><circle cx="50" cy="50" r="14" fill="#ffb627" stroke="#140a2e" stroke-width="3"/></svg>
+    <svg class="arch" viewBox="0 0 640 200" role="img" aria-label="Blake Dylan">
+      <defs><path id="archp" d="M30 190 Q320 10 610 190"/></defs>
+      <text class="archtxt" text-anchor="middle"><textPath href="#archp" startOffset="50%">BLAKE DYLAN</textPath></text>
     </svg>
-    <div class="swirl"></div>
-    <div class="swirl2"></div>
-    <div class="core"></div>
-    <svg class="gear2" viewBox="0 0 100 100" aria-hidden="true"><path fill="url(#br)" fill-rule="evenodd" d="M44 2h12l2 12 8 3 10-7 8 8-7 10 3 8 12 2v12l-12 2-3 8 7 10-8 8-10-7-8 3-2 12H44l-2-12-8-3-10 7-8-8 7-10-3-8-12-2V44l12-2 3-8-7-10 8-8 10 7 8-3zM50 34a16 16 0 1 0 .1 0z"/></svg>
-    <svg class="gear3" viewBox="0 0 100 100" aria-hidden="true"><path fill="url(#br)" fill-rule="evenodd" d="M44 2h12l2 12 8 3 10-7 8 8-7 10 3 8 12 2v12l-12 2-3 8 7 10-8 8-10-7-8 3-2 12H44l-2-12-8-3-10 7-8-8 7-10-3-8-12-2V44l12-2 3-8-7-10 8-8 10 7 8-3zM50 34a16 16 0 1 0 .1 0z"/></svg>
-    <svg class="cross" viewBox="0 0 60 90" aria-hidden="true"><path d="M23 0h14v24h23v14H37v52H23V38H0V24h23z" fill="#fffbe8" stroke="#ffb627" stroke-width="2"/></svg>
+    <div class="portal" role="img" aria-label="A dove with spread wings over a glowing cross, at the center of a gold spiral tunnel">
+      <svg class="gear" viewBox="0 0 200 200" aria-hidden="true">
+        <defs><radialGradient id="br" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe8a8"/><stop offset=".5" stop-color="#c8963e"/><stop offset="1" stop-color="#5a3410"/></radialGradient></defs>
+        <circle cx="100" cy="100" r="98" fill="url(#br)"/><circle cx="100" cy="100" r="88" fill="#000"/>
+        <g fill="#3d220a"><circle cx="100" cy="6" r="3" transform="rotate(0 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(30 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(60 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(90 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(120 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(150 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(180 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(210 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(240 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(270 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(300 100 100)"/><circle cx="100" cy="6" r="3" transform="rotate(330 100 100)"/></g>
+      </svg>
+      <svg class="spiral" viewBox="0 0 200 200" aria-hidden="true"><path d="M102.0 100.0 L102.3 100.3 L102.6 100.7 L102.8 101.2 L102.9 101.8 L102.9 102.4 L102.8 103.0 L102.5 103.6 L102.2 104.3 L101.7 104.9 L101.1 105.4 L100.4 105.8 L99.5 106.2 L98.6 106.4 L97.6 106.5 L96.6 106.4 L95.6 106.2 L94.5 105.8 L93.5 105.2 L92.6 104.4 L91.7 103.5 L91.0 102.4 L90.4 101.2 L90.0 99.9 L89.7 98.5 L89.7 97.0 L89.9 95.5 L90.3 93.9 L91.0 92.4 L91.9 91.0 L93.0 89.7 L94.3 88.5 L95.8 87.5 L97.5 86.7 L99.3 86.1 L101.2 85.8 L103.2 85.8 L105.3 86.0 L107.3 86.6 L109.3 87.4 L111.1 88.6 L112.9 90.0 L114.4 91.6 L115.7 93.6 L116.8 95.7 L117.6 98.0 L118.1 100.4 L118.2 102.9 L117.9 105.5 L117.3 108.0 L116.4 110.5 L115.0 112.9 L113.4 115.1 L111.4 117.1 L109.1 118.8 L106.6 120.2 L103.8 121.2 L100.9 121.9 L97.8 122.1 L94.8 122.0 L91.7 121.4 L88.7 120.3 L85.8 118.9 L83.1 117.0 L80.6 114.8 L78.5 112.1 L76.7 109.2 L75.3 106.0 L74.4 102.6 L73.9 99.1 L74.0 95.5 L74.5 91.9 L75.5 88.3 L77.1 84.9 L79.1 81.7 L81.5 78.7 L84.4 76.1 L87.7 73.9 L91.3 72.1 L95.1 70.8 L99.1 70.1 L103.3 69.9 L107.4 70.3 L111.6 71.3 L115.6 72.8 L119.3 74.9 L122.8 77.6 L126.0 80.7 L128.7 84.2 L130.9 88.2 L132.5 92.4 L133.6 96.9 L134.1 101.6 L133.9 106.3 L133.0 110.9 L131.6 115.5 L129.4 119.9 L126.7 123.9 L123.4 127.6 L119.6 130.9 L115.3 133.6 L110.7 135.7 L105.8 137.2 L100.7 138.0 L95.4 138.0 L90.2 137.4 L85.0 136.0 L80.1 133.9 L75.4 131.2 L71.1 127.7 L67.3 123.7 L64.1 119.2 L61.5 114.3 L59.5 108.9 L58.3 103.3 L57.9 97.6 L58.3 91.8 L59.5 86.1 L61.5 80.5 L64.2 75.2 L67.7 70.3 L71.8 65.9 L76.5 62.1 L81.8 58.9 L87.5 56.5 L93.5 54.8 L99.7 54.0 L106.1 54.1 L112.4 55.0 L118.6 56.8 L124.5 59.4 L130.0 62.9 L135.0 67.1 L139.5 72.0 L143.3 77.5 L146.3 83.5 L148.4 89.9 L149.7 96.6 L150.1 103.4 L149.5 110.3 L147.9 117.1 L145.4 123.6 L142.1 129.8 L137.8 135.5 L132.9 140.7 L127.2 145.1 L120.9 148.7 L114.1 151.4 L107.0 153.2 L99.7 154.0 L92.3 153.8 L84.9 152.6 L77.7 150.3 L70.8 147.1 L64.5 143.0 L58.7 137.9 L53.6 132.1 L49.3 125.6 L46.0 118.6 L43.6 111.1 L42.2 103.3 L42.0 95.4 L42.8 87.4 L44.8 79.6 L47.8 72.1 L51.8 65.0 L56.8 58.5 L62.6 52.7 L69.3 47.7 L76.6 43.7 L84.4 40.7 L92.6 38.7 L101.1 38.0 L109.6 38.3 L118.0 39.9 L126.2 42.6 L134.0 46.4 L141.2 51.3 L147.7 57.2 L153.4 63.9 L158.2 71.4 L161.9 79.5 L164.4 88.1 L165.8 97.0 L166.0 106.0 L164.9 115.1 L162.5 123.9 L159.0 132.4 L154.3 140.4 L148.5 147.7 L141.7 154.1 L134.1 159.6 L125.8 164.0 L116.9 167.3 L107.6 169.3 L98.0 170.0 L88.4 169.5 L78.9 167.6 L69.7 164.4 L61.0 159.9 L53.0 154.3 L45.7 147.6 L39.4 139.9 L34.2 131.4 L30.2 122.2 L27.5 112.5 L26.1 102.5 L26.1 92.4 L27.5 82.3 L30.3 72.4 L34.4 63.0 L39.8 54.1 L46.4 46.1 L54.1 39.0 L62.7 33.0 L72.0 28.2 L82.0 24.7 L92.5 22.6 L103.1 22.0 L113.8 22.8 L124.4 25.1 L134.5 28.8 L144.1 33.9 L153.0 40.3 L160.9 47.8 L167.8 56.5 L173.4 66.0 L177.7 76.2 L180.6 87.0 L181.9 98.1 L181.8 109.4 L180.0 120.6 L176.8 131.4 L172.1 141.8 L166.0 151.5 L158.6 160.3 L150.0 168.0 L140.4 174.5 L130.0 179.6 L118.9 183.3 L107.3 185.5 L95.6 186.0 L83.8 184.9 L72.2 182.3 L61.1 178.0 L50.6 172.3 L41.0 165.1 L32.3 156.6 L24.9 147.0 L18.9 136.5 L14.3 125.2 L11.4 113.3 L10.0 101.0 L10.4 88.7 L12.4 76.4 L16.2 64.6 L21.5 53.3 L28.3 42.8 L36.6 33.2 L46.1 24.9 L56.7 18.0 L68.2 12.5 L80.4 8.6 L93.0 6.4 L105.9 6.0 L118.8 7.4 L131.4 10.5 L143.5 15.3 L154.8 21.7 L165.3 29.7 L174.5 39.1 L182.4 49.6 L188.9 61.2 L193.7 73.7 L196.7 86.7" fill="none" stroke="#ffc93c" stroke-width="7" stroke-linecap="round"/></svg>
+      <div class="core"></div>
+      <svg class="cross" viewBox="0 0 60 90" aria-hidden="true"><path d="M23 0h14v24h23v14H37v52H23V38H0V24h23z" fill="#fffbe8" stroke="#ffb627" stroke-width="2"/></svg>
+      <svg class="gear3" viewBox="0 0 100 100" aria-hidden="true"><path fill="url(#br)" fill-rule="evenodd" d="M44 2h12l2 12 8 3 10-7 8 8-7 10 3 8 12 2v12l-12 2-3 8 7 10-8 8-10-7-8 3-2 12H44l-2-12-8-3-10 7-8-8 7-10-3-8-12-2V44l12-2 3-8-7-10 8-8 10 7 8-3zM50 34a16 16 0 1 0 .1 0z"/></svg>
+    </div>
+    <svg class="dove" viewBox="0 0 240 120" aria-hidden="true">
+      <g fill="#fff" stroke="#140a2e" stroke-width="4" stroke-linejoin="round">
+        <path d="M120 70 C95 40 60 10 8 8 C30 22 40 38 52 46 C34 46 24 52 18 60 C50 58 80 66 104 80z"/>
+        <path d="M120 70 C145 40 180 10 232 8 C210 22 200 38 188 46 C206 46 216 52 222 60 C190 58 160 66 136 80z"/>
+        <path d="M104 80 C108 64 132 64 136 80 C136 92 128 100 120 112 C112 100 104 92 104 80z"/>
+        <path d="M113 66 C112 56 126 54 128 62 L136 60 L129 67z" fill="#fff"/>
+      </g>
+      <path d="M122 104 l-6 12 M120 108 l0 12 M118 104 l6 12" stroke="#ffb627" stroke-width="3"/>
+    </svg>
+    <p class="musicname">BlakeDylan Music</p>
+    <p class="sub-poster">Live in Austin &middot; Busking &amp; Open Mics</p>
   </div>
-  <h1 class="name">Blake Dylan</h1>
-  <p class="musicname">BlakeDylan Music</p>
+  <div class="moonband" aria-hidden="true"></div>
 </header>
 
 <section class="scroll" aria-label="God is the center">
@@ -214,13 +270,44 @@ footer a{color:var(--saffron)}
   <div class="status" aria-hidden="true"><span>Ready</span><span>Open mics + busking</span></div>
 </section>
 
+<section class="cosmic" aria-labelledby="love-h">
+  <div class="cosmic-grid">
+    <figure class="eye-fig">
+      <svg viewBox="0 0 300 300" role="img" aria-label="A radiant eye inside a glowing triangle with rays of light">
+        <g opacity=".9"><path d="M150 150 L300.0 150.0" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L294.9 188.8" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L279.9 225.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L256.1 256.1" stroke="#9b5cff" stroke-width="10"/><path d="M150 150 L225.0 279.9" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L188.8 294.9" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L150.0 300.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L111.2 294.9" stroke="#9b5cff" stroke-width="10"/><path d="M150 150 L75.0 279.9" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L43.9 256.1" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L20.1 225.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L5.1 188.8" stroke="#9b5cff" stroke-width="10"/><path d="M150 150 L0.0 150.0" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L5.1 111.2" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L20.1 75.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L43.9 43.9" stroke="#9b5cff" stroke-width="10"/><path d="M150 150 L75.0 20.1" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L111.2 5.1" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L150.0 0.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L188.8 5.1" stroke="#9b5cff" stroke-width="10"/><path d="M150 150 L225.0 20.1" stroke="#ff2e9a" stroke-width="10"/><path d="M150 150 L256.1 43.9" stroke="#ffb627" stroke-width="10"/><path d="M150 150 L279.9 75.0" stroke="#19e3c8" stroke-width="10"/><path d="M150 150 L294.9 111.2" stroke="#9b5cff" stroke-width="10"/></g>
+        <circle cx="150" cy="150" r="78" fill="#140a2e"/>
+        <path d="M150 52 L242 214 H58z" fill="#ffb627" stroke="#140a2e" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M150 74 L224 204 H76z" fill="#ff2e9a" stroke="#140a2e" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M96 160 Q150 112 204 160 Q150 208 96 160z" fill="#fff" stroke="#140a2e" stroke-width="5"/>
+        <circle cx="150" cy="160" r="21" fill="#19e3c8" stroke="#140a2e" stroke-width="4"/>
+        <circle cx="150" cy="160" r="9" fill="#140a2e"/><circle cx="144" cy="154" r="4" fill="#fff"/>
+      </svg>
+      <figcaption>His watchful love is always on you.</figcaption>
+    </figure>
+    <figure class="mandala-fig">
+      <svg viewBox="0 0 300 300" role="img" aria-label="A glowing mandala woven from neon threads">
+        <g class="mandala-spin" fill="none" stroke-width="2.5">
+          <g stroke="#19e3c8"><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(0 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(15 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(30 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(45 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(60 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(75 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(90 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(105 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(120 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(135 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(150 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(165 150 150)"/></g>
+          <g stroke="#ff2e9a" transform="rotate(7.5 150 150)" opacity=".85"><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(0 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(15 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(30 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(45 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(60 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(75 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(90 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(105 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(120 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(135 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(150 150 150)"/><ellipse cx="150" cy="150" rx="140" ry="38" transform="rotate(165 150 150)"/></g>
+          <g stroke="#ffb627"><circle cx="150" cy="55" r="22" transform="rotate(0 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(30 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(60 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(90 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(120 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(150 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(180 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(210 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(240 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(270 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(300 150 150)"/><circle cx="150" cy="55" r="22" transform="rotate(330 150 150)"/></g>
+          <circle cx="150" cy="150" r="128" stroke="#9b5cff" stroke-dasharray="4 7"/>
+        </g>
+        <path d="M110 150 Q150 118 190 150 Q150 182 110 150z" fill="#fff" stroke="#19e3c8" stroke-width="3"/>
+        <circle cx="150" cy="150" r="14" fill="#9b5cff"/><circle cx="150" cy="150" r="6" fill="#140a2e"/>
+      </svg>
+      <figcaption>Every thread is woven by His hand.</figcaption>
+    </figure>
+  </div>
+  <h2 id="love-h" class="poster-h">Peace &middot; Love &middot; Blessings</h2>
+</section>
+
 <section class="win" id="listen" aria-labelledby="listen-h">
   <div class="titlebar"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="4" width="16" height="12" fill="#ff2e9a"/><path d="M8 7l5 3-5 3z" fill="#fff"/></svg><span class="t">FOLLOW.EXE</span><span class="tbtn" aria-hidden="true">_</span><span class="tbtn" aria-hidden="true">&#9633;</span><span class="tbtn" aria-hidden="true">x</span></div>
   <div class="pane weave">
     <h2 id="listen-h" style="color:#fff;text-shadow:3px 3px 0 #140a2e,0 0 16px #ff2e9a">Follow me</h2>
     <div class="btns two">
       <a class="stitch s-mag" href="https://www.youtube.com/@fteam777">YouTube<small>@fteam777</small></a>
-      <a class="stitch s-teal" href="https://www.tiktok.com/@blakedylan1313">TikTok<small>@blakedylan1313</small></a>
+      <a class="stitch s-teal" href="https://www.tiktok.com/@dynamisblakefgstx.com">TikTok<small>@dynamisblakefgstx.com</small></a>
       <a class="stitch s-vio" href="https://www.instagram.com/blakewhy">Instagram<small>@blakewhy</small></a>
       <a class="stitch s-saf" href="https://www.facebook.com/blaketexasmusic">Facebook<small>Blake Texas Music</small></a>
       <a class="stitch s-brass" href="https://fgstx.com/">Farthing Grace Services<small>fgstx.com</small></a>
@@ -267,6 +354,22 @@ footer a{color:var(--saffron)}
   </div>
 </section>
 
+<section class="starry" aria-label="A tree under a swirling starry sky">
+  <svg viewBox="0 0 700 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="700" height="320" fill="#0b1d5c"/>
+    <g fill="none" stroke-linecap="round"><g stroke="#4fa3ff" stroke-width="9" opacity=".7"><path d="M-20 60 q30 -30 60 0 t60 0 t60 0" /><path d="M80 110 q30 -30 60 0 t60 0 t60 0" /><path d="M220 50 q30 -30 60 0 t60 0 t60 0" /><path d="M380 95 q30 -30 60 0 t60 0 t60 0" /><path d="M500 40 q30 -30 60 0 t60 0 t60 0" /><path d="M560 130 q30 -30 60 0 t60 0 t60 0" /><path d="M20 160 q30 -30 60 0 t60 0 t60 0" /></g><g stroke="#19e3c8" stroke-width="3" stroke-dasharray="10 8" opacity=".9"><path d="M-20 60 q30 -30 60 0 t60 0 t60 0" /><path d="M80 110 q30 -30 60 0 t60 0 t60 0" /><path d="M220 50 q30 -30 60 0 t60 0 t60 0" /><path d="M380 95 q30 -30 60 0 t60 0 t60 0" /><path d="M500 40 q30 -30 60 0 t60 0 t60 0" /><path d="M560 130 q30 -30 60 0 t60 0 t60 0" /><path d="M20 160 q30 -30 60 0 t60 0 t60 0" /></g></g>
+    <g fill="none" stroke="#ffe28a" stroke-width="5"><circle cx="560" cy="70" r="34"/><circle cx="560" cy="70" r="48" stroke-dasharray="6 9"/></g>
+    <path d="M572 46 a28 28 0 1 0 0 48 a22 22 0 1 1 0 -48z" fill="#ffe28a"/>
+    <g fill="#fff8c8"><circle cx="40" cy="30" r="3"/><circle cx="130" cy="40" r="2"/><circle cx="200" cy="120" r="3"/><circle cx="300" cy="30" r="2"/><circle cx="350" cy="140" r="3"/><circle cx="450" cy="70" r="2"/><circle cx="600" cy="90" r="3"/><circle cx="660" cy="40" r="2"/><circle cx="520" cy="170" r="2"/><circle cx="90" cy="200" r="2"/></g>
+    <path d="M0 320 V262 Q180 222 350 248 T700 238 V320z" fill="#0a3d2a"/>
+    <g fill="#140a2e" stroke="#ffb627" stroke-width="3">
+      <path d="M200 262 C204 220 200 196 196 176 L210 176 C214 200 214 226 216 262z"/>
+      <path d="M203 180 C150 186 120 160 130 132 C110 110 140 80 168 92 C176 62 222 56 236 84 C268 76 292 110 272 134 C288 160 252 190 210 180z"/>
+    </g>
+    <g fill="#ff2e9a"><circle cx="160" cy="120" r="5"/><circle cx="246" cy="112" r="5"/><circle cx="200" cy="96" r="5"/><circle cx="226" cy="150" r="5"/></g>
+  </svg>
+  <p class="starry-cap">Under His sky, every road is home.</p>
+</section>
 <section class="scroll" aria-label="Blessing">
   <span class="knob k1"></span><span class="knob k2"></span><span class="knob k3"></span><span class="knob k4"></span>
   <div class="sheet">
@@ -329,6 +432,11 @@ footer a{color:var(--saffron)}
 "Open mics + busking": "Micrófonos abiertos + música en la calle",
 "Austin bound": "Rumbo a Austin",
 "Sections": "Secciones",
+"Live in Austin · Busking & Open Mics": "En vivo en Austin · Música en la calle y micrófonos abiertos",
+"His watchful love is always on you.": "Su amor siempre le está cuidando.",
+"Every thread is woven by His hand.": "Cada hilo está tejido por Su mano.",
+"Peace · Love · Blessings": "Paz · Amor · Bendiciones",
+"Under His sky, every road is home.": "Bajo Su cielo, todo camino es hogar.",
 "God is the center": "Dios es el centro",
 "Blessing": "Bendición"
 }
