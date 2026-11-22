@@ -176,6 +176,17 @@ func shoot_arrow() -> void:
 
 
 func _hurt(e: Dictionary, dmg: float, push_dir: Vector3) -> void:
+	# Every hit rolls a d20 (main.hit_roll shows the little dice chip).
+	var mult: float = main.hit_roll() if main.has_method("hit_roll") else 1.0
+	if mult <= 0.0:
+		return
+	hurt_plain(e, dmg * mult, push_dir)
+
+
+## Damage without a dice roll (party buddy, Charge, Storm).
+func hurt_plain(e: Dictionary, dmg: float, push_dir: Vector3) -> void:
+	if not e in enemies:
+		return
 	e["health"] -= dmg
 	e["node"].position += push_dir * 0.7
 	if e["health"] <= 0.0:
@@ -412,6 +423,9 @@ func _enemy_ward(e: Dictionary, id: String) -> void:
 
 func _spawn_spot() -> Vector3:
 	var hp: Vector3 = main.hero.global_position
+	if absf(hp.x) > 44.0 or hp.z > 36.0:
+		var a := rng.randf() * TAU
+		return Vector3(hp.x + cos(a) * 14.0, 0, hp.z + sin(a) * 14.0)
 	var best: Vector3 = SPAWNS[0]
 	var bs := 1e9
 	for s in SPAWNS:
@@ -485,7 +499,7 @@ func _enemy_tick(e: Dictionary, delta: float, t: float) -> void:
 				root.position += to.normalized() * step
 				walk = 1.0
 				e["phase"] += step * 3.2
-			elif e["t"] <= 0.0:
+			elif e["t"] <= 0.0 and float(main.get("sneak_left")) <= 0.0:
 				e["state"] = "windup"
 				e["t"] = float(_e().get("wind_up_seconds", 1.2))
 				_make_orb(e)
@@ -629,13 +643,16 @@ func _hit_player(b: Dictionary) -> void:
 
 func _hit_enemy(e: Dictionary, b: Dictionary) -> void:
 	var bc: Dictionary = cfg.get("bolt", {})
-	var dmg: float = b["dmg"]
+	var roll_mult: float = main.hit_roll() if main.has_method("hit_roll") else 1.0
+	if roll_mult <= 0.0:
+		return
+	var dmg: float = b["dmg"] * roll_mult
 	if b.get("arrow", false):
 		# Bone arrows ignore the element wheel; a ward still halves them.
 		if e["ward"] != "":
 			dmg *= 0.5
 			main.toast("Their ward slowed the arrow. Try steel or the element that beats it.")
-		_hurt(e, dmg, b["vel"].normalized() * Vector3(1, 0, 1))
+		hurt_plain(e, dmg, b["vel"].normalized() * Vector3(1, 0, 1))
 		return
 	if e["ward"] != "":
 		if beats(b["el"], e["ward"]):
@@ -665,6 +682,8 @@ func _defeat(e: Dictionary) -> void:
 	main.toast("The %s vanished in a puff of light and ran home! +%s coins" % [e["name"], TavernSafe.number_text(coins)])
 	e["node"].queue_free()
 	spawn_timer = maxf(spawn_timer, 12.0)
+	if main.has_method("foe_defeated"):
+		main.foe_defeated(e)
 
 
 func _puff(pos: Vector3, c: Color, size := 1.0) -> void:

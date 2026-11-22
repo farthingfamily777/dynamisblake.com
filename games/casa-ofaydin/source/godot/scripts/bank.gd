@@ -131,6 +131,16 @@ func on_season(season_name: String) -> String:
 	return "%s is here: %s." % [season_name, " and ".join(parts)]
 
 
+## Called each new game day: savings earn 1 coin for every 100 saved.
+func on_day() -> String:
+	var gain := savings / 100
+	if gain <= 0:
+		return ""
+	savings += gain
+	_log("Daily interest: savings +%s" % n(gain))
+	return "Your savings grew by %s coins overnight." % n(gain)
+
+
 func to_dict() -> Dictionary:
 	return {"purse": purse, "savings": savings, "loan": loan, "ledger": ledger}
 

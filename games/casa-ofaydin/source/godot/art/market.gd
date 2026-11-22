@@ -212,6 +212,7 @@ static func _crowd(main: Node3D, fx: Dictionary) -> void:
 		var root := Node3D.new()
 		root.position = homes[i]
 		main.add_child(root)
+		root.add_to_group("tag_target")
 		var body := LowPoly.build(root, LowPoly.random_params(roles[i], rng))
 		people.append({
 			"node": root,

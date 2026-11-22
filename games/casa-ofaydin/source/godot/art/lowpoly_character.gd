@@ -5,7 +5,7 @@ extends Object
 # limbs can swing. Worn gear is merged INTO those segment meshes, so a fully
 # geared hero still costs ten meshes.
 #
-# No eyes are ever drawn (house rule). Faces read from brow shadow, nose,
+# No eyes are ever drawn (house rule). Faces read from one brow line, nose,
 # mouth, ears, hair, and beard.
 #
 # Characters face +Z. The hero's Body is turned 180 degrees in main.gd's world.
@@ -85,6 +85,12 @@ static func col(v, fallback := Color(0.5, 0.5, 0.5)) -> Color:
 const LOD0_CAP := 760
 const LOD1_CAP := 450
 const LOD_SWAP_M := 14.0
+const LOD2_CAP := 190   # very far / Low-quality far version
+# Distance bands per quality: [LOD0 end, LOD1 end, LOD2 end, impostor end] in metres.
+# Low hides LOD0 (close = LOD1, <=450), far = LOD2 (<=190), sprite beyond 30 m.
+const BANDS := {"high": [14.0, 40.0, 80.0, 0.0], "med": [8.0, 22.0, 40.0, 70.0], "low": [0.0, 10.0, 30.0, 55.0]}
+static var quality := "high"
+static var _imp_tex: ImageTexture
 const BONES := ["Hips", "Head", "ArmL", "ForeL", "ArmR", "ForeR", "LegL", "ShinL", "LegR", "ShinR"]
 const BONE_PARENT := [-1, -1, -1, 2, -1, 4, -1, 6, -1, 8]
 const RigBody = preload("res://art/rig_body.gd")
@@ -189,9 +195,11 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 	body.set_meta("tris_wanted", N64.count(shapes, 0))
 	var lod0 := N64.fit(shapes, 0, LOD0_CAP)
 	var lod1 := N64.fit(shapes, 1, LOD1_CAP)
+	var lod2 := N64.fit(shapes, 1, LOD2_CAP)
 	var tri0 := N64.count(lod0, 0)
 	var tri1 := N64.count(lod1, 1)
-	for lod in [[lod0, "LOD0", 0], [lod1, "LOD1", 1]]:
+	var tri2 := N64.count(lod2, 1)
+	for lod in [[lod0, "LOD0", 0], [lod1, "LOD1", 1], [lod2, "LOD2", 1]]:
 		var mi := MeshInstance3D.new()
 		mi.name = lod[1]
 		mi.mesh = N64.commit(lod[0], lod[2], rest)
@@ -199,20 +207,89 @@ static func build(parent: Node3D, p: Dictionary, name := "Body") -> Node3D:
 		skel.add_child(mi)
 		mi.skeleton = NodePath("..")
 		mi.custom_aabb = AABB(Vector3(-1.2, -0.3, -1.4), Vector3(2.4, 2.6, 2.8))
-		if lod[1] == "LOD0":
-			mi.visibility_range_end = LOD_SWAP_M
-			mi.visibility_range_end_margin = 1.0
-		else:
-			mi.visibility_range_begin = LOD_SWAP_M
-			mi.visibility_range_begin_margin = 1.0
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF if lod[1] == "LOD2" else GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	# Impostor: one shared billboard sprite tinted with the outfit colour.
+	var imp := Sprite3D.new()
+	imp.name = "Imp"
+	imp.texture = _impostor_texture()
+	imp.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+	imp.pixel_size = 1.8 / 64.0
+	imp.position = Vector3(0, 0.9, 0)
+	imp.shaded = false
+	imp.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	imp.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	imp.modulate = (P["paint"]["chest"] as Color).lerp(P["skin"], 0.15)
+	body.add_child(imp)
+	body.add_to_group("lp_body")
+	apply_quality(body)
 	if weapon == "staff":
 		_staff_glow(nodes)
 	body.set_meta("tris_lod0", tri0)
 	body.set_meta("tris_lod1", tri1)
+	body.set_meta("tris_lod2", tri2)
 	body.set_meta("weapon", weapon)
 	body.scale = Vector3.ONE * float(p.get("height", 1.0))
 	body.set_meta("walk_phase", randf() * TAU)
 	return body
+
+
+## Set the LOD distance bands on one character for the current quality.
+static func apply_quality(body: Node3D) -> void:
+	var b: Array = BANDS.get(quality, BANDS["high"])
+	var skel := body.get_node_or_null("Skel")
+	var meshes := []
+	for n in ["LOD0", "LOD1", "LOD2"]:
+		var mi: GeometryInstance3D = null
+		if skel:
+			mi = skel.get_node_or_null(n)
+		if mi == null:
+			for c in body.find_children(n, "MeshInstance3D", true, false):
+				mi = c
+				break
+		meshes.append(mi)
+	var start := 0.0
+	for i in 3:
+		var mi: GeometryInstance3D = meshes[i]
+		if mi == null:
+			continue
+		var end: float = b[i]
+		var hidden := i == 0 and end <= 0.0
+		mi.visible = not hidden
+		mi.visibility_range_begin = start
+		mi.visibility_range_begin_margin = 1.0 if start > 0.0 else 0.0
+		mi.visibility_range_end = end
+		mi.visibility_range_end_margin = 1.0
+		if not hidden:
+			start = end
+	var imp: GeometryInstance3D = body.get_node_or_null("Imp")
+	if imp:
+		imp.visibility_range_begin = start
+		imp.visibility_range_end = b[3]
+		imp.visible = b[3] > 0.0 or quality == "high"
+
+
+static func _impostor_texture() -> ImageTexture:
+	if _imp_tex:
+		return _imp_tex
+	# A white rounded person silhouette (head, shoulders, body, legs), 32x64.
+	var img := Image.create(32, 64, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for y in 64:
+		for x in 32:
+			var cx := float(x) - 15.5
+			var on := false
+			if Vector2(cx, float(y) - 8.0).length() < 6.0:
+				on = true   # head
+			elif y >= 14 and y < 38:
+				var half := 12.0 - absf(float(y) - 20.0) * 0.12 if y < 22 else 10.0 - (float(y) - 22.0) * 0.1
+				on = absf(cx) < half
+			elif y >= 38 and y < 63:
+				on = absf(absf(cx) - 4.5) < 3.5
+			if on:
+				var shade := 1.0 - float(y) / 64.0 * 0.35
+				img.set_pixel(x, y, Color(shade, shade, shade, 1.0))
+	_imp_tex = ImageTexture.create_from_image(img)
+	return _imp_tex
 
 
 # ---------------------------------------------------------------- shape recording
@@ -318,8 +395,9 @@ static func _body(parts: Dictionary, P: Dictionary, gear: Dictionary) -> void:
 	parts["_kind"] = "box"
 	bx(parts, h, Vector3(0, 0.175, 0.135), Vector3(0.042, 0.075, 0.05), skin.darkened(0.04), Vector2(0.55, 0.3), Vector2(1.0, 1.0), Vector3(-8, 0, 0), 0.25)
 	parts["_kind"] = "quad"
-	# brow shadow band where eyes would be (painted, no eyes), mouth, cheek blush
-	bx(parts, h, Vector3(0, 0.235, 0.123), Vector3(0.17, 0.035, 0.01), skin.darkened(0.3), Vector2(1.0, 1.0), Vector2(0.85, 1.0), Vector3(-8, 0, 0), 0.25)
+	# ONE thin brow line high on the forehead (Blake: never two shadows that read
+	# like eyes), then the mouth. No eyes.
+	bx(parts, h, Vector3(0, 0.262, 0.121), Vector3(0.15, 0.016, 0.01), skin.darkened(0.24), Vector2(1.0, 1.0), Vector2(1.0, 1.0), Vector3(-10, 0, 0), 0.0)
 	bx(parts, h, Vector3(0, 0.112, 0.125), Vector3(0.07, 0.016, 0.01), Color(0.42, 0.20, 0.17), Vector2(1.1, 1), Vector2(0.9, 1), Vector3(14, 0, 0), 0.0)
 	parts["_kind"] = ""
 	parts["_ess"] = false

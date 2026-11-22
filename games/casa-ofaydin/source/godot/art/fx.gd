@@ -1,6 +1,9 @@
 extends Node
 const LowPoly = preload("res://art/lowpoly_character.gd")
 # Runtime art ticks: lighthouse, neon, animals, market crowd, paddle wheel, compass.
+# Quality sets meta "npc_cap": only the nearest N townsfolk are drawn and animated;
+# the rest keep a cheap off-screen tick (position only).
+var _cap_t := 0.0
 
 func _process(delta: float) -> void:
 	var fx: Dictionary = get_meta("fx") if has_meta("fx") else {}
@@ -34,6 +37,7 @@ func _process(delta: float) -> void:
 			var m: StandardMaterial3D = cap.material_override
 			m.emission_energy_multiplier = 2.2 + sin(t * 8.0 + cap.position.x) * 0.5
 	_wander(fx.get("animals", []), delta)
+	_cap_people(fx.get("people", []), delta)
 	_wander(fx.get("people", []), delta)
 	_update_compass(get_parent())
 
@@ -51,11 +55,27 @@ func _wander(list: Array, delta: float) -> void:
 		var step := n.position.distance_to(target)
 		if face.length() > 0.05:
 			n.rotation.y = lerp_angle(n.rotation.y, atan2(face.x, face.z), delta * 3.0)
-		if a.has("body"):
+		if a.has("body") and n.visible:
 			# limb swing for low-poly townsfolk
 			var amt := clampf(step * 6.0, 0.0, 1.0)
 			a["phase"] = float(a.get("phase", 0.0)) + amt * delta * 7.0
 			LowPoly.animate(a["body"], a["phase"], amt, Time.get_ticks_msec() / 1000.0 + a["home"].x)
+
+
+func _cap_people(list: Array, delta: float) -> void:
+	_cap_t -= delta
+	if _cap_t > 0.0 or list.is_empty():
+		return
+	_cap_t = 0.5
+	var cap := int(get_meta("npc_cap")) if has_meta("npc_cap") else 99
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return
+	var cp := cam.global_position
+	var order := list.duplicate()
+	order.sort_custom(func(a, b): return (a["node"] as Node3D).global_position.distance_squared_to(cp) < (b["node"] as Node3D).global_position.distance_squared_to(cp))
+	for i in order.size():
+		(order[i]["node"] as Node3D).visible = i < cap
 
 
 func _update_compass(main: Node) -> void:

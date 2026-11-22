@@ -10,7 +10,7 @@ const Fx = preload("res://art/fx.gd")
 
 static func apply(main: Node3D) -> void:
 	ArtSky.setup(main.env, main.sun)
-	Hero.build(main.hero, main.hero_gear() if main.has_method("hero_gear") else {}, str(main.get("weapon")) if main.get("weapon") != null else "staff")
+	Hero.build(main.hero, main.hero_gear() if main.has_method("hero_gear") else {}, str(main.get("weapon")) if main.get("weapon") != null else "staff", main.hero_look() if main.has_method("hero_look") else {})
 	Props.style_fairy(main.fairy)
 	for b in main.bugs:
 		Props.style_bug(b)

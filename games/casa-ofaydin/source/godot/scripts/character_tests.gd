@@ -52,6 +52,16 @@ func _init() -> void:
 			var n := Node3D.new()
 			root.add_child(n)
 			rows.append(["%s %d" % [role, i + 1], LowPoly.build(n, LowPoly.random_params(role, rng))])
+	# Mage, Thief, Warrior starting kits with their class looks.
+	var HC = load("res://scripts/hero_class.gd")
+	for cls in ["mage", "thief", "warrior"]:
+		var hc := CharacterBody3D.new()
+		root.add_child(hc)
+		var info: Dictionary = HC.CLASSES[cls]
+		var look: Dictionary = (info["look"] as Dictionary).duplicate()
+		look["tints"] = info["tints"]
+		Hero.build(hc, HC.gear_for(cls), info["weapon"], look)
+		rows.append(["class kit: " + cls, hc.get_node("Body")])
 	var mx0 := 0
 	var mx1 := 0
 	print("\nTRIANGLES (LOD0 close / LOD1 far):")
@@ -70,6 +80,19 @@ func _init() -> void:
 		var real1: int = lod1.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX].size() / 3
 		if real0 != t0 or real1 != t1:
 			ok(false, "%s mesh tris match (%d/%d)" % [r[0], real0, real1])
+	var mx2 := 0
+	for r in rows:
+		mx2 = maxi(mx2, int((r[1] as Node3D).get_meta("tris_lod2")))
+	print("  LOD2 (Low far) max: %d" % mx2)
+	var qb: Node3D = rows[0][1]
+	LowPoly.quality = "low"
+	LowPoly.apply_quality(qb)
+	var sk: Node = qb.get_node("Skel")
+	var low_ok: bool = not sk.get_node("LOD0").visible and sk.get_node("LOD1").visibility_range_end == 10.0 and sk.get_node("LOD2").visibility_range_end == 30.0 and qb.get_node("Imp").visibility_range_begin == 30.0
+	LowPoly.quality = "high"
+	LowPoly.apply_quality(qb)
+	ok(mx2 <= LowPoly.LOD2_CAP, "LOD2 (Low far) never over %d tris (max %d)" % [LowPoly.LOD2_CAP, mx2])
+	ok(low_ok, "Low quality: LOD1 close (<=450), LOD2 to 30 m, sprite beyond 30 m")
 	ok(mx0 <= LowPoly.LOD0_CAP, "LOD0 never over %d tris (max %d)" % [LowPoly.LOD0_CAP, mx0])
 	ok(mx1 <= LowPoly.LOD1_CAP, "LOD1 never over %d tris (max %d)" % [LowPoly.LOD1_CAP, mx1])
 	var hb: Node3D = rows[3][1]

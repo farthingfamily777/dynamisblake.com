@@ -1,7 +1,7 @@
 extends Object
 # Hero: late-90s low-poly traveler (PS1 / FF7 / N64 style) built by
 # art/lowpoly_character.gd. Worn gear comes from the wardrobe (data/clothing.json).
-# No eyes are drawn; the hood rim and brow give the face its shadow.
+# No eyes are drawn; one brow line and the hood rim shape the face.
 
 const LowPoly = preload("res://art/lowpoly_character.gd")
 
@@ -18,8 +18,10 @@ const LOOK := {
 }
 
 
-static func build(hero: CharacterBody3D, gear: Dictionary = {}, weapon := "staff") -> void:
+static func build(hero: CharacterBody3D, gear: Dictionary = {}, weapon := "staff", look: Dictionary = {}) -> void:
 	var p := LOOK.duplicate()
+	for k in look.keys():
+		p[k] = look[k]
 	p["gear"] = gear
 	p["weapon"] = weapon
 	var body := LowPoly.build(hero, p)
