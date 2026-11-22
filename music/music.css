@@ -1,0 +1,200 @@
+/* Music page only (loaded by /music/index.html). Matches the home page look:
+   deep space, neon rainbow poster, Win95 windows, parchment scroll, stitched buttons.
+   Every class is prefixed .mu- so no other page can shift. */
+.mu{--indigo:#140a2e;--magenta:#ff2e9a;--saffron:#ffb627;--teal:#19e3c8;--violet:#9b5cff;
+  --brass:#c8963e;--parch:#f3e2b8;--parch2:#dcc28a;--ink:#2a1606;--laurel:#0d2e22;--gold:#c9a24a;
+  --w95:#c0c0c0;--w95hi:#fff;--w95lo:#808080;--w95dk:#0a0a0a;--w95blue:#000080;--w95blue2:#1084d0}
+.mu *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body.mu{margin:0;min-height:100vh;color:#fff8ea;font:400 19px/1.6 'Montserrat',sans-serif;overflow-x:hidden;background:#04020c}
+.mu a{color:var(--teal);font-weight:700}
+.mu a:focus-visible{outline:4px solid var(--saffron);outline-offset:3px}
+.mu-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* deep space backdrop */
+.mu-space{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 50% 120%,#1a0b3d,#04020c 70%)}
+.mu-neb{position:absolute;border-radius:50%;opacity:.6;animation:mu-drift 40s ease-in-out infinite alternate}
+.mu-n1{width:70vmax;height:50vmax;left:-20vmax;top:-10vmax;background:radial-gradient(closest-side,rgba(255,46,154,.8),rgba(155,92,255,.35) 55%,transparent)}
+.mu-n2{width:60vmax;height:45vmax;right:-20vmax;top:30vh;background:radial-gradient(closest-side,rgba(25,227,200,.7),rgba(36,87,255,.3) 60%,transparent);animation-duration:55s}
+.mu-n3{width:55vmax;height:40vmax;left:5vmax;bottom:-15vmax;background:radial-gradient(closest-side,rgba(255,182,39,.6),rgba(255,46,154,.25) 60%,transparent);animation-duration:65s}
+.mu-stars{position:absolute;inset:0;background-image:
+  radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1.5px 1.5px at 72% 12%,#fff,transparent),
+  radial-gradient(2px 2px at 86% 58%,#ffe8b0,transparent),radial-gradient(1.5px 1.5px at 33% 72%,#fff,transparent),
+  radial-gradient(2px 2px at 54% 90%,#a8f5ff,transparent),radial-gradient(1.5px 1.5px at 8% 86%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 45% 40%,#ff9bd0,transparent),radial-gradient(1px 1px at 92% 30%,#fff,transparent);
+  background-size:320px 320px}
+@keyframes mu-drift{to{transform:translate(4vmax,3vmax) scale(1.12)}}
+@keyframes mu-spin{to{transform:rotate(360deg)}}
+@keyframes mu-flicker{0%,92%,94%,100%{opacity:1}93%{opacity:.6}97%{opacity:.75}}
+@keyframes mu-mq{to{transform:translateX(-50%)}}
+@keyframes mu-blink{to{visibility:hidden}}
+
+/* Win95 taskbar with the home link and crumbs */
+.mu-taskbar{position:relative;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--w95);color:#000;padding:5px 6px;border-bottom:2px solid var(--w95dk);box-shadow:inset 0 2px 0 var(--w95hi);font:700 17px/1.2 'League Spartan',sans-serif}
+.mu-start{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;background:var(--w95);border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);box-shadow:inset -1px -1px 0 var(--w95lo);color:#000!important;text-decoration:none;font-size:20px}
+.mu-start svg{width:20px;height:20px}
+.mu-crumbs{flex:1;min-width:0;list-style:none;margin:0;padding:6px 10px;background:#fff;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo);display:flex;flex-wrap:wrap;gap:4px 10px;font-size:17px;font-weight:600}
+.mu-crumbs li+li::before{content:"\203A";margin-right:10px;color:var(--w95lo)}
+.mu-crumbs a{color:var(--w95blue)!important}
+.mu-crumbs [aria-current]{color:#7a1048;font-weight:800}
+.mu .lang-toggle{background:var(--w95)!important;border:2px solid!important;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi)!important;border-radius:0!important;box-shadow:4px 4px 0 var(--magenta)!important}
+.mu .lang-toggle,.mu .lang-toggle button{font-family:'League Spartan',sans-serif!important}
+.mu .lang-toggle span,.mu .lang-toggle button{color:#000!important}
+.mu .lang-toggle button{border-radius:0!important}
+.mu .lang-toggle button.on{background:var(--w95blue)!important;color:#fff!important}
+@media(min-width:701px){.mu-taskbar{padding-right:250px}}
+
+/* MySpace marquee */
+.mu-mq{position:relative;z-index:2;overflow:hidden;border:4px ridge var(--magenta);margin:10px 0;padding:6px 0;background:#140a2e}
+.mu-mq-track{display:flex;width:max-content;animation:mu-mq 34s linear infinite}
+.mu-mq:hover .mu-mq-track{animation-play-state:paused}
+.mu-mq-run{display:flex;align-items:center;gap:18px;padding-right:18px;white-space:nowrap}
+.mu-mq-run span{font:700 clamp(1.2rem,5vw,1.6rem) 'League Spartan',sans-serif;color:var(--teal);text-shadow:0 0 8px rgba(25,227,200,.7)}
+.mu-mq-run span:nth-of-type(even){color:var(--saffron);text-shadow:0 0 8px rgba(255,182,39,.7)}
+.mu-mq-run i{font-style:normal;color:#fff36b;font-size:1.4rem;text-shadow:0 0 8px #fff36b}
+
+.mu-wrap{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:0 14px 30px}
+
+/* HERO: rainbow gig poster with the DB laurel logo at the center */
+.mu-hero{position:relative;margin:14px -14px 0;background:#07030f;border-block:6px solid var(--saffron);overflow:hidden;text-align:center}
+.mu-moonband{height:40px;background-color:#1b0f5a;border-block:4px solid #140a2e;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='44'%3E%3Cpath d='M28 8a14 14 0 1 0 0 28a9 14 0 0 1 0-28z' fill='%23ffe28a' stroke='%23140a2e' stroke-width='2'/%3E%3Cpath d='M64 10l3.5 8 8.5.6-6.5 5.6 2 8.3-7.5-4.4-7.5 4.4 2-8.3-6.5-5.6 8.5-.6z' fill='%23ff2e9a' stroke='%23140a2e' stroke-width='2'/%3E%3C/svg%3E");background-position:center}
+.mu-hero-in{position:relative;padding:10px 14px 30px}
+.mu-rainbow{position:absolute;left:50%;top:150px;width:min(160vw,1100px);aspect-ratio:2/1;transform:translateX(-50%);border-radius:50% 50% 0 0/100% 100% 0 0;
+  background:radial-gradient(circle at 50% 100%,transparent 0 44%,#9b5cff 44% 49%,#2457ff 49% 54%,#19e3c8 54% 59%,#7ddc3a 59% 64%,#ffb627 64% 69%,#ff7a1a 69% 74%,#ff2e9a 74% 79%,transparent 79%);opacity:.9}
+.mu-sunburst{position:absolute;left:50%;top:380px;width:1400px;height:1400px;transform:translate(-50%,-50%);border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,182,39,.26) 0 6deg,transparent 6deg 12deg,rgba(255,46,154,.2) 12deg 18deg,transparent 18deg 24deg);animation:mu-spin 120s linear infinite;
+  -webkit-mask:radial-gradient(circle,#000 0 22%,transparent 46%);mask:radial-gradient(circle,#000 0 22%,transparent 46%)}
+.mu-title{position:relative;z-index:2;margin:0}
+.mu-arch{display:block;overflow:visible;width:min(100%,640px);margin:0 auto -24px}
+.mu-archtxt{font-family:'Calistoga',serif;font-size:66px;fill:var(--magenta);stroke:#140a2e;stroke-width:9px;paint-order:stroke;letter-spacing:2px;filter:drop-shadow(5px 5px 0 #ffb627) drop-shadow(4px 4px 0 #19e3c8)}
+.mu-medal{position:relative;z-index:3;width:min(74vw,340px);aspect-ratio:1;margin:6px auto 0}
+.mu-medal img{position:absolute;inset:7%;width:86%;height:86%;border-radius:50%;background:#fbf7ec;
+  box-shadow:0 0 0 6px var(--gold),0 0 0 11px var(--laurel),0 0 0 14px var(--gold),0 0 40px 10px rgba(255,226,138,.7),0 0 90px rgba(255,46,154,.5)}
+.mu-orbit{position:absolute;inset:0;border:3px dashed var(--teal);border-radius:50%;animation:mu-spin 18s linear infinite}
+.mu-orbit::before{content:"";position:absolute;top:-9px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#ff2e9a 60%,#5a0a3a);box-shadow:0 0 10px #ff2e9a}
+.mu-orbit::after{content:"";position:absolute;bottom:-7px;left:30%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#ffb627 60%,#6a3a00);box-shadow:0 0 8px #ffb627}
+.mu-neon{position:relative;z-index:2;display:inline-block;margin:22px 0 0;padding:4px 16px;font:800 clamp(1.25rem,5.4vw,1.9rem)/1.25 'League Spartan',sans-serif;color:var(--teal);letter-spacing:.05em;border:2px solid var(--teal);background:rgba(10,4,30,.75);
+  text-shadow:0 0 8px var(--teal),0 0 18px var(--teal);box-shadow:0 0 14px rgba(25,227,200,.5),inset 0 0 14px rgba(25,227,200,.25);animation:mu-flicker 7s infinite}
+.mu-genres{position:relative;z-index:2;margin:16px 0 0;font:400 clamp(1.35rem,5.6vw,2rem)/1.25 'Calistoga',serif;color:var(--saffron);-webkit-text-stroke:1.2px #140a2e;text-shadow:3px 3px 0 var(--magenta)}
+.mu-tag{position:relative;z-index:2;margin:18px 0 0;font:400 clamp(1.9rem,7.5vw,2.6rem)/1.2 'Great Vibes',cursive;color:#ffe9b0;text-shadow:0 0 12px rgba(255,182,39,.6)}
+.mu-hero .mu-btns{position:relative;z-index:2;max-width:640px;margin:20px auto 0}
+
+/* stitched buttons */
+.mu-btns{display:grid;gap:14px;margin-top:18px}
+@media(min-width:640px){.mu-btns.mu-two{grid-template-columns:1fr 1fr}.mu-btns.mu-three{grid-template-columns:1fr 1fr 1fr}}
+.mu-stitch{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:66px;padding:14px 16px;text-align:center;text-decoration:none;font:800 clamp(1.2rem,5vw,1.4rem)/1.2 'Outfit','League Spartan',sans-serif;color:#140a2e!important;border-radius:6px;
+  outline:3px dashed rgba(20,10,46,.55);outline-offset:-9px;box-shadow:0 5px 0 rgba(0,0,0,.45);transition:transform .12s}
+.mu-stitch:hover{transform:translateY(-2px) rotate(-.4deg)}
+.mu-stitch:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.45)}
+.mu-s-mag{background:var(--magenta);color:#fff!important;outline-color:rgba(255,255,255,.65)}
+.mu-s-saf{background:var(--saffron)}
+.mu-s-teal{background:var(--teal)}
+.mu-s-brass{background:linear-gradient(180deg,#f1d08a,var(--brass));color:#2a1606!important}
+.mu-s-laurel{background:var(--laurel);color:#f1d08a!important;outline-color:rgba(241,208,138,.7);box-shadow:0 5px 0 #000,0 0 0 3px var(--gold)}
+
+/* Win95 windows as frames */
+.mu-win{position:relative;z-index:1;margin:34px auto;max-width:860px;background:var(--w95);color:#000;padding:3px;
+  border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,8px 8px 0 rgba(255,46,154,.55),16px 16px 0 rgba(25,227,200,.25)}
+.mu-win.mu-alt{box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,-8px 8px 0 rgba(255,182,39,.55),-16px 16px 0 rgba(155,92,255,.3)}
+.mu-titlebar{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--w95blue),var(--w95blue2));color:#fff;padding:4px 4px 4px 8px;font:400 17px/1.2 'Righteous',sans-serif;letter-spacing:.03em}
+.mu-titlebar .mu-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mu-titlebar svg{width:20px;height:20px;flex:none}
+.mu-tbtn{width:26px;height:24px;flex:none;background:var(--w95);border:2px solid;border-color:var(--w95hi) var(--w95dk) var(--w95dk) var(--w95hi);display:grid;place-items:center;color:#000;font:800 14px/1 'League Spartan',sans-serif}
+.mu-pane{margin:3px;padding:24px 20px;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo);background:#0c0622;color:#fff8ea;
+  background-image:repeating-linear-gradient(0deg,rgba(25,227,200,.05) 0 2px,transparent 2px 4px)}
+.mu-pane.mu-weave{background-color:#2a0f4a;background-image:repeating-linear-gradient(45deg,rgba(255,46,154,.3) 0 6px,transparent 6px 12px),repeating-linear-gradient(-45deg,rgba(25,227,200,.24) 0 6px,transparent 6px 12px)}
+.mu-pane h2{font:400 clamp(1.9rem,7vw,2.7rem)/1.1 'Calistoga',serif;margin:0 0 14px;color:var(--saffron);text-shadow:0 0 12px rgba(255,182,39,.55),2px 2px 0 var(--magenta)}
+.mu-pane p,.mu-pane li{font-size:clamp(1.12rem,4.4vw,1.28rem)}
+.mu-pane p{margin:0 0 14px}
+.mu-status{display:flex;gap:4px;margin:0 3px 3px;font-size:15px}
+.mu-status span{flex:1;padding:3px 8px;border:2px solid;border-color:var(--w95lo) var(--w95hi) var(--w95hi) var(--w95lo);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-list{list-style:none;padding:0;margin:0 0 10px}
+.mu-list li{position:relative;padding:6px 0 6px 40px}
+.mu-list li::before{content:"\266B";position:absolute;left:4px;top:4px;color:var(--teal);font-size:1.3em;text-shadow:0 0 8px rgba(25,227,200,.7)}
+.mu-list li:nth-child(even)::before{color:var(--magenta);text-shadow:0 0 8px rgba(255,46,154,.7)}
+.mu-soon{display:inline-block;margin:6px 0 0!important;padding:6px 14px;border:3px dashed var(--saffron);border-radius:6px;font-weight:800;color:var(--saffron)}
+.mu-big{font:800 clamp(1.25rem,5vw,1.6rem)/1.35 'League Spartan',sans-serif!important;color:var(--teal);text-shadow:0 0 8px rgba(25,227,200,.5)}
+
+/* facts: three glowing tiles */
+.mu-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;text-align:center}
+.mu-facts div{background:#140a2e;border:3px solid var(--c,var(--teal));border-radius:8px;padding:12px 4px;font-weight:700;font-size:clamp(.95rem,3.6vw,1.15rem);line-height:1.25;box-shadow:0 0 14px color-mix(in srgb,var(--c,var(--teal)) 45%,transparent)}
+.mu-facts span{display:block;font:400 clamp(2rem,9vw,3rem)/1.1 'Calistoga',serif;color:var(--c,var(--teal))}
+
+/* rates: brass price cards */
+.mu-cards{display:grid;gap:16px}
+@media(min-width:600px){.mu-cards{grid-template-columns:1fr 1fr}}
+.mu-card{display:flex;flex-direction:column;align-items:center;padding:18px 12px;border-radius:8px;text-align:center;background:linear-gradient(180deg,#f1d08a,var(--brass));color:var(--ink);font-weight:800;font-size:1.2rem;outline:3px dashed rgba(42,22,6,.5);outline-offset:-9px;box-shadow:0 6px 0 #5a3410}
+.mu-price{font:400 clamp(2.8rem,12vw,3.6rem)/1.05 'Calistoga',serif;color:#7a1048}
+
+/* parchment scroll for Faith and Friends */
+.mu-scroll{position:relative;z-index:1;margin:44px auto;max-width:780px;padding:0 18px}
+.mu-sheet{position:relative;color:var(--ink);padding:36px 22px 32px;text-align:center;
+  background:radial-gradient(ellipse at 20% 30%,rgba(140,90,30,.18),transparent 40%),radial-gradient(ellipse at 80% 70%,rgba(140,90,30,.2),transparent 45%),linear-gradient(180deg,var(--parch) 0%,#f8ebc7 50%,var(--parch2) 100%);
+  box-shadow:inset 0 0 40px rgba(120,70,20,.35)}
+.mu-scroll::before,.mu-scroll::after{content:"";position:absolute;left:0;right:0;height:26px;border-radius:13px;z-index:2;background:linear-gradient(180deg,#5a3410 0%,var(--brass) 30%,#f1d08a 50%,var(--brass) 70%,#4a2a0c 100%);box-shadow:0 4px 8px rgba(0,0,0,.5)}
+.mu-scroll::before{top:-12px}.mu-scroll::after{bottom:-12px}
+.mu-kicker{display:inline-block;margin:0 0 6px;padding:4px 14px;background:#7a1048;color:#ffe9b0;border-radius:999px;font:800 1rem/1.3 'League Spartan',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.mu-sheet h2{margin:4px 0 0;font:400 clamp(2.6rem,11vw,4rem)/1.1 'Great Vibes',cursive;color:#7a1048}
+.mu-ff-live{margin:0;font:800 clamp(1.2rem,5vw,1.5rem)/1.3 'League Spartan',sans-serif;color:#0d2e22;letter-spacing:.04em}
+.mu-ff-when{margin:12px 0 0;font:400 clamp(1.5rem,6.4vw,2rem)/1.2 'Calistoga',serif;color:#3a1a04}
+.mu-ff-time,.mu-ff-where{margin:2px 0 0;font-weight:700;font-size:1.25rem}
+.mu-ff-blurb{max-width:560px;margin:14px auto 0;font-size:1.2rem}
+.mu-ff-place{margin:10px 0 0;font-weight:800;font-size:1.2rem;color:#7a1048}
+.mu-sheet .mu-btns{max-width:640px;margin-left:auto;margin-right:auto}
+
+/* poster frame + gallery */
+.mu-frame{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;border:6px solid var(--saffron);outline:3px dashed var(--magenta);outline-offset:4px;border-radius:6px;background:#000}
+.mu-badge{display:inline-block;font:800 .82rem/1.3 'League Spartan',sans-serif;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:4px 10px;margin:0 0 6px}
+.mu-poss{background:var(--saffron);color:#140a2e}
+.mu-fact{background:var(--teal);color:#140a2e}
+.mu-soonbadge{background:transparent;color:var(--saffron);border:2px solid var(--saffron)}
+.mu-center{text-align:center}
+.mu-key{font-size:1.05rem!important;padding:10px 14px;border:3px dashed var(--violet);border-radius:8px;background:rgba(155,92,255,.12)}
+.mu-gallery{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:600px){.mu-gallery{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.mu-gallery{grid-template-columns:1fr 1fr 1fr}}
+.mu-item{margin:0;background:#140a2e;border:3px solid var(--c,var(--teal));border-radius:8px;overflow:hidden;box-shadow:0 0 16px color-mix(in srgb,var(--c,var(--teal)) 40%,transparent)}
+.mu-item:nth-child(3n+2){--c:var(--magenta)}.mu-item:nth-child(3n){--c:var(--saffron)}
+.mu-item img{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#000}
+.mu-item figcaption{padding:12px 14px 16px;font-size:1.05rem;line-height:1.4}
+.mu-item figcaption b{display:block;font:400 1.35rem/1.2 'Calistoga',serif;color:var(--c,var(--teal));margin:2px 0}
+
+/* story slots */
+.mu-slots{display:grid;gap:14px}
+@media(min-width:640px){.mu-slots{grid-template-columns:1fr 1fr}}
+.mu-slot{padding:16px;border:3px dashed var(--saffron);border-radius:6px;background:rgba(12,6,34,.85)}
+.mu-slot h3{margin:4px 0;font:400 1.45rem/1.2 'Calistoga',serif;color:var(--teal)}
+.mu-slot p{margin:0;font-size:1.1rem}
+
+/* footer */
+.mu-foot{position:relative;z-index:2;text-align:center;padding:26px 14px 44px;font-family:'League Spartan',sans-serif;font-size:1.2rem;font-weight:700}
+.mu-foot img{display:block;width:84px;height:84px;margin:0 auto 10px;border-radius:50%;box-shadow:0 0 0 3px var(--gold),0 0 0 6px var(--laurel),0 0 16px rgba(255,226,138,.7)}
+.mu-foot h2{margin:0 0 12px;font:400 clamp(1.9rem,7vw,2.6rem)/1.1 'Calistoga',serif;color:var(--saffron);text-shadow:2px 2px 0 var(--magenta)}
+.mu-follow{list-style:none;padding:0;margin:0 auto 18px;max-width:860px;display:grid;gap:12px}
+@media(min-width:600px){.mu-follow{grid-template-columns:1fr 1fr}}
+.mu-follow li{padding:14px 12px;border:3px dashed var(--c,var(--teal));border-radius:6px;background:rgba(12,6,34,.9);font-size:1.15rem;color:#f2e8ff}
+.mu-follow li:nth-child(2){--c:var(--magenta)}.mu-follow li:nth-child(3){--c:var(--violet)}.mu-follow li:nth-child(4){--c:var(--saffron)}.mu-follow li:nth-child(5){--c:var(--gold)}
+.mu-follow li:last-child:nth-child(odd){grid-column:1/-1}
+.mu-follow a{color:var(--c,var(--teal))}
+.mu-foot p{color:var(--teal);text-shadow:0 0 8px rgba(25,227,200,.6)}
+.mu-foot p a{color:var(--saffron)}
+
+@media(max-width:700px){
+  body.mu{font-size:18px}
+  .mu-crumbs{font-size:15px}
+  .mu-pane{padding:20px 14px}
+  .mu-win,.mu-win.mu-alt{box-shadow:inset -2px -2px 0 var(--w95lo),inset 2px 2px 0 #dfdfdf,6px 6px 0 rgba(255,46,154,.55);margin-right:6px}
+  .mu-rainbow{top:110px}.mu-sunburst{top:300px}
+  .mu-scroll{padding:0 10px}.mu-sheet{padding:32px 14px 28px}
+}
+@media (prefers-reduced-motion:reduce){.mu *,.mu *::before,.mu *::after{animation:none!important;transition:none!important}.mu-mq-track{width:auto}.mu-mq-run{white-space:normal;flex-wrap:wrap;justify-content:center;padding:0 10px}.mu-mq-run[aria-hidden]{display:none}}
+
+/* layout polish */
+@media(min-width:640px){.mu-btns.mu-three{grid-template-columns:1fr 1fr}.mu-btns.mu-three>:last-child{grid-column:1/-1}}
+.mu-item img{object-fit:contain}
+@media(min-width:600px) and (max-width:899px){.mu-item:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 9px)}}
+@media(min-width:900px){.mu-item:last-child:nth-child(3n+1){grid-column:2}}
+.mu-pane h2+.mu-slots{margin-top:4px}
+.mu-pane p+h2,.mu-pane .mu-cards+h2,.mu-pane p+h2[id]{margin-top:30px}
+@media(max-width:700px){.mu-genres{text-shadow:2px 2px 0 var(--magenta);-webkit-text-stroke:1px #140a2e}}
