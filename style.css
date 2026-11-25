@@ -1,4 +1,4 @@
-:root{--green:#123524;--deep:#0b2418;--gold:#c9a24a;--cream:#fbf7ec}
+:root{--green:#1F3A68;--deep:#0A3161;--gold:#c9a24a;--cream:#fbf7ec}
 *{box-sizing:border-box}
 html{font-size:22px}
 body{margin:0;font-family:'Lexend',sans-serif;background:var(--cream);color:var(--deep);line-height:1.5}
@@ -155,7 +155,7 @@ a.card b{font-size:1.3rem}a.card span{color:var(--gold);font-size:1.3rem;font-we
 
 /* ===== Faith and Friends (Nov 2026 first night) ===== */
 .ff-hero{
-  background:linear-gradient(165deg,#0b2418 0%,#123524 60%,#1a4a32 100%);
+  background:linear-gradient(165deg,#0A3161 0%,#1F3A68 60%,#0A3161 100%);
   color:#fbf7ec;
   border-top:8px solid #c9a24a;
   border-bottom:8px solid #c9a24a;
@@ -179,7 +179,7 @@ a.card b{font-size:1.3rem}a.card span{color:var(--gold);font-size:1.3rem;font-we
 .ff-kicker{
   display:inline-block;
   background:#c9a24a;
-  color:#0b2418;
+  color:#0A3161;
   font-weight:800;
   font-size:clamp(1.05rem,4.5vw,1.35rem);
   padding:8px 18px;
@@ -235,11 +235,11 @@ a.card b{font-size:1.3rem}a.card span{color:var(--gold);font-size:1.3rem;font-we
   text-decoration:none;
   box-shadow:0 4px 0 rgba(0,0,0,.35);
 }
-.ff-btns .b1{background:#c9a24a;color:#0b2418}
-.ff-btns .b2{background:#fbf7ec;color:#123524}
+.ff-btns .b1{background:#c9a24a;color:#0A3161}
+.ff-btns .b2{background:#fbf7ec;color:#1F3A68}
 .ff-btns .b3{background:transparent;color:#fbf7ec;border:3px solid #c9a24a;box-shadow:none}
 .ff-callout{
-  background:linear-gradient(165deg,#0b2418 0%,#123524 60%,#1a4a32 100%);
+  background:linear-gradient(165deg,#0A3161 0%,#1F3A68 60%,#0A3161 100%);
   color:#fbf7ec;
   border:6px solid #c9a24a;
   border-radius:1.2rem;
@@ -254,13 +254,13 @@ a.card b{font-size:1.3rem}a.card span{color:var(--gold);font-size:1.3rem;font-we
 .ff-callout .ff-time,.ff-callout .ff-where,.ff-callout .ff-blurb,.ff-callout .ff-place{font-size:1.15rem}
 .ff-callout .ff-btns{max-width:460px}
 .ff-callout .ff-btns a{font-size:1.2rem;padding:14px 12px}
-.music .ff-callout a.b1{color:#0b2418}
-.music .ff-callout a.b2{color:#123524}
+.music .ff-callout a.b1{color:#0A3161}
+.music .ff-callout a.b2{color:#1F3A68}
 .music .ff-callout a.b3{color:#fbf7ec}
-.ff-page-hero{background:linear-gradient(165deg,#0b2418 0%,#123524 70%,#1a4a32 100%);color:#fbf7ec;text-align:center;padding:2rem 1rem 2.2rem;border-bottom:8px solid #c9a24a}
+.ff-page-hero{background:linear-gradient(165deg,#0A3161 0%,#1F3A68 70%,#0A3161 100%);color:#fbf7ec;text-align:center;padding:2rem 1rem 2.2rem;border-bottom:8px solid #c9a24a}
 .ff-page-hero h1{color:#fbf7ec;margin:.4rem 0 .3rem;font-size:clamp(2.2rem,9vw,4rem)}
 .ff-page-hero .lead{color:#c9a24a;font-size:clamp(1.3rem,5vw,1.9rem)}
 .ff-details{background:#fff;border:4px solid #c9a24a;border-radius:1.2rem;padding:1.4rem 1.2rem;margin:1.2rem 0;box-shadow:0 6px 0 #8a6d2a}
 .ff-details h2{margin-top:0}
 .ff-details p{margin:.4rem 0}
-.ff-when-block{font-size:1.45rem;font-weight:800;color:#123524;margin:.2rem 0}
+.ff-when-block{font-size:1.45rem;font-weight:800;color:#1F3A68;margin:.2rem 0}

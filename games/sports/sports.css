@@ -242,7 +242,7 @@ body.osn-paper .item figcaption{font-size:20px}
   display:inline-flex;
   align-items:center;
 }
-.play-art{width:100%;height:auto;border:2px solid var(--ink);border-radius:0;background:#0b2418;margin:.8rem 0}
+.play-art{width:100%;height:auto;border:2px solid var(--ink);border-radius:0;background:#0A3161;margin:.8rem 0}
 
 body.osn-paper .item{
   background:var(--row);
