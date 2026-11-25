@@ -279,17 +279,24 @@ footer{font-size:1.15rem!important;font-weight:700}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.mq-track{width:auto;justify-content:center}.mq-run{white-space:normal;flex-wrap:wrap;justify-content:center;padding:0 10px}.mq-run[aria-hidden]{display:none}.shoot{display:none}}
 
 /* grace banner */
-.grace-banner{position:relative;z-index:4;background:var(--indigo2);color:var(--parch);border-bottom:3px solid var(--saffron);padding:64px 16px 18px;text-align:center}
-.grace-banner-inner{max-width:820px;margin:0 auto}
-.grace-banner p{margin:0 0 10px;font:400 17px/1.55 'Gilroy','Montserrat',sans-serif}
-.grace-banner p:last-child{margin-bottom:0}
-.grace-banner-good{font:800 22px/1.25 'League Spartan','Montserrat',sans-serif !important;letter-spacing:.02em;margin:12px 0 8px !important;color:var(--saffron)}
-.grace-banner-lyric{font-style:italic;font-size:16px !important;font-weight:400;opacity:.95;margin:0 0 6px !important;color:#fff8ea}
-.grace-banner-play{font-size:15px !important;opacity:.9}
-@media(min-width:701px){.grace-banner p{font-size:18px}.grace-banner-good{font-size:26px !important}.grace-banner-lyric{font-size:17px !important}.grace-banner-play{font-size:16px !important}}
-/* Leave room at the top of the banner so the fixed language toggle does not cover the words. */
-.grace-banner{padding-top:64px}
-.lang-toggle{position:fixed !important;top:8px;right:8px;margin:0 !important;width:max-content;z-index:9999}
+.grace-banner{position:relative;z-index:4;background:#1e1046;color:#f3e2b8;border-bottom:3px solid var(--saffron);padding:20px 20px 22px;text-align:center}
+.grace-banner-inner{max-width:760px;margin:0 auto}
+.grace-banner p{margin:0 0 10px;font:400 15px/1.5 'Gilroy','Montserrat',sans-serif}
+.grace-banner .gb-head{font:700 22px/1.25 'League Spartan','Montserrat',sans-serif;color:#ffb627;margin:16px 0 6px;padding-top:14px;border-top:1px solid rgba(255,182,39,.4);letter-spacing:.01em}
+.grace-banner .gb-good{font:700 18px/1.3 'League Spartan','Montserrat',sans-serif;color:#fff8ea;margin:0 0 10px}
+.grace-banner .gb-small{font-size:13.5px;line-height:1.4;color:#cbbfe0;margin:0 0 2px}
+.grace-banner .gb-lyric{font-style:italic}
+@media(min-width:701px){.grace-banner{padding:24px}.grace-banner p{font-size:16px}.grace-banner .gb-head{font-size:26px}.grace-banner .gb-good{font-size:20px}.grace-banner .gb-small{font-size:14px}}
+/* Keep the language toggle off the banner text. On wide screens it sits in the margin; otherwise it follows the banner. */
+@media(min-width:1101px){
+  .lang-toggle{position:fixed !important;top:12px;right:12px;margin:0 !important;z-index:9999}
+}
+@media(max-width:1100px){
+  body{display:flex;flex-direction:column}
+  .space{order:0;flex:0 0 0;height:0}
+  .grace-banner{order:-2}
+  .lang-toggle{order:-1;position:relative !important;top:auto !important;right:auto !important;margin:8px auto 0 !important;align-self:center;z-index:6}
+}
 </style>
 </head>
 <body>
@@ -297,9 +304,10 @@ footer{font-size:1.15rem!important;font-weight:700}
 <div class="grace-banner-inner">
 <p>We don't know exactly what we're doing, and we need your help. We're doing the best we can, but we're just figuring this out.</p>
 <p>We pray and trust that God will put us where we need to be with who we need to be, but we don't have it all figured out. Give us grace, and we'll give you grace. You give us grace.</p>
-<p class="grace-banner-good">God is good.</p>
-<p class="grace-banner-lyric">Good times, bad times, you know I've had my share.</p>
-<p class="grace-banner-play">Arguing with a license.</p>
+<p class="gb-head">We need grace. We offer grace.</p>
+<p class="gb-good">God is good.</p>
+<p class="gb-small gb-lyric">Good times, bad times, you know I've had my share.</p>
+<p class="gb-small">Arguing with a license.</p>
 </div>
 </div>
 <div class="space" aria-hidden="true">
@@ -538,6 +546,7 @@ footer{font-size:1.15rem!important;font-weight:700}
 <!-- i18n:start -->
 <script type="application/json" id="i18n-es">
 {
+"We need grace. We offer grace.": "Necesitamos gracia. Ofrecemos gracia.",
 
 "We don't know exactly what we're doing, and we need your help. We're doing the best we can, but we're just figuring this out.": "No sabemos exactamente lo que estamos haciendo y necesitamos su ayuda. Estamos haciendo lo mejor que podemos, pero apenas lo estamos descubriendo.",
 "We pray and trust that God will put us where we need to be with who we need to be, but we don't have it all figured out. Give us grace, and we'll give you grace. You give us grace.": "Oramos y confiamos en que Dios nos pondrá donde necesitamos estar, con quien necesitamos estar, pero no lo tenemos todo resuelto. Dennos gracia, y nosotros les daremos gracia. Ustedes nos dan gracia.",
