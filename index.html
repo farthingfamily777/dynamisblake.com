@@ -287,16 +287,11 @@ footer{font-size:1.15rem!important;font-weight:700}
 .grace-banner .gb-small{font-size:13.5px;line-height:1.4;color:#cbbfe0;margin:0 0 2px}
 .grace-banner .gb-lyric{font-style:italic}
 @media(min-width:701px){.grace-banner{padding:24px}.grace-banner p{font-size:16px}.grace-banner .gb-head{font-size:26px}.grace-banner .gb-good{font-size:20px}.grace-banner .gb-small{font-size:14px}}
-/* Keep the language toggle off the banner text. On wide screens it sits in the margin; otherwise it follows the banner. */
-@media(min-width:1101px){
-  .lang-toggle{position:fixed !important;top:12px;right:12px;margin:0 !important;z-index:9999}
-}
-@media(max-width:1100px){
-  body{display:flex;flex-direction:column}
-  .space{order:0;flex:0 0 0;height:0}
-  .grace-banner{order:-2}
-  .lang-toggle{order:-1;position:relative !important;top:auto !important;right:auto !important;margin:8px auto 0 !important;align-self:center;z-index:6}
-}
+/* Place the language toggle just under the banner so it never covers the words. */
+body{display:flex;flex-direction:column}
+.space{order:0;flex:0 0 0;height:0}
+.grace-banner{order:-2}
+.lang-toggle{order:-1;position:relative !important;top:auto !important;right:auto !important;margin:8px auto 0 !important;align-self:center;z-index:6}
 </style>
 </head>
 <body>
