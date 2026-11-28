@@ -91,13 +91,26 @@ footer .bar{width:48px;height:2px;background:var(--red);margin:0 auto 18px}
 footer p{margin:4px 0}
 footer .credit{font-size:12px;opacity:.8;margin-top:12px}
 @media(max-width:700px){section{padding:56px 0}.grace{padding:64px 0}header.site{padding-top:20px}}
+
+/* hero: logo left, dignity graphic right */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;align-items:center;padding:24px 0 36px}
+@media(min-width:820px){.hero{grid-template-columns:1fr 1fr;gap:48px}}
+.hero-logo{display:flex;justify-content:center;align-items:center}
+.hero-logo img{display:block;width:min(420px,78vw);height:auto}
+.hero-car{position:relative;max-width:360px;width:100%;margin:0 auto}
+.hero-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.18);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hero-track::-webkit-scrollbar{display:none}
+.hero-track img{flex:0 0 100%;width:100%;height:auto;display:block;scroll-snap-align:center}
+.hero-nav{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:12px;font:600 14px/1 system-ui,sans-serif}
+.hero-nav button{min-width:44px;min-height:44px;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.hero-nav button:focus-visible{outline:2px solid #B22234;outline-offset:2px}
+.hero-count{min-width:3.5em;text-align:center}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap">
-    <a href="./" aria-label="DynamisBlake.com home"><img class="logo" src="assets/home/db-logo-skyline-rwb-520.webp" srcset="assets/home/db-logo-skyline-rwb-520.webp 520w, assets/home/db-logo-skyline-rwb.webp 924w" sizes="(max-width:460px) 78vw, 360px" width="520" height="254" alt="Dynamis Blake Designs skyline logo"></a>
     <nav class="top" aria-label="Main">
       <a href="music/">Music</a>
       <a href="faith/">Faith</a>
@@ -108,6 +121,16 @@ footer .credit{font-size:12px;opacity:.8;margin-top:12px}
 </header>
 
 <main id="main">
+<section class="hero wrap" aria-label="Helping people experiencing homelessness with dignity">
+  <div class="hero-logo"><a href="./" aria-label="DynamisBlake.com home"><img src="assets/home/db-logo-skyline-rwb-520.webp" srcset="assets/home/db-logo-skyline-rwb-520.webp 520w, assets/home/db-logo-skyline-rwb.webp 924w" sizes="(max-width:820px) 78vw, 420px" width="520" height="254" alt="Dynamis Blake Designs skyline logo"></a></div>
+  <div class="hero-car" role="group" aria-roledescription="carousel" aria-label="Helping the homeless with dignity, 2 slides">
+    <div class="hero-track" id="heroTrack" tabindex="0">
+      <img src="assets/home/homeless-dignity-1.webp" width="720" height="1280" alt="Cartoon graphic: what people experiencing homelessness DO need, including clean socks, warm clothing, water, food, gift cards, and respect." loading="eager">
+      <img src="assets/home/homeless-dignity-2.webp" width="720" height="1280" alt="Cartoon graphic: what people experiencing homelessness do NOT need, such as lectures, pity, cameras in their face, or proving themselves. Give with love, serve with humility." loading="lazy">
+    </div>
+    <div class="hero-nav"><button type="button" id="heroPrev" aria-label="Previous slide">&#8249;</button><span class="hero-count" id="heroCount" aria-live="polite">1 / 2</span><button type="button" id="heroNext" aria-label="Next slide">&#8250;</button></div>
+  </div>
+</section>
 <div class="intro wrap">
   <p class="eyebrow">Dynamis Blake Designs</p>
   <h1>Blake Dylan</h1>
@@ -283,6 +306,14 @@ footer .credit{font-size:12px;opacity:.8;margin-top:12px}
 ". Resized and color-graded.": ". Tamaño y color ajustados.",
 "Texas ·": "Texas ·"
 }
+</script>
+<script>
+(function(){var t=document.getElementById('heroTrack');if(!t)return;var c=document.getElementById('heroCount');
+function idx(){return Math.round(t.scrollLeft/t.clientWidth)}
+function go(i){t.scrollTo({left:i*t.clientWidth,behavior:'smooth'})}
+document.getElementById('heroPrev').onclick=function(){go(Math.max(0,idx()-1))};
+document.getElementById('heroNext').onclick=function(){go(Math.min(1,idx()+1))};
+t.addEventListener('scroll',function(){c.textContent=(idx()+1)+' / 2'});})();
 </script>
 <script src="assets/lang.js" defer></script>
 </body>
